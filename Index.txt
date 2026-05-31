@@ -64,27 +64,28 @@ transition:background .3s,color .3s;
 .welcome-modal{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.95);
-backdrop-filter:blur(20px);
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(12px);
 z-index:99999;
 display:flex;
-align-items:center;
+align-items:flex-start;
 justify-content:center;
-padding:20px;
+padding:60px 20px 30px;
 animation:fadeIn .5s ease;
 }
 
 .welcome-content{
 width:100%;
 max-width:500px;
+max-height:calc(100vh - 120px);
 background:linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
 border-radius:32px;
-padding:50px 40px;
+padding:32px 30px 40px;
 border:1px solid var(--border);
 position:relative;
-overflow:hidden;
+overflow:auto;
 text-align:center;
-box-shadow:0 25px 100px rgba(0,255,136,.15), 0 0 0 1px rgba(0,255,136,.1);
+box-shadow:0 25px 100px rgba(0,255,136,.12), 0 0 0 1px rgba(0,255,136,.08);
 }
 
 .welcome-content::before{
@@ -95,6 +96,101 @@ left:0;
 right:0;
 height:4px;
 background:linear-gradient(90deg,var(--accent),var(--accent-dark),var(--accent));
+}
+
+.welcome-image{
+width:100%;
+height:220px;
+border-radius:24px;
+margin-bottom:24px;
+background:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+.welcome-no-show{
+margin-top:20px;
+background:rgba(255,255,255,.06);
+color:var(--text-secondary);
+padding:14px 18px;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+font-size:14px;
+}
+
+.welcome-no-show button{
+background:transparent;
+border:1px solid var(--border);
+padding:12px 18px;
+border-radius:16px;
+color:var(--text-primary);
+font-weight:700;
+}
+
+.auth-btn.google-btn{
+background:linear-gradient(90deg,#4285f4,#2a62d8);
+color:#fff;
+}
+
+.auth-btn.google-btn i{
+color:#fff;
+}
+
+.welcome-toast{
+position:fixed;
+top:86px;
+left:50%;
+transform:translateX(-50%);
+max-width:520px;
+width:calc(100% - 32px);
+background:rgba(10,10,10,.95);
+border:1px solid rgba(0,255,136,.18);
+padding:18px 22px;
+border-radius:22px;
+display:none;
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+z-index:99999;
+backdrop-filter:blur(10px);
+}
+
+.welcome-toast.active{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:18px;
+}
+
+.welcome-toast .toast-text{
+max-width:calc(100% - 120px);
+}
+
+.welcome-toast strong{
+display:block;
+font-size:16px;
+margin-bottom:6px;
+}
+
+.welcome-toast button{
+background:var(--accent);
+color:#000;
+border:none;
+padding:12px 16px;
+border-radius:16px;
+font-weight:700;
+}
+
+.download-key-btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
+background:linear-gradient(90deg,#3b82f6,#060bff);
+color:#fff;
+font-weight:800;
+margin-top:16px;
+cursor:pointer;
 }
 
 .welcome-glow{
@@ -134,9 +230,9 @@ animation:pulse 2s infinite;
 font-size:36px;
 font-weight:900;
 margin-bottom:15px;
-background:linear-gradient(45deg,var(--text-primary),var(--accent));
--webkit-background-clip:text;
-color:transparent;
+    background:linear-gradient(45deg,var(--text-primary),var(--accent));
+    -webkit-background-clip:text; background-clip:text;
+    color:transparent;
 }
 
 .welcome-content p{
@@ -246,9 +342,9 @@ display:block;
 .auth-logo h1{
 font-size:32px;
 font-weight:900;
-background:linear-gradient(45deg,var(--text-primary),var(--accent));
--webkit-background-clip:text;
-color:transparent;
+    background:linear-gradient(45deg,var(--text-primary),var(--accent));
+    -webkit-background-clip:text; background-clip:text;
+    color:transparent;
 }
 
 .auth-logo p{
@@ -510,6 +606,7 @@ font-size:22px;
 font-weight:900;
 background:linear-gradient(45deg,var(--text-primary),var(--accent),var(--accent-dark));
 -webkit-background-clip:text;
+background-clip:text;
 color:transparent;
 display:flex;
 align-items:center;
@@ -642,6 +739,7 @@ font-size:46px;
 font-weight:900;
 background:linear-gradient(45deg,var(--text-primary),var(--accent),var(--accent-dark));
 -webkit-background-clip:text;
+background-clip:text;
 color:transparent;
 }
 
@@ -650,6 +748,270 @@ margin-top:8px;
 font-size:12px;
 letter-spacing:5px;
 color:var(--text-secondary);
+}
+
+.home-section{
+max-width:1200px;
+margin:0 auto;
+padding:40px 20px 60px;
+}
+
+.home-hero{
+background:linear-gradient(135deg,rgba(8,8,15,.95),rgba(12,12,22,.95));
+border:1px solid rgba(255,255,255,.08);
+border-radius:32px;
+padding:40px;
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:32px;
+box-shadow:0 40px 120px rgba(0,0,0,.35);
+position:relative;
+overflow:hidden;
+}
+
+.home-hero::before{
+content:'';
+position:absolute;
+top:-10%;
+left:-10%;
+width:500px;
+height:500px;
+background:radial-gradient(circle,rgba(0,255,136,.15),transparent 55%);
+filter:blur(40px);
+}
+
+.home-hero::after{
+content:'';
+position:absolute;
+bottom:-20px;
+right:-10px;
+width:420px;
+height:420px;
+background:radial-gradient(circle,rgba(59,130,246,.12),transparent 55%);
+filter:blur(30px);
+}
+
+.home-copy{
+position:relative;
+z-index:1;
+}
+
+.home-copy h1{
+font-size:46px;
+line-height:1.05;
+margin-bottom:18px;
+}
+
+.home-copy p{
+color:var(--text-secondary);
+font-size:16px;
+line-height:1.9;
+max-width:620px;
+margin-bottom:24px;
+}
+
+.home-hero-buttons{
+display:flex;
+gap:16px;
+flex-wrap:wrap;
+margin-bottom:24px;
+}
+
+.home-hero-buttons button{
+padding:16px 24px;
+border:none;
+border-radius:18px;
+font-weight:800;
+font-size:15px;
+min-width:180px;
+}
+
+.home-hero-buttons .btn-primary{
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+color:#000;
+}
+
+.home-hero-buttons .btn-secondary{
+background:rgba(255,255,255,.05);
+color:var(--text-primary);
+border:1px solid rgba(255,255,255,.12);
+}
+
+.home-profile-card{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.08);
+border-radius:28px;
+padding:26px;
+backdrop-filter:blur(12px);
+}
+
+.home-profile-card h3{
+font-size:20px;
+margin-bottom:10px;
+}
+
+.home-profile-card p{
+color:var(--text-secondary);
+line-height:1.7;
+margin-bottom:20px;
+}
+
+.home-stats{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:14px;
+}
+
+.home-stat{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+border-radius:18px;
+padding:18px;
+text-align:center;
+}
+
+.home-stat h4{
+font-size:26px;
+margin-bottom:8px;
+color:var(--accent);
+}
+
+.home-stat span{
+color:var(--text-secondary);
+font-size:13px;
+}
+
+.home-reviews-section{
+margin-top:40px;
+}
+
+.home-reviews-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:16px;
+margin-bottom:24px;
+}
+
+.home-reviews-header h2{
+font-size:28px;
+}
+
+.home-review-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
+
+.home-review-card{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.08);
+border-radius:24px;
+padding:24px;
+min-height:240px;
+}
+
+.home-review-card .review-top{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:18px;
+}
+
+.home-review-card .review-avatar{
+width:52px;
+height:52px;
+border-radius:50%;
+background:var(--bg-tertiary);
+display:flex;
+align-items:center;
+justify-content:center;
+color:var(--text-secondary);
+font-size:22px;
+overflow:hidden;
+}
+
+.home-review-card .review-avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.home-review-card .reviewer-info h4{
+font-size:16px;
+margin-bottom:4px;
+}
+
+.home-review-card .reviewer-info span{
+font-size:13px;
+color:var(--text-secondary);
+}
+
+.home-review-card .review-stars{
+color:var(--vip-gold);
+margin-bottom:14px;
+}
+
+.home-review-card p{
+color:var(--text-secondary);
+line-height:1.8;
+font-size:14px;
+}
+
+.home-add-review{
+margin-top:34px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.08);
+border-radius:28px;
+padding:28px;
+}
+
+.home-add-review h3{
+margin-bottom:18px;
+}
+
+.home-add-review textarea{
+width:100%;
+min-height:120px;
+resize:none;
+border-radius:18px;
+padding:18px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+color:var(--text-primary);
+}
+
+.review-stars-input{
+display:flex;
+gap:8px;
+margin-bottom:18px;
+font-size:24px;
+color:var(--text-secondary);
+}
+
+.review-stars-input i.active{
+color:var(--vip-gold);
+}
+
+.review-submit{
+margin-top:18px;
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.review-submit button{
+padding:14px 24px;
+border:none;
+border-radius:18px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+color:#000;
+font-weight:800;
+}
+
+@media(max-width:900px){
+.home-hero{grid-template-columns:1fr;}
+.home-stats{grid-template-columns:1fr;}
 }
 
 /* SEARCH */
@@ -734,51 +1096,69 @@ padding-bottom:110px;
 }
 
 .product-card{
-background:var(--card-bg);
+background:linear-gradient(180deg, var(--card-bg), rgba(255,255,255,.02));
 border-radius:28px;
 overflow:hidden;
-border:1px solid var(--border);
-transition:all .4s cubic-bezier(0.4,0,0.2,1);
+border:1px solid rgba(255,255,255,.08);
+transition:transform .4s cubic-bezier(0.4,0,0.2,1),box-shadow .4s ease,border-color .4s ease;
 position:relative;
 display:flex;
 flex-direction:column;
+backdrop-filter:blur(8px);
+}
+
+.product-card::before{
+content:'';
+position:absolute;
+inset:0;
+background:radial-gradient(circle at top left, rgba(0,255,136,.12), transparent 40%);
+pointer-events:none;
 }
 
 .product-card:hover{
-transform:translateY(-8px);
-border-color:rgba(0,255,136,.3);
-box-shadow:0 20px 40px rgba(0,255,136,.15);
+transform:translateY(-10px);
+border-color:rgba(0,255,136,.35);
+box-shadow:0 28px 60px rgba(0,255,136,.15);
 }
 
 .vip-badge{
 position:absolute;
-top:15px;
-right:15px;
+top:18px;
+right:18px;
 background:linear-gradient(135deg,#ffd700,#ff9500);
 color:#000;
-padding:8px 16px;
-border-radius:50px;
+padding:10px 18px;
+border-radius:999px;
 font-size:12px;
 font-weight:800;
 display:flex;
 align-items:center;
-gap:6px;
+gap:8px;
 z-index:10;
-box-shadow:0 4px 20px rgba(255,215,0,.4);
+box-shadow:0 12px 30px rgba(255,215,0,.22);
+backdrop-filter:blur(10px);
 }
 
 .product-img-container{
 position:relative;
 width:100%;
-height:200px;
+height:220px;
 overflow:hidden;
+}
+
+.product-img-container::after{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.45));
+pointer-events:none;
 }
 
 .product-img{
 width:100%;
 height:100%;
 object-fit:cover;
-transition:transform .5s ease;
+transition:transform .6s ease;
 }
 
 .product-card:hover .product-img{
@@ -840,12 +1220,13 @@ color:#fbbf24;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:var(--bg-tertiary);
-padding:12px 16px;
-border-radius:14px;
-margin-bottom:15px;
+background:rgba(0,255,136,.06);
+padding:14px 18px;
+border-radius:18px;
+margin-bottom:18px;
 font-size:13px;
 color:var(--text-secondary);
+backdrop-filter:blur(8px);
 }
 
 .catalog-info span{
@@ -862,16 +1243,22 @@ gap:10px;
 flex:1;
 padding:16px;
 border:none;
-border-radius:16px;
+border-radius:18px;
 font-weight:700;
 color:#000;
 font-size:15px;
 background:linear-gradient(90deg,var(--accent),var(--accent-dark));
-box-shadow:0 4px 20px rgba(0,255,136,.3);
+box-shadow:0 8px 24px rgba(0,255,136,.22);
 display:flex;
 align-items:center;
 justify-content:center;
-gap:8px;
+gap:10px;
+transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.buy-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 28px rgba(0,255,136,.32);
 }
 
 .review-btn{
@@ -1271,6 +1658,7 @@ font-size:42px;
 font-weight:900;
 background:linear-gradient(135deg,#ffd700,#ff9500);
 -webkit-background-clip:text;
+background-clip:text;
 color:transparent;
 margin-bottom:15px;
 display:flex;
@@ -1287,23 +1675,27 @@ font-size:16px;
 /* TOP VIP GRID - 5 USUARIOS */
 .top-vip-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:25px;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:28px;
 margin-bottom:40px;
 }
 
 .vip-card{
-background:var(--card-bg);
-border-radius:28px;
-padding:30px 20px;
+background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+border-radius:32px;
+padding:34px 24px;
 text-align:center;
-border:1px solid var(--border);
+border:1px solid rgba(255,255,255,.08);
 position:relative;
-transition:all .4s ease;
+transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease;
+box-shadow:0 18px 50px rgba(0,0,0,.14);
+overflow:hidden;
 }
 
 .vip-card:hover{
-transform:translateY(-10px);
+transform:translateY(-8px);
+box-shadow:0 28px 60px rgba(0,0,0,.22);
+border-color:rgba(0,255,136,.22);
 }
 
 .vip-card.rank-1{
@@ -1366,19 +1758,20 @@ border:2px solid var(--border);
 }
 
 .vip-avatar{
-width:100px;
-height:100px;
+width:110px;
+height:110px;
 border-radius:50%;
-background:var(--bg-tertiary);
-margin:30px auto 20px;
+background:linear-gradient(180deg, rgba(0,255,136,.08), rgba(255,255,255,.03));
+margin:28px auto 22px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:40px;
+font-size:42px;
 color:var(--text-secondary);
-border:4px solid var(--border);
+border:4px solid rgba(255,255,255,.15);
 overflow:hidden;
 position:relative;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
 }
 
 .vip-card.rank-1 .vip-avatar{
@@ -1386,7 +1779,7 @@ width:140px;
 height:140px;
 border-color:#ffd700;
 box-shadow:0 0 40px rgba(255,215,0,.3);
-margin-top:40px;
+margin-top:30px;
 }
 
 .vip-avatar img{
@@ -1426,6 +1819,7 @@ margin-bottom:5px;
 font-size:36px;
 background:linear-gradient(135deg,#ffd700,#ff9500);
 -webkit-background-clip:text;
+background-clip:text;
 color:transparent;
 }
 
@@ -2873,9 +3267,9 @@ margin-top:40px;
 .footer-logo{
 font-size:24px;
 font-weight:900;
-background:linear-gradient(45deg,var(--text-primary),var(--accent));
--webkit-background-clip:text;
-color:transparent;
+    background:linear-gradient(45deg,var(--text-primary),var(--accent),var(--accent-dark));
+    -webkit-background-clip:text; background-clip:text;
+    color:transparent;
 margin-bottom:12px;
 display:flex;
 align-items:center;
@@ -2980,6 +3374,7 @@ font-size:20px;
 <div class="welcome-modal" id="welcomeModal">
 <div class="welcome-content">
 <div class="welcome-glow"></div>
+<div class="welcome-image"></div>
 <div class="welcome-icon">
 <i class="fas fa-terminal"></i>
 </div>
@@ -3002,7 +3397,20 @@ font-size:20px;
 <button class="welcome-btn" onclick="closeWelcome()">
 COMENZAR <i class="fas fa-arrow-right"></i>
 </button>
+<div class="welcome-no-show">
+<span>¿Prefieres no ver este mensaje de bienvenida?:</span>
+<button onclick="closeWelcome(true)">NO MOSTRAR MÁS</button>
 </div>
+</div>
+</div>
+
+<!-- BIENVENIDA RÁPIDA -->
+<div class="welcome-toast" id="welcomeToast">
+<div class="toast-text">
+<strong>Bienvenido a xOrochiModz</strong>
+<span id="welcomeToastText">Disfruta de acceso premium y llaves instantáneas.</span>
+</div>
+<button onclick="dismissWelcomeToast()">No mostrar más</button>
 </div>
 
 <!-- BACKGROUND -->
@@ -3022,8 +3430,8 @@ COMENZAR <i class="fas fa-arrow-right"></i>
 </div>
 
 <div class="auth-tabs">
-<button class="auth-tab active" onclick="switchAuthTab('login')">Iniciar Sesión</button>
-<button class="auth-tab" onclick="switchAuthTab('register')">Crear Cuenta</button>
+<button class="auth-tab active" onclick="switchAuthTab(event,'login')">Iniciar Sesión</button>
+<button class="auth-tab" onclick="switchAuthTab(event,'register')">Crear Cuenta</button>
 </div>
 
 <!-- LOGIN FORM -->
@@ -3036,6 +3444,9 @@ COMENZAR <i class="fas fa-arrow-right"></i>
 <i class="fas fa-lock"></i>
 <input type="password" id="loginPassword" placeholder="Contraseña" required>
 </div>
+<button type="button" class="auth-btn google-btn" onclick="handleGoogleSignIn()">
+<i class="fab fa-google"></i> INICIAR CON GOOGLE
+</button>
 <button type="submit" class="auth-btn">
 <i class="fas fa-sign-in-alt"></i> ENTRAR
 </button>
@@ -3073,6 +3484,9 @@ COMENZAR <i class="fas fa-arrow-right"></i>
 <i class="fas fa-lock"></i>
 <input type="password" id="regPasswordConfirm" placeholder="Confirmar contraseña" required>
 </div>
+<button type="button" class="auth-btn google-btn" onclick="handleGoogleRegister()">
+<i class="fab fa-google"></i> CREAR CUENTA CON GOOGLE
+</button>
 <button type="submit" class="auth-btn">
 <i class="fas fa-user-plus"></i> CREAR CUENTA
 </button>
@@ -3095,6 +3509,63 @@ COMENZAR <i class="fas fa-arrow-right"></i>
 <button onclick="toggleMenu()">
 <i class="fas fa-bars"></i>
 </button>
+</div>
+</div>
+
+<!-- HOME SECTION -->
+<div id="homeSection" class="home-section">
+<div class="home-hero">
+<div class="home-copy">
+<h1>Bienvenido a xOrochiModz</h1>
+<p>Tu portal gaming oscuro para compras premium, llaves seguras y reseñas verificadas.</p>
+<div class="home-hero-buttons">
+<button class="btn-primary" onclick="showCatalog()">Ir al Catálogo</button>
+<button class="btn-secondary" onclick="verDashboard()">Ir al Dashboard</button>
+</div>
+<div class="home-stats">
+<div class="home-stat">
+<h4 id="homeSaldo">$0.00</h4>
+<span>Saldo disponible</span>
+</div>
+<div class="home-stat">
+<h4 id="homeCompras">0</h4>
+<span>Compras realizadas</span>
+</div>
+<div class="home-stat">
+<h4 id="homeReviewsCount">0</h4>
+<span>Reseñas recientes</span>
+</div>
+</div>
+</div>
+<div class="home-profile-card">
+<h3>Perfil</h3>
+<p><strong id="homeUserName">Usuario</strong></p>
+<p id="homeUserEmail">Correo no disponible</p>
+<p id="homeUserIdHome">ID: ---</p>
+<p style="margin-top:12px;color:var(--text-secondary);font-size:14px;">Todo listo para explorar el catálogo y dejar tus reseñas con estilo profesional.</p>
+</div>
+</div>
+
+<div class="home-reviews-section">
+<div class="home-reviews-header">
+<h2>Reseñas recientes</h2>
+<button class="btn-primary" onclick="toggleHomeReviewForm()">Agregar reseña</button>
+</div>
+<div id="homeReviewsList" class="home-review-grid"></div>
+<div id="homeAddReviewForm" class="home-add-review" style="display:none;">
+<h3>Deja tu reseña</h3>
+<div class="review-stars-input" id="homeStarInput">
+<i class="fas fa-star" data-rating="1" onclick="setHomeReviewRating(1)"></i>
+<i class="fas fa-star" data-rating="2" onclick="setHomeReviewRating(2)"></i>
+<i class="fas fa-star" data-rating="3" onclick="setHomeReviewRating(3)"></i>
+<i class="fas fa-star" data-rating="4" onclick="setHomeReviewRating(4)"></i>
+<i class="fas fa-star" data-rating="5" onclick="setHomeReviewRating(5)"></i>
+</div>
+<textarea id="homeReviewText" placeholder="Comparte tu experiencia con la comunidad..."></textarea>
+<div class="review-submit">
+<button onclick="submitHomeReview()">Publicar reseña</button>
+<button class="btn-secondary" onclick="toggleHomeReviewForm()">Cancelar</button>
+</div>
 </div>
 </div>
 
@@ -3294,7 +3765,7 @@ VOLVER AL CATÁLOGO
 </div>
 <p class="step-title">Elige cómo quieres recargar</p>
 <div class="method-cards">
-<div class="method-card" onclick="selectMethod('bank')">
+<div class="method-card" onclick="selectMethod(event,'bank')">
 <div class="method-icon"><i class="fas fa-building-columns"></i></div>
 <div class="method-info">
 <h3>Pago Bancario</h3>
@@ -3305,7 +3776,7 @@ VOLVER AL CATÁLOGO
 </div>
 <i class="fas fa-chevron-right method-arrow"></i>
 </div>
-<div class="method-card" onclick="selectMethod('crypto')">
+<div class="method-card" onclick="selectMethod(event,'crypto')">
 <div class="method-icon"><i class="fab fa-bitcoin"></i></div>
 <div class="method-info">
 <h3>Cripto</h3>
@@ -3358,11 +3829,11 @@ Continuar <i class="fas fa-arrow-right"></i>
 </div>
 <p class="amount-label">Monto a pagar (USD) - Mínimo $1</p>
 <div class="amount-presets">
-<button class="amount-preset" onclick="selectAmount(5)">$5</button>
-<button class="amount-preset" onclick="selectAmount(10)">$10</button>
-<button class="amount-preset" onclick="selectAmount(25)">$25</button>
-<button class="amount-preset" onclick="selectAmount(50)">$50</button>
-<button class="amount-preset" onclick="selectAmount(100)">$100</button>
+<button class="amount-preset" onclick="selectAmount(event,5)">$5</button>
+<button class="amount-preset" onclick="selectAmount(event,10)">$10</button>
+<button class="amount-preset" onclick="selectAmount(event,25)">$25</button>
+<button class="amount-preset" onclick="selectAmount(event,50)">$50</button>
+<button class="amount-preset" onclick="selectAmount(event,100)">$100</button>
 </div>
 <div class="custom-amount">
 <i class="fas fa-dollar-sign"></i>
@@ -3512,9 +3983,13 @@ Ver instrucciones <i class="fas fa-arrow-right"></i>
 <!-- MODAL KEY -->
 <div class="modal" id="modalKey" style="align-items:center;justify-content:center;display:none;">
 <div style="background:var(--bg-secondary);border-radius:32px;padding:28px;border:1px solid var(--border);max-width:440px;width:90%;">
-<h2 style="font-size:24px;margin-bottom:24px;color:var(--text-primary);">LLAVE ENTREGADA</h2>
+<h2 style="font-size:24px;margin-bottom:16px;color:var(--text-primary);">LLAVE ENTREGADA</h2>
+<p style="color:var(--text-secondary);font-size:14px;margin-bottom:18px;">Tu clave premium está lista. Guarda este archivo seguro y utilízalo en tu compra.</p>
 <div class="key-box" id="keyGenerada"></div>
 <button class="auth-btn" onclick="copiarKey()">COPIAR LLAVE</button>
+<button class="download-key-btn" onclick="downloadKeyFile()">
+<i class="fas fa-download"></i> DESCARGAR ARCHIVO
+</button>
 <button class="btn-cancel" onclick="cerrarKey()" style="width:100%;padding:16px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:16px;color:var(--text-primary);font-weight:600;margin-top:12px;">CERRAR</button>
 </div>
 </div>
@@ -3793,6 +4268,8 @@ import {
 getAuth, 
 createUserWithEmailAndPassword, 
 signInWithEmailAndPassword, 
+GoogleAuthProvider,
+signInWithPopup,
 onAuthStateChanged, 
 updateProfile, 
 updatePassword,
@@ -3829,6 +4306,8 @@ appId:"1:1045786433620:web:1b594c8f3bf6226d6035c1"
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
+const googleProvider=new GoogleAuthProvider();
+googleProvider.setCustomParameters({prompt:'select_account'});
 
 // THEME
 let currentTheme=localStorage.getItem('theme')||'dark';
@@ -3848,14 +4327,38 @@ if(icon) icon.className=currentTheme==='dark'?'fas fa-eye':'fas fa-eye-slash';
 }
 
 // WELCOME MODAL
-window.closeWelcome=function(){
-document.getElementById('welcomeModal').style.display='none';
-localStorage.setItem('welcomeShown','true');
+window.closeWelcome=function(dontShowAgain=false){
+const modal=document.getElementById('welcomeModal');
+if(modal) modal.style.display='none';
+localStorage.setItem('welcomeModalShown','true');
+if(dontShowAgain){
+localStorage.setItem('welcomeToastHidden','true');
+const toast=document.getElementById('welcomeToast');
+if(toast) toast.classList.remove('active');
+}
+};
+
+window.dismissWelcomeToast=function(){
+const toast=document.getElementById('welcomeToast');
+if(toast) toast.classList.remove('active');
+localStorage.setItem('welcomeToastHidden','true');
+};
+
+window.showWelcomeToast=function(){
+if(localStorage.getItem('welcomeToastHidden')==='true') return;
+const toast=document.getElementById('welcomeToast');
+if(!toast) return;
+const name=userData.name || (currentUser? currentUser.displayName : '');
+const text= name ? `Hola ${name}, disfruta de acceso premium y llaves instantáneas.` : 'Disfruta de acceso premium y llaves instantáneas.';
+document.getElementById('welcomeToastText').textContent=text;
+toast.classList.add('active');
+setTimeout(()=>{ if(toast) toast.classList.remove('active'); },9000);
 };
 
 // Mostrar welcome solo la primera vez
-if(localStorage.getItem('welcomeShown')){
-document.getElementById('welcomeModal').style.display='none';
+if(localStorage.getItem('welcomeModalShown')){
+const modal=document.getElementById('welcomeModal');
+if(modal) modal.style.display='none';
 }
 
 // AUTH STATE
@@ -3867,6 +4370,7 @@ let recargaData={method:null,country:null,amount:null,file:null};
 let currentReviewProduct=null;
 let reviewRating=0;
 let reviewImages=[];
+let homeReviewRating=0;
 
 // FUNCION PARA GENERAR ID NUMERICO UNICO (SIMPLE Y ROBUSTA)
 function generarIdNumericoUnico() {
@@ -4056,10 +4560,11 @@ total:"Consultar"
 };
 
 // AUTH FUNCTIONS
-window.switchAuthTab=function(tab){
+window.switchAuthTab=function(evt,tab){
+const target = evt?.target || evt?.srcElement;
 document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
 document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('active'));
-event.target.classList.add('active');
+if(target) target.classList.add('active');
 document.getElementById(tab==='login'?'loginForm':'registerForm').classList.add('active');
 };
 
@@ -4176,6 +4681,41 @@ alert('Error: '+e.message);
 }
 };
 
+window.handleGoogleAuth=async function(){
+try{
+const result=await signInWithPopup(auth,googleProvider);
+const user=result.user;
+if(user){
+const userDocRef=doc(db,'usuarios',user.uid);
+const userDoc=await getDoc(userDocRef);
+if(!userDoc.exists()){
+await setDoc(userDocRef,{ 
+uid:user.uid,
+userId:generarIdNumericoUnico(),
+name:user.displayName||'Usuario',
+email:user.email||'',
+phone:'',
+photoURL:user.photoURL||null,
+saldo:0,
+createdAt:new Date().toISOString(),
+role:'user'
+});
+}
+}
+}catch(error){
+console.error('Error Google:',error);
+alert('Error al iniciar con Google: '+(error.message||error.code));
+}
+};
+
+window.handleGoogleSignIn=function(){
+return window.handleGoogleAuth();
+};
+
+window.handleGoogleRegister=function(){
+return window.handleGoogleAuth();
+};
+
 window.logout=async function(){
 await auth.signOut();
 };
@@ -4246,6 +4786,8 @@ document.getElementById('authContainer').style.display='none';
 document.getElementById('mainApp').style.display='block';
 await cargarDatosUsuario();
 iniciarApp();
+showHome();
+showWelcomeToast();
 }else{
 document.getElementById('authContainer').style.display='flex';
 document.getElementById('mainApp').style.display='none';
@@ -4325,6 +4867,17 @@ document.getElementById('infoName').textContent=displayName;
 document.getElementById('infoEmail').textContent=displayEmail;
 document.getElementById('infoPhone').textContent=userData.phone||'No especificado';
 
+const homeUserName=document.getElementById('homeUserName');
+if(homeUserName) homeUserName.textContent=displayName;
+const homeUserEmail=document.getElementById('homeUserEmail');
+if(homeUserEmail) homeUserEmail.textContent=displayEmail;
+const homeUserIdHome=document.getElementById('homeUserIdHome');
+if(homeUserIdHome) homeUserIdHome.textContent='ID: '+displayUserId;
+const homeSaldo=document.getElementById('homeSaldo');
+if(homeSaldo) homeSaldo.textContent='$'+saldoFormateado;
+const homeCompras=document.getElementById('homeCompras');
+if(homeCompras) homeCompras.textContent=document.getElementById('statCompras')?.textContent||'0';
+
 document.getElementById('editName').value=userData.name||'';
 document.getElementById('editPhone').value=userData.phone||'';
 
@@ -4362,6 +4915,8 @@ if(userData.userId){
 onSnapshot(query(collection(db,"compras"),where("userId","==",userData.userId)),snap=>{
 const compras=snap.docs.map(d=>d.data());
 document.getElementById('statCompras').textContent=compras.length;
+const homeCompras=document.getElementById('homeCompras');
+if(homeCompras) homeCompras.textContent=compras.length;
 const totalGastado = compras.reduce((a,b)=>a+(b.total||0),0);
 document.getElementById('statGastado').textContent='$'+totalGastado.toFixed(2);
 renderCompras(compras);
@@ -4612,6 +5167,121 @@ document.getElementById('misReviewsList').innerHTML='<div style="text-align:cent
 };
 
 // RENDER FUNCTIONS
+window.showHome=function(){
+const home=document.getElementById('homeSection');
+const header=document.querySelector('.header');
+const filters=document.querySelector('.filter-tabs');
+const catalog=document.getElementById('catalogo');
+const topVip=document.getElementById('topVipSection');
+if(home) home.style.display='block';
+if(header) header.style.display='none';
+if(filters) filters.style.display='none';
+if(catalog) catalog.style.display='none';
+if(topVip) topVip.classList.remove('active');
+renderHomeReviews();
+};
+
+window.showCatalog=function(){
+const home=document.getElementById('homeSection');
+const header=document.querySelector('.header');
+const filters=document.querySelector('.filter-tabs');
+const catalog=document.getElementById('catalogo');
+if(home) home.style.display='none';
+if(header) header.style.display='block';
+if(filters) filters.style.display='flex';
+if(catalog) catalog.style.display='grid';
+const topVip=document.getElementById('topVipSection');
+if(topVip) topVip.classList.remove('active');
+currentFilter='all';
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+document.querySelectorAll('.filter-btn')[0]?.classList.add('active');
+renderCatalogo();
+};
+
+window.setHomeReviewRating=function(rating){
+homeReviewRating=rating;
+document.querySelectorAll('#homeStarInput i').forEach((star,index)=>{
+star.classList.toggle('active', index<rating);
+});
+};
+
+window.toggleHomeReviewForm=function(){
+const form=document.getElementById('homeAddReviewForm');
+if(!form) return;
+form.style.display=form.style.display==='none'?'block':'none';
+homeReviewRating=0;
+document.querySelectorAll('#homeStarInput i').forEach(star=>star.classList.remove('active'));
+document.getElementById('homeReviewText').value='';
+};
+
+window.submitHomeReview=async function(){
+const text=document.getElementById('homeReviewText').value.trim();
+if(homeReviewRating===0){
+alert('Por favor selecciona una calificación');
+return;
+}
+if(!text){
+alert('Escribe tu opinión antes de enviar');
+return;
+}
+try{
+await addDoc(collection(db,'reviews'),{
+productId:'home',
+productName:'Home',
+userId:userData.userId||'---',
+uid:currentUser.uid,
+userName:userData.name||currentUser.displayName||'Usuario',
+userPhoto:userData.photoURL||null,
+rating:homeReviewRating,
+text:text,
+timestamp:Date.now(),
+verified:true
+});
+alert('Reseña publicada correctamente');
+const form=document.getElementById('homeAddReviewForm');
+if(form) form.style.display='none';
+setHomeReviewRating(0);
+document.getElementById('homeReviewText').value='';
+renderHomeReviews();
+}catch(e){
+alert('Error al publicar reseña: '+e.message);
+}
+};
+
+async function renderHomeReviews(){
+const list=document.getElementById('homeReviewsList');
+if(!list) return;
+try{
+const qReviews=query(collection(db,'reviews'),orderBy('timestamp','desc'));
+const snap=await getDocs(qReviews);
+const reviews=snap.docs.map(d=>d.data()).slice(0,6);
+if(!reviews.length){
+list.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:30px;">Aún no hay reseñas. Sé el primero en dejar una.</div>';
+return;
+}
+list.innerHTML=reviews.map(r=>{
+const stars=Array(5).fill(0).map((_,i)=>i<r.rating?'<i class="fas fa-star"></i>':'<i class="far fa-star"></i>').join('');
+return `
+<div class="home-review-card">
+<div class="review-top">
+<div class="review-avatar">${r.userPhoto?`<img src="${r.userPhoto}">`:'<i class="fas fa-user"></i>'}</div>
+<div class="reviewer-info">
+<h4>${r.userName||'Usuario'}</h4>
+<span>${r.userId?`ID: ${r.userId}`:'ID: ---'} · ${r.productName||'Comunidad'}</span>
+</div>
+</div>
+<div class="review-stars">${stars}</div>
+<p>${r.text}</p>
+</div>
+`;
+}).join('');
+document.getElementById('homeReviewsCount').textContent=reviews.length;
+}catch(e){
+console.error('Error cargando reseñas home:',e);
+list.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:30px;">Error cargando reseñas.</div>';
+}
+}
+
 function renderCatalogo(lista=productos){
 const c=document.getElementById("catalogo");
 const topVipSection=document.getElementById("topVipSection");
@@ -4760,10 +5430,11 @@ grid.innerHTML=countries.map(c=>`
 }
 
 // RECARGA FUNCTIONS
-window.selectMethod=function(method){
+window.selectMethod=function(evt,method){
 recargaData.method=method;
 document.querySelectorAll('.method-card').forEach(c=>c.classList.remove('selected'));
-event.currentTarget.classList.add('selected');
+const card = evt?.currentTarget || evt?.target;
+if(card) card.classList.add('selected');
 setTimeout(()=>goToStep(2),200);
 };
 
@@ -4780,11 +5451,12 @@ document.querySelector(`[data-code="${code}"]`).classList.add('selected');
 document.getElementById('btnStep2').disabled=false;
 };
 
-window.selectAmount=function(amount){
+window.selectAmount=function(evt,amount){
 recargaData.amount=amount;
 document.getElementById('customAmountInput').value='';
 document.querySelectorAll('.amount-preset').forEach(b=>b.classList.remove('selected'));
-event.target.classList.add('selected');
+const button = evt?.currentTarget || evt?.target;
+if(button) button.classList.add('selected');
 };
 
 window.handleCustomAmount=function(input){
@@ -5023,6 +5695,20 @@ document.getElementById('modalKey').style.display='flex';
 window.copiarKey=async function(){
 await navigator.clipboard.writeText(document.getElementById('keyGenerada').innerText);
 alert("Llave copiada");
+};
+
+window.downloadKeyFile=function(){
+const key=document.getElementById('keyGenerada').innerText;
+if(!key) return;
+const blob=new Blob([key],{type:'text/plain'});
+const url=URL.createObjectURL(blob);
+const link=document.createElement('a');
+link.href=url;
+link.download='clave-xOrochiModz.txt';
+document.body.appendChild(link);
+link.click();
+link.remove();
+URL.revokeObjectURL(url);
 };
 
 window.cerrarKey=()=>{
@@ -5281,6 +5967,14 @@ renderCatalogo();
 };
 
 window.showTopVip=function(){
+const home=document.getElementById('homeSection');
+if(home) home.style.display='none';
+const header=document.querySelector('.header');
+const filters=document.querySelector('.filter-tabs');
+const catalog=document.getElementById('catalogo');
+if(header) header.style.display='block';
+if(filters) filters.style.display='flex';
+if(catalog) catalog.style.display='grid';
 currentFilter='topvip';
 document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
 document.querySelector('.vip-tab').classList.add('active');
@@ -5289,6 +5983,14 @@ updateTopVip();
 };
 
 window.backToCatalog=function(){
+const home=document.getElementById('homeSection');
+if(home) home.style.display='none';
+const header=document.querySelector('.header');
+const filters=document.querySelector('.filter-tabs');
+const catalog=document.getElementById('catalogo');
+if(header) header.style.display='block';
+if(filters) filters.style.display='flex';
+if(catalog) catalog.style.display='grid';
 currentFilter='all';
 document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
 document.querySelectorAll('.filter-btn')[0].classList.add('active');
