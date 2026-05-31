@@ -1,0 +1,5329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>xOrochiModz - Premium Market</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+--bg-primary:#050505;
+--bg-secondary:#0a0a0a;
+--bg-tertiary:#111;
+--text-primary:#fff;
+--text-secondary:#888;
+--text-muted:#666;
+--accent:#00ff88;
+--accent-dark:#00d26a;
+--border:rgba(255,255,255,.08);
+--card-bg:#111;
+--shadow:rgba(0,0,0,.45);
+--vip-gold:#ffd700;
+--vip-orange:#ff9500;
+--danger:#ff4d6d;
+--info:#3b82f6;
+--review-bg:#0d1117;
+}
+
+[data-theme="light"]{
+--bg-primary:#f5f5f5;
+--bg-secondary:#fff;
+--bg-tertiary:#f0f0f0;
+--text-primary:#111;
+--text-secondary:#555;
+--text-muted:#888;
+--accent:#00d26a;
+--accent-dark:#00b359;
+--border:rgba(0,0,0,.1);
+--card-bg:#fff;
+--shadow:rgba(0,0,0,.1);
+--review-bg:#f8f9fa;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+background:var(--bg-primary);
+color:var(--text-primary);
+overflow-x:hidden;
+min-height:100vh;
+transition:background .3s,color .3s;
+}
+
+/* WELCOME MODAL */
+.welcome-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.95);
+backdrop-filter:blur(20px);
+z-index:99999;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+animation:fadeIn .5s ease;
+}
+
+.welcome-content{
+width:100%;
+max-width:500px;
+background:linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+border-radius:32px;
+padding:50px 40px;
+border:1px solid var(--border);
+position:relative;
+overflow:hidden;
+text-align:center;
+box-shadow:0 25px 100px rgba(0,255,136,.15), 0 0 0 1px rgba(0,255,136,.1);
+}
+
+.welcome-content::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:4px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark),var(--accent));
+}
+
+.welcome-glow{
+position:absolute;
+width:300px;
+height:300px;
+background:radial-gradient(circle,rgba(0,255,136,.2) 0%,transparent 70%);
+border-radius:50%;
+top:-100px;
+left:50%;
+transform:translateX(-50%);
+filter:blur(40px);
+}
+
+.welcome-icon{
+width:100px;
+height:100px;
+border-radius:50%;
+background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 30px;
+font-size:48px;
+color:#000;
+position:relative;
+box-shadow:0 10px 40px rgba(0,255,136,.4);
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.05);}
+}
+
+.welcome-content h1{
+font-size:36px;
+font-weight:900;
+margin-bottom:15px;
+background:linear-gradient(45deg,var(--text-primary),var(--accent));
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.welcome-content p{
+color:var(--text-secondary);
+font-size:16px;
+line-height:1.6;
+margin-bottom:30px;
+}
+
+.welcome-features{
+display:flex;
+flex-direction:column;
+gap:12px;
+margin-bottom:30px;
+text-align:left;
+}
+
+.welcome-feature{
+display:flex;
+align-items:center;
+gap:15px;
+padding:15px 20px;
+background:var(--bg-primary);
+border-radius:16px;
+border:1px solid var(--border);
+}
+
+.welcome-feature i{
+color:var(--accent);
+font-size:20px;
+}
+
+.welcome-feature span{
+color:var(--text-primary);
+font-size:14px;
+font-weight:600;
+}
+
+.welcome-btn{
+width:100%;
+padding:20px;
+border:none;
+border-radius:20px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+color:#000;
+font-size:18px;
+font-weight:800;
+cursor:pointer;
+transition:transform .2s;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+.welcome-btn:hover{
+transform:translateY(-2px);
+}
+
+/* AUTH SCREENS */
+.auth-container{
+position:fixed;
+inset:0;
+background:var(--bg-primary);
+z-index:10000;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+overflow-y:auto;
+}
+
+.auth-box{
+width:100%;
+max-width:420px;
+background:var(--bg-secondary);
+border-radius:32px;
+padding:40px 30px;
+border:1px solid var(--border);
+box-shadow:0 25px 80px rgba(0,0,0,.6);
+position:relative;
+overflow:hidden;
+}
+
+.auth-box::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:4px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+}
+
+.auth-logo{
+text-align:center;
+margin-bottom:30px;
+}
+
+.auth-logo i{
+font-size:48px;
+color:var(--accent);
+margin-bottom:15px;
+display:block;
+}
+
+.auth-logo h1{
+font-size:32px;
+font-weight:900;
+background:linear-gradient(45deg,var(--text-primary),var(--accent));
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.auth-logo p{
+color:var(--text-secondary);
+margin-top:8px;
+font-size:14px;
+}
+
+.auth-tabs{
+display:flex;
+gap:10px;
+margin-bottom:30px;
+background:var(--bg-tertiary);
+padding:6px;
+border-radius:16px;
+}
+
+.auth-tab{
+flex:1;
+padding:14px;
+border:none;
+border-radius:12px;
+background:transparent;
+color:var(--text-secondary);
+font-weight:600;
+font-size:15px;
+cursor:pointer;
+transition:all .3s;
+}
+
+.auth-tab.active{
+background:var(--accent);
+color:#000;
+box-shadow:0 4px 15px rgba(0,255,136,.3);
+}
+
+.auth-form{
+display:none;
+animation:fadeIn .4s ease;
+}
+
+.auth-form.active{
+display:block;
+}
+
+.input-group{
+margin-bottom:20px;
+position:relative;
+}
+
+.input-group i{
+position:absolute;
+left:18px;
+top:50%;
+transform:translateY(-50%);
+color:var(--accent);
+font-size:18px;
+}
+
+.input-group input, .input-group select{
+width:100%;
+padding:16px 16px 16px 50px;
+border:none;
+border-radius:16px;
+background:var(--bg-tertiary);
+color:var(--text-primary);
+font-size:15px;
+border:1px solid var(--border);
+transition:all .2s;
+}
+
+.input-group input:focus, .input-group select:focus{
+border-color:var(--accent);
+outline:none;
+}
+
+.input-group input::placeholder{
+color:var(--text-muted);
+}
+
+.auth-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:16px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+color:#000;
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+margin-bottom:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+transition:transform .2s;
+}
+
+.auth-btn:hover{
+transform:translateY(-2px);
+}
+
+.auth-btn:disabled{
+opacity:.6;
+cursor:not-allowed;
+transform:none;
+}
+
+.auth-switch{
+text-align:center;
+color:var(--text-secondary);
+font-size:14px;
+}
+
+.auth-switch a{
+color:var(--accent);
+text-decoration:none;
+font-weight:600;
+cursor:pointer;
+}
+
+/* PROFILE PHOTO UPLOAD */
+.photo-upload{
+width:120px;
+height:120px;
+border-radius:50%;
+background:var(--bg-tertiary);
+margin:0 auto 20px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+cursor:pointer;
+border:3px solid var(--border);
+overflow:hidden;
+}
+
+.photo-upload img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.photo-upload i{
+font-size:40px;
+color:var(--text-muted);
+}
+
+.photo-upload .overlay{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.7);
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+transition:opacity .3s;
+}
+
+.photo-upload:hover .overlay{
+opacity:1;
+}
+
+.photo-upload .overlay i{
+font-size:24px;
+color:#fff;
+}
+
+/* BACKGROUND EFFECT */
+.bg-effect{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:-1;
+overflow:hidden;
+}
+
+.bg-gradient{
+position:absolute;
+width:600px;
+height:600px;
+background:radial-gradient(circle,rgba(0,255,136,.15) 0%,transparent 70%);
+border-radius:50%;
+top:-200px;
+right:-200px;
+animation:float 20s ease-in-out infinite;
+}
+
+.bg-gradient-2{
+position:absolute;
+width:400px;
+height:400px;
+background:radial-gradient(circle,rgba(109,28,255,.1) 0%,transparent 70%);
+border-radius:50%;
+bottom:-100px;
+left:-100px;
+animation:float 15s ease-in-out infinite reverse;
+}
+
+.bg-grid{
+position:absolute;
+width:100%;
+height:100%;
+background-image:
+linear-gradient(rgba(0,255,136,.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,255,136,.03) 1px,transparent 1px);
+background-size:50px 50px;
+opacity:.5;
+}
+
+@keyframes float{
+0%,100%{transform:translate(0,0) scale(1);}
+50%{transform:translate(30px,30px) scale(1.1);}
+}
+
+button,input,select{
+outline:none;
+border:none;
+font-family:inherit;
+}
+
+button{
+transition:all .2s ease;
+cursor:pointer;
+}
+
+button:active{
+transform:scale(.97);
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+/* TOP BAR */
+.top-bar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:68px;
+background:rgba(10,10,10,.98);
+backdrop-filter:blur(10px);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+z-index:999;
+border-bottom:1px solid var(--border);
+transition:background .3s;
+}
+
+.logo-small{
+font-size:22px;
+font-weight:900;
+background:linear-gradient(45deg,var(--text-primary),var(--accent),var(--accent-dark));
+-webkit-background-clip:text;
+color:transparent;
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.top-icons{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.top-icons button{
+width:46px;
+height:46px;
+border:none;
+border-radius:50%;
+background:var(--bg-tertiary);
+color:var(--text-primary);
+font-size:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid var(--border);
+}
+
+.top-icons button:hover{
+background:var(--accent);
+color:#000;
+}
+
+/* MENU */
+.menu-box{
+position:fixed;
+top:78px;
+right:15px;
+width:280px;
+background:var(--bg-secondary);
+padding:15px;
+border-radius:22px;
+display:none;
+z-index:999;
+border:1px solid var(--border);
+box-shadow:0 10px 40px var(--shadow);
+}
+
+.menu-box button{
+width:100%;
+padding:13px;
+border:none;
+border-radius:16px;
+font-weight:600;
+margin-top:10px;
+color:var(--text-primary);
+font-size:14px;
+background:var(--bg-tertiary);
+display:flex;
+align-items:center;
+gap:10px;
+border:1px solid var(--border);
+}
+
+.menu-box button:hover{
+background:var(--accent);
+color:#000;
+}
+
+.menu-box button:first-child{
+margin-top:0;
+}
+
+.menu-box button.logout{
+background:linear-gradient(90deg,#ff4d6d,#ff0080);
+color:#fff;
+border:none;
+}
+
+/* FLOATING MENU */
+.floating-menu{
+position:fixed;
+bottom:90px;
+right:18px;
+background:var(--bg-secondary);
+border:1px solid var(--border);
+border-radius:20px;
+padding:10px;
+z-index:998;
+box-shadow:0 10px 40px rgba(0,0,0,.4);
+display:none;
+flex-direction:column;
+gap:5px;
+min-width:160px;
+}
+
+.floating-menu button{
+display:flex;
+align-items:center;
+gap:12px;
+padding:14px;
+background:transparent;
+border:none;
+color:var(--text-primary);
+width:100%;
+border-radius:12px;
+cursor:pointer;
+font-size:14px;
+font-weight:600;
+}
+
+.floating-menu button:hover{
+background:var(--bg-tertiary);
+}
+
+.floating-menu button i{
+color:var(--accent);
+font-size:18px;
+width:20px;
+text-align:center;
+}
+
+/* HEADER */
+.header{
+text-align:center;
+padding:115px 20px 35px;
+position:relative;
+}
+
+.shop-title{
+font-size:46px;
+font-weight:900;
+background:linear-gradient(45deg,var(--text-primary),var(--accent),var(--accent-dark));
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.subtitle{
+margin-top:8px;
+font-size:12px;
+letter-spacing:5px;
+color:var(--text-secondary);
+}
+
+/* SEARCH */
+.search-box{
+max-width:560px;
+margin:30px auto 0;
+position:relative;
+}
+
+.search-box i{
+position:absolute;
+left:18px;
+top:50%;
+transform:translateY(-50%);
+color:var(--accent);
+}
+
+.search-input{
+width:100%;
+padding:17px 18px 17px 50px;
+border:none;
+border-radius:18px;
+background:var(--bg-secondary);
+color:var(--text-primary);
+font-size:15px;
+border:1px solid var(--border);
+}
+
+.search-input:focus{
+border-color:var(--accent);
+}
+
+/* FILTER TABS */
+.filter-tabs{
+display:flex;
+gap:10px;
+justify-content:center;
+margin:30px auto;
+max-width:800px;
+padding:0 20px;
+flex-wrap:wrap;
+}
+
+.filter-btn{
+padding:12px 24px;
+border-radius:50px;
+background:var(--bg-secondary);
+color:var(--text-secondary);
+font-size:14px;
+font-weight:600;
+border:1px solid var(--border);
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.filter-btn.active{
+background:var(--accent);
+color:#000;
+border-color:var(--accent);
+}
+
+.filter-btn.vip-tab{
+background:linear-gradient(135deg,#ffd700,#ff9500);
+color:#000;
+border:none;
+}
+
+.filter-btn.vip-tab.active{
+box-shadow:0 4px 20px rgba(255,215,0,.4);
+}
+
+/* PRODUCT GRID - MEJORADO */
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+gap:25px;
+padding-bottom:110px;
+}
+
+.product-card{
+background:var(--card-bg);
+border-radius:28px;
+overflow:hidden;
+border:1px solid var(--border);
+transition:all .4s cubic-bezier(0.4,0,0.2,1);
+position:relative;
+display:flex;
+flex-direction:column;
+}
+
+.product-card:hover{
+transform:translateY(-8px);
+border-color:rgba(0,255,136,.3);
+box-shadow:0 20px 40px rgba(0,255,136,.15);
+}
+
+.vip-badge{
+position:absolute;
+top:15px;
+right:15px;
+background:linear-gradient(135deg,#ffd700,#ff9500);
+color:#000;
+padding:8px 16px;
+border-radius:50px;
+font-size:12px;
+font-weight:800;
+display:flex;
+align-items:center;
+gap:6px;
+z-index:10;
+box-shadow:0 4px 20px rgba(255,215,0,.4);
+}
+
+.product-img-container{
+position:relative;
+width:100%;
+height:200px;
+overflow:hidden;
+}
+
+.product-img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:transform .5s ease;
+}
+
+.product-card:hover .product-img{
+transform:scale(1.1);
+}
+
+.product-info{
+padding:24px;
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+.product-info h3{
+font-size:22px;
+margin-bottom:10px;
+font-weight:700;
+color:var(--text-primary);
+}
+
+.product-info p{
+font-size:14px;
+color:var(--text-secondary);
+line-height:1.6;
+margin-bottom:15px;
+flex:1;
+}
+
+.product-meta{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.price-sale{
+font-size:26px;
+font-weight:800;
+color:var(--accent);
+}
+
+.stock-info{
+font-size:13px;
+color:var(--text-muted);
+display:flex;
+align-items:center;
+gap:5px;
+}
+
+.stock-info.in-stock{
+color:var(--accent);
+}
+
+.stock-info.low-stock{
+color:#fbbf24;
+}
+
+.catalog-info{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:var(--bg-tertiary);
+padding:12px 16px;
+border-radius:14px;
+margin-bottom:15px;
+font-size:13px;
+color:var(--text-secondary);
+}
+
+.catalog-info span{
+color:var(--accent);
+font-weight:700;
+}
+
+.product-actions{
+display:flex;
+gap:10px;
+}
+
+.buy-btn{
+flex:1;
+padding:16px;
+border:none;
+border-radius:16px;
+font-weight:700;
+color:#000;
+font-size:15px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+box-shadow:0 4px 20px rgba(0,255,136,.3);
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+}
+
+.review-btn{
+width:50px;
+height:50px;
+border:none;
+border-radius:16px;
+background:var(--bg-tertiary);
+border:1px solid var(--border);
+color:var(--text-secondary);
+font-size:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.review-btn:hover{
+background:var(--accent);
+color:#000;
+border-color:var(--accent);
+}
+
+/* REVIEWS MODAL */
+.reviews-modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.95);
+z-index:9999;
+overflow-y:auto;
+animation:fadeIn .3s ease;
+}
+
+.reviews-content{
+min-height:100vh;
+padding:20px;
+max-width:800px;
+margin:0 auto;
+}
+
+.reviews-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:30px;
+padding-top:20px;
+}
+
+.reviews-header h2{
+font-size:28px;
+font-weight:800;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.reviews-header h2 i{
+color:var(--accent);
+}
+
+.rating-summary{
+background:var(--card-bg);
+border-radius:24px;
+padding:30px;
+border:1px solid var(--border);
+margin-bottom:30px;
+display:flex;
+align-items:center;
+gap:40px;
+}
+
+.rating-big{
+text-align:center;
+}
+
+.rating-big .number{
+font-size:64px;
+font-weight:900;
+color:var(--accent);
+line-height:1;
+}
+
+.rating-big .stars{
+color:var(--vip-gold);
+font-size:24px;
+margin-top:10px;
+}
+
+.rating-big .total{
+color:var(--text-muted);
+font-size:14px;
+margin-top:5px;
+}
+
+.rating-bars{
+flex:1;
+}
+
+.rating-bar{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:10px;
+}
+
+.rating-bar span{
+width:30px;
+font-size:14px;
+color:var(--text-secondary);
+}
+
+.rating-bar .bar{
+flex:1;
+height:8px;
+background:var(--bg-tertiary);
+border-radius:4px;
+overflow:hidden;
+}
+
+.rating-bar .fill{
+height:100%;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+border-radius:4px;
+transition:width .5s ease;
+}
+
+.review-card{
+background:var(--card-bg);
+border-radius:20px;
+padding:24px;
+border:1px solid var(--border);
+margin-bottom:20px;
+animation:slideUp .4s ease;
+}
+
+.review-header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:15px;
+}
+
+.reviewer-avatar{
+width:50px;
+height:50px;
+border-radius:50%;
+background:var(--bg-tertiary);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+color:var(--text-secondary);
+border:2px solid var(--border);
+overflow:hidden;
+}
+
+.reviewer-avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.reviewer-info{
+flex:1;
+}
+
+.reviewer-name{
+font-weight:700;
+color:var(--text-primary);
+margin-bottom:3px;
+}
+
+.reviewer-badge{
+display:inline-flex;
+align-items:center;
+gap:4px;
+padding:4px 10px;
+background:rgba(0,255,136,.1);
+border-radius:20px;
+font-size:11px;
+color:var(--accent);
+font-weight:600;
+}
+
+.review-date{
+font-size:12px;
+color:var(--text-muted);
+}
+
+.review-stars{
+color:var(--vip-gold);
+margin-bottom:10px;
+font-size:16px;
+}
+
+.review-text{
+color:var(--text-secondary);
+font-size:15px;
+line-height:1.7;
+}
+
+.review-images{
+display:flex;
+gap:10px;
+margin-top:15px;
+flex-wrap:wrap;
+}
+
+.review-images img{
+width:80px;
+height:80px;
+border-radius:12px;
+object-fit:cover;
+cursor:pointer;
+border:2px solid var(--border);
+transition:all .2s;
+}
+
+.review-images img:hover{
+border-color:var(--accent);
+transform:scale(1.05);
+}
+
+.add-review-btn{
+width:100%;
+padding:18px;
+background:var(--accent);
+border:none;
+border-radius:20px;
+color:#000;
+font-weight:800;
+font-size:16px;
+margin-bottom:30px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+/* ADD REVIEW FORM */
+.add-review-form{
+background:var(--card-bg);
+border-radius:24px;
+padding:30px;
+border:1px solid var(--border);
+margin-bottom:30px;
+display:none;
+}
+
+.add-review-form.active{
+display:block;
+animation:slideUp .4s ease;
+}
+
+.add-review-form h3{
+margin-bottom:20px;
+font-size:20px;
+}
+
+.star-rating-input{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+font-size:32px;
+color:var(--text-muted);
+cursor:pointer;
+}
+
+.star-rating-input i:hover,
+.star-rating-input i.active{
+color:var(--vip-gold);
+}
+
+.review-textarea{
+width:100%;
+min-height:120px;
+padding:16px;
+background:var(--bg-tertiary);
+border:1px solid var(--border);
+border-radius:16px;
+color:var(--text-primary);
+font-size:15px;
+resize:vertical;
+margin-bottom:15px;
+}
+
+.review-textarea::placeholder{
+color:var(--text-muted);
+}
+
+.review-image-upload{
+border:2px dashed var(--border);
+border-radius:16px;
+padding:30px;
+text-align:center;
+cursor:pointer;
+margin-bottom:20px;
+transition:all .2s;
+}
+
+.review-image-upload:hover{
+border-color:var(--accent);
+background:rgba(0,255,136,.02);
+}
+
+.review-image-upload i{
+font-size:32px;
+color:var(--text-muted);
+margin-bottom:10px;
+}
+
+.review-image-upload p{
+color:var(--text-secondary);
+font-size:14px;
+}
+
+.review-images-preview{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+.review-image-preview{
+position:relative;
+width:80px;
+height:80px;
+border-radius:12px;
+overflow:hidden;
+border:2px solid var(--border);
+}
+
+.review-image-preview img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.review-image-preview .remove{
+position:absolute;
+top:5px;
+right:5px;
+width:24px;
+height:24px;
+background:rgba(255,77,109,.9);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff;
+font-size:12px;
+cursor:pointer;
+}
+
+.form-actions{
+display:flex;
+gap:12px;
+}
+
+/* MY REVIEWS PANEL */
+.my-reviews-panel{
+display:none;
+position:fixed;
+inset:0;
+background:var(--bg-primary);
+z-index:9999;
+overflow-y:auto;
+}
+
+.my-reviews-content{
+min-height:100vh;
+padding:20px;
+max-width:800px;
+margin:0 auto;
+}
+
+/* TOP VIP SECTION - MEJORADO */
+.top-vip-section{
+display:none;
+padding:20px;
+max-width:1200px;
+margin:0 auto;
+}
+
+.top-vip-section.active{
+display:block;
+}
+
+.top-vip-header{
+text-align:center;
+margin-bottom:50px;
+padding-top:20px;
+}
+
+.top-vip-header h2{
+font-size:42px;
+font-weight:900;
+background:linear-gradient(135deg,#ffd700,#ff9500);
+-webkit-background-clip:text;
+color:transparent;
+margin-bottom:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:15px;
+}
+
+.top-vip-header p{
+color:var(--text-secondary);
+font-size:16px;
+}
+
+/* TOP VIP GRID - 5 USUARIOS */
+.top-vip-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:25px;
+margin-bottom:40px;
+}
+
+.vip-card{
+background:var(--card-bg);
+border-radius:28px;
+padding:30px 20px;
+text-align:center;
+border:1px solid var(--border);
+position:relative;
+transition:all .4s ease;
+}
+
+.vip-card:hover{
+transform:translateY(-10px);
+}
+
+.vip-card.rank-1{
+border-color:#ffd700;
+background:linear-gradient(180deg,rgba(255,215,0,.15),var(--card-bg));
+box-shadow:0 20px 60px rgba(255,215,0,.2);
+grid-column:span 2;
+}
+
+.vip-card.rank-2{
+border-color:#c0c0c0;
+background:linear-gradient(180deg,rgba(192,192,192,.1),var(--card-bg));
+}
+
+.vip-card.rank-3{
+border-color:#cd7f32;
+background:linear-gradient(180deg,rgba(205,127,50,.1),var(--card-bg));
+}
+
+.vip-rank{
+position:absolute;
+top:-15px;
+left:50%;
+transform:translateX(-50%);
+width:50px;
+height:50px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+font-weight:900;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.vip-card.rank-1 .vip-rank{
+background:linear-gradient(135deg,#ffd700,#ff9500);
+color:#000;
+width:70px;
+height:70px;
+font-size:32px;
+top:-25px;
+}
+
+.vip-card.rank-2 .vip-rank{
+background:linear-gradient(135deg,#e0e0e0,#a0a0a0);
+color:#000;
+}
+
+.vip-card.rank-3 .vip-rank{
+background:linear-gradient(135deg,#cd7f32,#8b4513);
+color:#fff;
+}
+
+.vip-card.rank-4 .vip-rank,
+.vip-card.rank-5 .vip-rank{
+background:var(--bg-tertiary);
+color:var(--text-secondary);
+border:2px solid var(--border);
+}
+
+.vip-avatar{
+width:100px;
+height:100px;
+border-radius:50%;
+background:var(--bg-tertiary);
+margin:30px auto 20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+color:var(--text-secondary);
+border:4px solid var(--border);
+overflow:hidden;
+position:relative;
+}
+
+.vip-card.rank-1 .vip-avatar{
+width:140px;
+height:140px;
+border-color:#ffd700;
+box-shadow:0 0 40px rgba(255,215,0,.3);
+margin-top:40px;
+}
+
+.vip-avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.vip-crown{
+position:absolute;
+top:-10px;
+right:-10px;
+font-size:24px;
+color:#ffd700;
+filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));
+}
+
+.vip-name{
+font-size:20px;
+font-weight:800;
+margin-bottom:8px;
+color:var(--text-primary);
+}
+
+.vip-card.rank-1 .vip-name{
+font-size:28px;
+}
+
+.vip-amount{
+font-size:28px;
+font-weight:900;
+color:var(--accent);
+margin-bottom:5px;
+}
+
+.vip-card.rank-1 .vip-amount{
+font-size:36px;
+background:linear-gradient(135deg,#ffd700,#ff9500);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.vip-label{
+font-size:12px;
+color:var(--text-muted);
+text-transform:uppercase;
+letter-spacing:2px;
+}
+
+.vip-stats{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:20px;
+padding-top:20px;
+border-top:1px solid var(--border);
+}
+
+.vip-stat{
+text-align:center;
+}
+
+.vip-stat-value{
+font-size:20px;
+font-weight:800;
+color:var(--text-primary);
+}
+
+.vip-stat-label{
+font-size:11px;
+color:var(--text-muted);
+text-transform:uppercase;
+letter-spacing:1px;
+margin-top:3px;
+}
+
+/* MODALS */
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.95);
+z-index:9999;
+overflow-y:auto;
+animation:fadeIn .2s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+
+.modal-content{
+min-height:100vh;
+padding:20px;
+position:relative;
+background:var(--bg-primary);
+}
+
+/* STEPPER HEADER */
+.stepper-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:24px;
+padding-top:10px;
+}
+
+.stepper-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.back-btn{
+width:44px;
+height:44px;
+border-radius:50%;
+background:var(--bg-tertiary);
+color:var(--text-primary);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:16px;
+border:1px solid var(--border);
+}
+
+.back-btn:hover{
+background:var(--accent);
+color:#000;
+}
+
+.step-info h2{
+font-size:26px;
+font-weight:800;
+color:var(--text-primary);
+}
+
+.step-counter{
+color:var(--accent);
+font-size:13px;
+font-weight:600;
+letter-spacing:1px;
+margin-bottom:4px;
+}
+
+.close-btn{
+width:44px;
+height:44px;
+border-radius:50%;
+background:var(--bg-tertiary);
+color:var(--text-primary);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+border:1px solid var(--border);
+}
+
+.close-btn:hover{
+background:#ff4d6d;
+color:#fff;
+}
+
+.step-title{
+font-size:15px;
+color:var(--text-secondary);
+margin-top:8px;
+}
+
+/* STEP PANELS */
+.step-panel{
+display:none;
+animation:slideUp .3s ease;
+}
+
+.step-panel.active{
+display:block;
+}
+
+@keyframes slideUp{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* METHOD CARDS */
+.method-cards{
+display:flex;
+flex-direction:column;
+gap:16px;
+margin-top:24px;
+}
+
+.method-card{
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:24px;
+padding:20px;
+display:flex;
+align-items:center;
+gap:16px;
+cursor:pointer;
+transition:all .2s;
+position:relative;
+overflow:hidden;
+}
+
+.method-card:hover{
+border-color:var(--accent);
+transform:translateX(4px);
+}
+
+.method-card.selected{
+border-color:var(--accent);
+background:linear-gradient(145deg,rgba(0,255,136,.05),var(--card-bg));
+}
+
+.method-icon{
+width:60px;
+height:60px;
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+flex-shrink:0;
+}
+
+.method-card:first-child .method-icon{
+background:linear-gradient(135deg,#1a3a5c,#2d5a87);
+color:#60a5fa;
+}
+
+.method-card:last-child .method-icon{
+background:linear-gradient(135deg,#3d2914,#5c4420);
+color:#fbbf24;
+}
+
+.method-info h3{
+font-size:20px;
+font-weight:700;
+margin-bottom:4px;
+color:var(--text-primary);
+}
+
+.method-info p{
+font-size:13px;
+color:var(--text-secondary);
+}
+
+.method-arrow{
+margin-left:auto;
+color:var(--text-muted);
+font-size:20px;
+}
+
+.country-flags{
+display:flex;
+gap:6px;
+margin-top:8px;
+flex-wrap:wrap;
+}
+
+.country-flags span{
+font-size:18px;
+}
+
+/* COUNTRY GRID */
+.country-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:24px;
+}
+
+.country-card{
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:20px;
+padding:16px;
+cursor:pointer;
+transition:all .2s;
+}
+
+.country-card:hover{
+border-color:var(--accent);
+transform:translateY(-2px);
+}
+
+.country-card.selected{
+border-color:var(--accent);
+background:rgba(0,255,136,.05);
+}
+
+.country-flag{
+font-size:32px;
+margin-bottom:10px;
+}
+
+.country-name{
+font-size:16px;
+font-weight:700;
+margin-bottom:4px;
+color:var(--text-primary);
+}
+
+.country-methods{
+font-size:12px;
+color:var(--text-muted);
+}
+
+.continue-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:20px;
+background:var(--accent);
+color:#000;
+font-size:18px;
+font-weight:800;
+margin-top:24px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+.continue-btn:disabled{
+background:var(--bg-tertiary);
+color:var(--text-muted);
+cursor:not-allowed;
+}
+
+/* AMOUNT SECTION */
+.amount-section{
+margin-top:24px;
+}
+
+.selected-country-display{
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:16px;
+padding:14px 18px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:24px;
+}
+
+.selected-country-display .left{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.selected-country-display .flag{
+font-size:28px;
+}
+
+.selected-country-display .name{
+font-weight:600;
+color:var(--text-primary);
+}
+
+.change-btn{
+color:var(--accent);
+font-size:14px;
+font-weight:600;
+background:none;
+}
+
+.amount-label{
+font-size:15px;
+color:var(--text-secondary);
+margin-bottom:12px;
+}
+
+.amount-presets{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.amount-preset{
+padding:16px 24px;
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:16px;
+font-size:18px;
+font-weight:700;
+color:var(--text-primary);
+cursor:pointer;
+min-width:80px;
+text-align:center;
+}
+
+.amount-preset:hover{
+border-color:var(--accent);
+}
+
+.amount-preset.selected{
+background:var(--accent);
+color:#000;
+border-color:var(--accent);
+}
+
+.custom-amount{
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:16px;
+padding:16px;
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:20px;
+}
+
+.custom-amount i{
+color:var(--accent);
+font-size:20px;
+}
+
+.custom-amount input{
+flex:1;
+background:transparent;
+color:var(--text-primary);
+font-size:18px;
+font-weight:600;
+}
+
+.custom-amount span{
+color:var(--text-muted);
+font-size:14px;
+}
+
+/* INSTRUCTIONS */
+.instruction-card{
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:24px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.instruction-header{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:16px;
+}
+
+.instruction-header .flag{
+font-size:32px;
+}
+
+.instruction-header .info h3{
+font-size:18px;
+font-weight:700;
+color:var(--text-primary);
+}
+
+.instruction-header .info p{
+font-size:13px;
+color:var(--text-secondary);
+}
+
+.amount-display{
+text-align:right;
+}
+
+.amount-display .label{
+font-size:12px;
+color:var(--text-secondary);
+}
+
+.amount-display .value{
+font-size:28px;
+font-weight:800;
+color:var(--accent);
+}
+
+.amount-display .converted{
+font-size:14px;
+color:var(--text-muted);
+margin-top:4px;
+}
+
+.divider{
+height:1px;
+background:var(--border);
+margin:16px 0;
+}
+
+.wallet-credit{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.wallet-credit span{
+color:var(--text-secondary);
+}
+
+.wallet-credit strong{
+font-size:24px;
+color:var(--accent);
+}
+
+/* RULES BOX */
+.rules-box{
+background:rgba(234,179,8,.1);
+border:1px solid rgba(234,179,8,.4);
+border-radius:16px;
+padding:16px;
+margin-bottom:20px;
+}
+
+.rules-box-header{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:12px;
+}
+
+.rules-box-header i{
+color:#eab308;
+font-size:20px;
+}
+
+.rules-box-header h4{
+color:#eab308;
+font-size:16px;
+font-weight:700;
+}
+
+.rules-box ul{
+list-style:none;
+}
+
+.rules-box li{
+font-size:13px;
+color:#eab308;
+line-height:1.8;
+padding-left:20px;
+position:relative;
+}
+
+.rules-box li:before{
+content:"•";
+position:absolute;
+left:8px;
+color:#eab308;
+}
+
+/* PAYMENT DETAILS */
+.payment-details{
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.payment-details h4{
+font-size:14px;
+color:var(--text-secondary);
+margin-bottom:16px;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.payment-row{
+display:flex;
+align-items:center;
+padding:12px 0;
+border-bottom:1px solid var(--border);
+}
+
+.payment-row:last-child{
+border-bottom:none;
+}
+
+.payment-row i{
+width:30px;
+color:var(--accent);
+font-size:16px;
+}
+
+.payment-row .label{
+width:100px;
+font-size:13px;
+color:var(--text-secondary);
+}
+
+.payment-row .value{
+flex:1;
+font-size:15px;
+font-weight:600;
+color:var(--text-primary);
+font-family:'Courier New',monospace;
+}
+
+.payment-row .value.amount{
+color:var(--accent);
+font-size:18px;
+}
+
+.copy-btn-small{
+padding:10px 16px;
+background:rgba(0,255,136,.1);
+border:1px solid var(--accent);
+border-radius:12px;
+color:var(--accent);
+font-size:13px;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:6px;
+margin-left:12px;
+}
+
+.rate-info{
+background:rgba(59,130,246,.1);
+border:1px solid rgba(59,130,246,.3);
+border-radius:16px;
+padding:16px;
+margin-bottom:20px;
+}
+
+.rate-info p{
+font-size:13px;
+color:#60a5fa;
+line-height:1.6;
+}
+
+.upload-btn-large{
+width:100%;
+padding:18px;
+background:var(--accent);
+border:none;
+border-radius:20px;
+color:#000;
+font-size:16px;
+font-weight:800;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+/* UPLOAD */
+.upload-area{
+border:2px dashed var(--border);
+border-radius:24px;
+padding:40px 20px;
+text-align:center;
+margin-top:24px;
+transition:all .2s;
+background:var(--card-bg);
+}
+
+.upload-area:hover{
+border-color:var(--accent);
+background:rgba(0,255,136,.02);
+}
+
+.upload-area i{
+font-size:48px;
+color:var(--text-muted);
+margin-bottom:16px;
+}
+
+.upload-area h3{
+font-size:18px;
+margin-bottom:8px;
+color:var(--text-primary);
+}
+
+.upload-area p{
+font-size:13px;
+color:var(--text-muted);
+}
+
+.upload-area.has-file{
+border-color:var(--accent);
+background:rgba(0,255,136,.05);
+}
+
+.upload-area.has-file i{
+color:var(--accent);
+}
+
+.select-gallery-btn{
+width:100%;
+padding:16px;
+background:var(--bg-tertiary);
+border:1px solid var(--border);
+border-radius:16px;
+color:var(--text-primary);
+font-size:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin-top:20px;
+}
+
+.notes-section{
+margin-top:24px;
+}
+
+.notes-section label{
+display:block;
+font-size:14px;
+color:var(--text-secondary);
+margin-bottom:10px;
+}
+
+.notes-input{
+width:100%;
+padding:16px;
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:16px;
+color:var(--text-primary);
+font-size:15px;
+}
+
+.whatsapp-notice{
+background:rgba(0,255,136,.08);
+border:1px solid var(--accent);
+border-radius:16px;
+padding:16px;
+display:flex;
+gap:12px;
+align-items:flex-start;
+margin-top:20px;
+}
+
+.whatsapp-notice i{
+color:var(--accent);
+font-size:20px;
+}
+
+.whatsapp-notice p{
+font-size:13px;
+color:var(--text-secondary);
+line-height:1.6;
+}
+
+.send-proof-btn{
+width:100%;
+padding:18px;
+background:var(--accent);
+border:none;
+border-radius:20px;
+color:#000;
+font-size:16px;
+font-weight:800;
+margin-top:24px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+.send-proof-btn:disabled{
+background:var(--bg-tertiary);
+color:var(--text-muted);
+}
+
+/* DASHBOARD - SUPER MEJORADO */
+.dashboard-panel{
+display:none;
+position:fixed;
+inset:0;
+background:var(--bg-primary);
+z-index:9999;
+overflow-y:auto;
+}
+
+.dashboard-content{
+min-height:100vh;
+padding:20px;
+max-width:800px;
+margin:0 auto;
+}
+
+.dashboard-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:30px;
+padding-top:10px;
+}
+
+.dashboard-title{
+font-size:28px;
+font-weight:800;
+color:var(--text-primary);
+}
+
+/* PROFILE HERO */
+.profile-hero{
+background:linear-gradient(135deg,var(--bg-secondary),var(--bg-tertiary));
+border-radius:28px;
+padding:30px;
+text-align:center;
+border:1px solid var(--border);
+margin-bottom:24px;
+position:relative;
+overflow:hidden;
+}
+
+.profile-hero::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:4px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+}
+
+.profile-photo-large{
+width:120px;
+height:120px;
+border-radius:50%;
+background:var(--bg-tertiary);
+margin:0 auto 20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:50px;
+color:var(--text-secondary);
+border:4px solid var(--accent);
+overflow:hidden;
+position:relative;
+}
+
+.profile-photo-large img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.profile-photo-large .edit-overlay{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.7);
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+transition:opacity .3s;
+cursor:pointer;
+}
+
+.profile-photo-large:hover .edit-overlay{
+opacity:1;
+}
+
+.profile-photo-large .edit-overlay i{
+font-size:24px;
+color:#fff;
+}
+
+.profile-hero h2{
+font-size:26px;
+font-weight:800;
+color:var(--text-primary);
+margin-bottom:8px;
+}
+
+.profile-hero p{
+color:var(--text-secondary);
+font-size:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+}
+
+.profile-hero .user-id-badge{
+display:inline-flex;
+align-items:center;
+gap:8px;
+background:var(--bg-tertiary);
+padding:8px 16px;
+border-radius:50px;
+margin-top:12px;
+font-size:13px;
+color:var(--accent);
+font-family:'Courier New',monospace;
+}
+
+/* STATS GRID */
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-bottom:24px;
+}
+
+.stat-box{
+background:var(--card-bg);
+padding:24px;
+border-radius:20px;
+border:1px solid var(--border);
+text-align:center;
+}
+
+.stat-box h3{
+font-size:32px;
+font-weight:800;
+color:var(--accent);
+margin-bottom:4px;
+}
+
+.stat-box p{
+font-size:13px;
+color:var(--text-secondary);
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+/* INFO CARDS */
+.info-card{
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:20px;
+padding:20px;
+margin-bottom:16px;
+}
+
+.info-card h4{
+font-size:14px;
+color:var(--text-secondary);
+margin-bottom:12px;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.info-row{
+display:flex;
+align-items:center;
+padding:12px 0;
+border-bottom:1px solid var(--border);
+}
+
+.info-row:last-child{
+border-bottom:none;
+}
+
+.info-row i{
+width:40px;
+height:40px;
+border-radius:12px;
+background:var(--bg-tertiary);
+display:flex;
+align-items:center;
+justify-content:center;
+color:var(--accent);
+font-size:18px;
+margin-right:16px;
+}
+
+.info-row .content{
+flex:1;
+}
+
+.info-row .content .label{
+font-size:12px;
+color:var(--text-muted);
+margin-bottom:2px;
+}
+
+.info-row .content .value{
+font-size:15px;
+font-weight:600;
+color:var(--text-primary);
+}
+
+.info-row .edit-btn{
+padding:10px;
+background:transparent;
+border:1px solid var(--border);
+border-radius:10px;
+color:var(--text-secondary);
+font-size:14px;
+cursor:pointer;
+}
+
+.info-row .edit-btn:hover{
+border-color:var(--accent);
+color:var(--accent);
+}
+
+/* EDIT FORM */
+.edit-form{
+display:none;
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:20px;
+padding:24px;
+margin-bottom:16px;
+}
+
+.edit-form.active{
+display:block;
+animation:slideUp .3s ease;
+}
+
+.edit-form h4{
+margin-bottom:20px;
+color:var(--text-primary);
+}
+
+.form-group{
+margin-bottom:16px;
+}
+
+.form-group label{
+display:block;
+font-size:13px;
+color:var(--text-secondary);
+margin-bottom:8px;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.form-group input{
+width:100%;
+padding:14px;
+background:var(--bg-tertiary);
+border:1px solid var(--border);
+border-radius:12px;
+color:var(--text-primary);
+font-size:15px;
+}
+
+.form-actions{
+display:flex;
+gap:12px;
+margin-top:24px;
+}
+
+.btn-save{
+flex:1;
+padding:14px;
+background:var(--accent);
+border:none;
+border-radius:12px;
+color:#000;
+font-weight:700;
+font-size:15px;
+}
+
+.btn-cancel{
+flex:1;
+padding:14px;
+background:var(--bg-tertiary);
+border:1px solid var(--border);
+border-radius:12px;
+color:var(--text-primary);
+font-weight:600;
+font-size:15px;
+}
+
+/* TABS */
+.tabs-container{
+background:var(--bg-secondary);
+border-radius:16px;
+padding:6px;
+margin-bottom:24px;
+border:1px solid var(--border);
+}
+
+.tabs{
+display:flex;
+gap:6px;
+}
+
+.tab-btn{
+flex:1;
+padding:14px;
+border:none;
+border-radius:12px;
+background:transparent;
+color:var(--text-secondary);
+font-weight:600;
+font-size:13px;
+position:relative;
+transition:all .2s;
+}
+
+.tab-btn.active{
+background:var(--accent);
+color:#000;
+box-shadow:0 4px 15px rgba(0,255,136,.3);
+}
+
+.tab-content{
+display:none;
+animation:fadeIn .3s ease;
+}
+
+.tab-content.active{
+display:block;
+}
+
+/* TRANSFER SECTION */
+.transfer-section{
+background:var(--card-bg);
+border-radius:24px;
+padding:30px;
+border:1px solid var(--border);
+margin-bottom:24px;
+}
+
+.transfer-section h3{
+font-size:20px;
+margin-bottom:10px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.transfer-section h3 i{
+color:var(--accent);
+}
+
+.transfer-section p{
+color:var(--text-secondary);
+font-size:14px;
+margin-bottom:25px;
+}
+
+.transfer-balance{
+background:var(--bg-tertiary);
+border-radius:16px;
+padding:20px;
+text-align:center;
+margin-bottom:25px;
+}
+
+.transfer-balance .label{
+font-size:13px;
+color:var(--text-muted);
+margin-bottom:8px;
+}
+
+.transfer-balance .amount{
+font-size:42px;
+font-weight:900;
+color:var(--accent);
+}
+
+.transfer-form{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.transfer-input-group{
+position:relative;
+}
+
+.transfer-input-group label{
+display:block;
+font-size:13px;
+color:var(--text-secondary);
+margin-bottom:8px;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.transfer-input-group input{
+width:100%;
+padding:16px;
+background:var(--bg-tertiary);
+border:1px solid var(--border);
+border-radius:16px;
+color:var(--text-primary);
+font-size:16px;
+}
+
+.transfer-input-group i{
+position:absolute;
+right:16px;
+top:42px;
+color:var(--text-muted);
+}
+
+.transfer-btn{
+width:100%;
+padding:18px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+border:none;
+border-radius:16px;
+color:#000;
+font-size:16px;
+font-weight:800;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin-top:10px;
+}
+
+.transfer-history{
+margin-top:30px;
+}
+
+.transfer-history h4{
+font-size:16px;
+margin-bottom:15px;
+color:var(--text-secondary);
+}
+
+.transfer-item{
+background:var(--bg-tertiary);
+border-radius:16px;
+padding:16px;
+margin-bottom:12px;
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.transfer-item.sent{
+border-left:4px solid #ff4d6d;
+}
+
+.transfer-item.received{
+border-left:4px solid var(--accent);
+}
+
+.transfer-icon{
+width:45px;
+height:45px;
+border-radius:12px;
+background:var(--card-bg);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+}
+
+.transfer-item.sent .transfer-icon{
+color:#ff4d6d;
+}
+
+.transfer-item.received .transfer-icon{
+color:var(--accent);
+}
+
+.transfer-details{
+flex:1;
+}
+
+.transfer-details .type{
+font-weight:700;
+font-size:14px;
+color:var(--text-primary);
+}
+
+.transfer-details .user{
+font-size:12px;
+color:var(--text-muted);
+margin-top:2px;
+}
+
+.transfer-details .date{
+font-size:11px;
+color:var(--text-muted);
+margin-top:2px;
+}
+
+.transfer-amount{
+font-size:18px;
+font-weight:800;
+}
+
+.transfer-item.sent .transfer-amount{
+color:#ff4d6d;
+}
+
+.transfer-item.received .transfer-amount{
+color:var(--accent);
+}
+
+/* COMPRA CARDS */
+.compra-card{
+background:var(--card-bg);
+padding:24px;
+border-radius:20px;
+border:1px solid var(--border);
+margin-bottom:16px;
+}
+
+.compra-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:16px;
+}
+
+.compra-top h3{
+font-size:18px;
+color:var(--text-primary);
+}
+
+.badge{
+padding:8px 14px;
+border-radius:12px;
+font-size:12px;
+font-weight:700;
+}
+
+.badge.aprobada{
+background:rgba(0,255,136,.15);
+color:var(--accent);
+}
+
+.badge.pendiente{
+background:rgba(251,191,36,.15);
+color:#fbbf24;
+}
+
+.badge.rechazada{
+background:rgba(255,77,109,.15);
+color:#ff4d6d;
+}
+
+.key-box{
+background:var(--bg-tertiary);
+padding:16px;
+border-radius:14px;
+font-family:'Courier New',monospace;
+font-size:13px;
+color:var(--accent);
+word-break:break-all;
+margin-top:16px;
+border:1px solid var(--border);
+position:relative;
+}
+
+.garantia{
+margin-top:16px;
+padding:14px;
+border-radius:12px;
+background:var(--bg-tertiary);
+font-size:13px;
+color:var(--accent);
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.garantia.expirada{
+color:#ff4d6d;
+}
+
+.refund-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+background:linear-gradient(90deg,#ff4d6d,#ff0080);
+color:#fff;
+font-weight:700;
+margin-top:16px;
+}
+
+/* CONTACT/SOPORTE */
+.contact-hero{
+background:linear-gradient(135deg,var(--bg-secondary),var(--bg-tertiary));
+border-radius:28px;
+padding:40px 30px;
+text-align:center;
+border:1px solid var(--border);
+margin-bottom:30px;
+}
+
+.contact-hero i{
+font-size:60px;
+color:var(--accent);
+margin-bottom:20px;
+}
+
+.contact-hero h2{
+font-size:32px;
+font-weight:800;
+margin-bottom:12px;
+}
+
+.contact-hero p{
+color:var(--text-secondary);
+font-size:16px;
+}
+
+.contact-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.contact-card{
+background:var(--card-bg);
+border:1px solid var(--border);
+border-radius:24px;
+padding:30px;
+text-align:center;
+transition:all .3s;
+cursor:pointer;
+}
+
+.contact-card:hover{
+transform:translateY(-5px);
+border-color:var(--accent);
+box-shadow:0 10px 30px rgba(0,255,136,.1);
+}
+
+.contact-card i{
+font-size:40px;
+color:var(--accent);
+margin-bottom:16px;
+}
+
+.contact-card h3{
+font-size:20px;
+margin-bottom:8px;
+}
+
+.contact-card p{
+color:var(--text-secondary);
+font-size:14px;
+margin-bottom:16px;
+}
+
+.contact-btn{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:12px 24px;
+background:var(--accent);
+border-radius:50px;
+color:#000;
+font-weight:700;
+font-size:14px;
+}
+
+/* FLOATING BUTTON */
+.dashboard-btn{
+position:fixed;
+right:18px;
+bottom:18px;
+width:60px;
+height:60px;
+border-radius:50%;
+background:var(--accent);
+color:#000;
+border:none;
+font-size:22px;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:997;
+box-shadow:0 4px 20px rgba(0,255,136,.4);
+}
+
+/* FOOTER */
+.footer{
+background:var(--bg-secondary);
+border-top:1px solid var(--border);
+padding:40px 20px;
+text-align:center;
+margin-top:40px;
+}
+
+.footer-logo{
+font-size:24px;
+font-weight:900;
+background:linear-gradient(45deg,var(--text-primary),var(--accent));
+-webkit-background-clip:text;
+color:transparent;
+margin-bottom:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+.footer-tagline{
+font-size:14px;
+color:var(--text-secondary);
+margin-bottom:20px;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.footer-links{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-bottom:24px;
+flex-wrap:wrap;
+}
+
+.footer-links a{
+color:var(--text-muted);
+font-size:14px;
+transition:color .2s;
+}
+
+.footer-links a:hover{
+color:var(--accent);
+}
+
+.footer-social{
+display:flex;
+justify-content:center;
+gap:16px;
+margin-bottom:24px;
+}
+
+.footer-social a{
+width:44px;
+height:44px;
+border-radius:50%;
+background:var(--bg-tertiary);
+display:flex;
+align-items:center;
+justify-content:center;
+color:var(--text-secondary);
+font-size:18px;
+border:1px solid var(--border);
+transition:all .2s;
+}
+
+.footer-social a:hover{
+background:var(--accent);
+color:#000;
+border-color:var(--accent);
+transform:translateY(-3px);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+.shop-title{
+font-size:36px;
+}
+.country-grid{
+grid-template-columns:1fr;
+}
+.auth-box{
+padding:30px 20px;
+}
+.top-vip-grid{
+grid-template-columns:1fr;
+}
+.vip-card.rank-1{
+grid-column:span 1;
+}
+.rating-summary{
+flex-direction:column;
+gap:20px;
+}
+.container{
+grid-template-columns:1fr;
+}
+}
+
+@media(max-width:600px){
+.vip-card.rank-1 .vip-avatar{
+width:100px;
+height:100px;
+}
+.vip-card.rank-1 .vip-name{
+font-size:20px;
+}
+}
+</style>
+</head>
+<body>
+
+<!-- WELCOME MODAL -->
+<div class="welcome-modal" id="welcomeModal">
+<div class="welcome-content">
+<div class="welcome-glow"></div>
+<div class="welcome-icon">
+<i class="fas fa-terminal"></i>
+</div>
+<h1>¡Bienvenido a xOrochiModz!</h1>
+<p>El marketplace premium más seguro y confiable. Compra, vende y transfiere con total confianza.</p>
+<div class="welcome-features">
+<div class="welcome-feature">
+<i class="fas fa-shield-alt"></i>
+<span>Sistema de reseñas verificadas</span>
+</div>
+<div class="welcome-feature">
+<i class="fas fa-bolt"></i>
+<span>Entrega inmediata automática</span>
+</div>
+<div class="welcome-feature">
+<i class="fas fa-users"></i>
+<span>Mas de 350 compras verificadas</span>
+</div>
+</div>
+<button class="welcome-btn" onclick="closeWelcome()">
+COMENZAR <i class="fas fa-arrow-right"></i>
+</button>
+</div>
+</div>
+
+<!-- BACKGROUND -->
+<div class="bg-effect">
+<div class="bg-grid"></div>
+<div class="bg-gradient"></div>
+<div class="bg-gradient-2"></div>
+</div>
+
+<!-- AUTH CONTAINER -->
+<div class="auth-container" id="authContainer">
+<div class="auth-box">
+<div class="auth-logo">
+<i class="fas fa-terminal"></i>
+<h1>xOrochiModz</h1>
+<p>Premium Market</p>
+</div>
+
+<div class="auth-tabs">
+<button class="auth-tab active" onclick="switchAuthTab('login')">Iniciar Sesión</button>
+<button class="auth-tab" onclick="switchAuthTab('register')">Crear Cuenta</button>
+</div>
+
+<!-- LOGIN FORM -->
+<form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+<div class="input-group">
+<i class="fas fa-envelope"></i>
+<input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+</div>
+<div class="input-group">
+<i class="fas fa-lock"></i>
+<input type="password" id="loginPassword" placeholder="Contraseña" required>
+</div>
+<button type="submit" class="auth-btn">
+<i class="fas fa-sign-in-alt"></i> ENTRAR
+</button>
+<p style="text-align:center;margin-top:15px;color:var(--text-secondary);font-size:14px;">
+<a href="#" onclick="resetPassword()" style="color:var(--accent)">¿Olvidaste tu contraseña?</a>
+</p>
+</form>
+
+<!-- REGISTER FORM -->
+<form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+<div class="photo-upload" onclick="document.getElementById('regPhoto').click()">
+<img id="regPhotoPreview" style="display:none">
+<i class="fas fa-camera" id="regPhotoIcon"></i>
+<div class="overlay"><i class="fas fa-camera"></i></div>
+<input type="file" id="regPhoto" accept="image/*" style="display:none" onchange="previewRegPhoto(this)">
+</div>
+
+<div class="input-group">
+<i class="fas fa-user"></i>
+<input type="text" id="regName" placeholder="Nombre completo" required>
+</div>
+<div class="input-group">
+<i class="fas fa-envelope"></i>
+<input type="email" id="regEmail" placeholder="Correo electrónico" required>
+</div>
+<div class="input-group">
+<i class="fas fa-phone"></i>
+<input type="tel" id="regPhone" placeholder="Número de teléfono" required>
+</div>
+<div class="input-group">
+<i class="fas fa-lock"></i>
+<input type="password" id="regPassword" placeholder="Contraseña" required minlength="6">
+</div>
+<div class="input-group">
+<i class="fas fa-lock"></i>
+<input type="password" id="regPasswordConfirm" placeholder="Confirmar contraseña" required>
+</div>
+<button type="submit" class="auth-btn">
+<i class="fas fa-user-plus"></i> CREAR CUENTA
+</button>
+</form>
+</div>
+</div>
+
+<!-- MAIN APP (hidden until logged in) -->
+<div id="mainApp" style="display:none">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+<div class="logo-small">
+<i class="fas fa-terminal"></i> xOrochiModz
+</div>
+<div class="top-icons">
+<button onclick="toggleTheme()" title="Cambiar tema">
+<i class="fas fa-eye" id="themeIcon"></i>
+</button>
+<button onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+</div>
+
+<!-- MENU -->
+<div class="menu-box" id="menuBox">
+<button onclick="verDashboard()">
+<i class="fas fa-user"></i> Mi Perfil
+</button>
+<button onclick="abrirCompras()">
+<i class="fas fa-bag-shopping"></i> Mis Compras
+</button>
+<button onclick="abrirMisReviews()">
+<i class="fas fa-star"></i> Mis Reseñas
+</button>
+<button onclick="abrirRecarga()">
+<i class="fas fa-wallet"></i> Recargar Saldo
+</button>
+<button onclick="abrirTransferir()">
+<i class="fas fa-exchange-alt"></i> Transferir Saldo
+</button>
+<button onclick="abrirMisRecargas()">
+<i class="fas fa-clock-rotate-left"></i> Mis Recargas
+</button>
+<button onclick="abrirContacto()">
+<i class="fas fa-headset"></i> Contacto/Soporte
+</button>
+<button onclick="logout()" class="logout">
+<i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+</button>
+</div>
+
+<!-- FLOATING MENU -->
+<div class="floating-menu" id="floatingMenu">
+<button onclick="verDashboard(); toggleFloatingMenu();">
+<i class="fas fa-user"></i> Mi Perfil
+</button>
+<button onclick="mostrarLoginAdmin(); toggleFloatingMenu();">
+<i class="fas fa-shield-alt"></i> Panel Admin
+</button>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+<h1 class="shop-title">xOrochiModz</h1>
+<p class="subtitle">PREMIUM MARKET</p>
+<div class="search-box">
+<i class="fas fa-search"></i>
+<input type="text" id="buscador" class="search-input" placeholder="Buscar productos premium...">
+</div>
+</div>
+
+<!-- FILTER TABS -->
+<div class="filter-tabs">
+<button class="filter-btn active" onclick="filterProducts('all')">
+<i class="fas fa-th-large"></i> Todos
+</button>
+<button class="filter-btn" onclick="filterProducts('vip')">
+<i class="fas fa-crown"></i> VIP
+</button>
+<button class="filter-btn vip-tab" onclick="showTopVip()">
+<i class="fas fa-trophy"></i> TOP VIP
+</button>
+</div>
+
+<!-- CATALOG -->
+<div class="container" id="catalogo">
+<div class="loading">Cargando productos...</div>
+</div>
+
+<!-- TOP VIP SECTION -->
+<div class="top-vip-section" id="topVipSection">
+<div class="top-vip-header">
+<h2><i class="fas fa-crown"></i> TOP VIP</h2>
+<p>Los 5 usuarios con más compras del mes</p>
+</div>
+
+<div class="top-vip-grid" id="topVipGrid">
+<!-- Se llena dinámicamente -->
+</div>
+
+<button class="btn-cancel" onclick="backToCatalog()" style="max-width:400px;margin:0 auto;display:block;">
+VOLVER AL CATÁLOGO
+</button>
+</div>
+
+<!-- FLOATING BUTTON -->
+<button class="dashboard-btn" onclick="toggleFloatingMenu()">
+<i class="fas fa-bars"></i>
+</button>
+
+<!-- MODAL COMPRA -->
+<div class="modal product-modal" id="modalCompra" style="align-items:center;justify-content:center;display:none;">
+<div style="background:var(--bg-secondary);border-radius:32px;padding:28px;border:1px solid var(--border);max-width:440px;width:90%;">
+<h2 style="font-size:24px;margin-bottom:24px;color:var(--text-primary);" id="tituloCompra">COMPRAR</h2>
+<select id="diasSelect" class="custom-select" style="width:100%;padding:16px;margin-bottom:12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:16px;color:var(--text-primary);"></select>
+<select id="cantidadSelect" class="custom-select" style="width:100%;padding:16px;margin-bottom:12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:16px;color:var(--text-primary);">
+<option value="1">1 Unidad</option>
+<option value="2">2 Unidades</option>
+<option value="3">3 Unidades</option>
+</select>
+<div style="background:var(--card-bg);padding:16px;border-radius:16px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);">
+<span style="color:var(--text-secondary);">Saldo disponible:</span>
+<span style="color:var(--accent);font-weight:700;" id="saldoActual">$0.00 USD</span>
+</div>
+<button class="auth-btn" onclick="confirmarCompra()">COMPRAR AHORA</button>
+<button class="btn-cancel" onclick="cerrarCompra()" style="width:100%;padding:16px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:16px;color:var(--text-primary);font-weight:600;margin-top:12px;">CANCELAR</button>
+</div>
+</div>
+
+<!-- REVIEWS MODAL -->
+<div class="reviews-modal" id="reviewsModal">
+<div class="reviews-content">
+<div class="reviews-header">
+<div class="stepper-left">
+<button class="back-btn" onclick="cerrarReviews()"><i class="fas fa-arrow-left"></i></button>
+<div class="step-info">
+<h2><i class="fas fa-star"></i> Reseñas</h2>
+</div>
+</div>
+<button class="close-btn" onclick="cerrarReviews()"><i class="fas fa-times"></i></button>
+</div>
+
+<div class="rating-summary">
+<div class="rating-big">
+<div class="number" id="avgRating">4.8</div>
+<div class="stars" id="avgStars">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+</div>
+<div class="total" id="totalReviews">128 reseñas</div>
+</div>
+<div class="rating-bars" id="ratingBars">
+<!-- Se llena dinámicamente -->
+</div>
+</div>
+
+<button class="add-review-btn" id="btnAddReview" onclick="mostrarFormReview()">
+<i class="fas fa-plus"></i> Agregar Reseña
+</button>
+
+<div class="add-review-form" id="addReviewForm">
+<h3>Califica este producto</h3>
+<div class="star-rating-input" id="starRatingInput">
+<i class="fas fa-star" data-rating="1"></i>
+<i class="fas fa-star" data-rating="2"></i>
+<i class="fas fa-star" data-rating="3"></i>
+<i class="fas fa-star" data-rating="4"></i>
+<i class="fas fa-star" data-rating="5"></i>
+</div>
+<textarea class="review-textarea" id="reviewText" placeholder="Comparte tu experiencia con este producto..."></textarea>
+<div class="review-image-upload" onclick="document.getElementById('reviewImages').click()">
+<i class="fas fa-camera"></i>
+<p>Agregar fotos (opcional)</p>
+<input type="file" id="reviewImages" accept="image/*" multiple style="display:none" onchange="previewReviewImages(this)">
+</div>
+<div class="review-images-preview" id="reviewImagesPreview"></div>
+<div class="form-actions">
+<button class="btn-save" onclick="enviarReview()">Publicar Reseña</button>
+<button class="btn-cancel" onclick="ocultarFormReview()">Cancelar</button>
+</div>
+</div>
+
+<div id="reviewsList">
+<!-- Se llenan dinámicamente -->
+</div>
+</div>
+</div>
+
+<!-- MY REVIEWS PANEL -->
+<div class="my-reviews-panel" id="panelMisReviews">
+<div class="my-reviews-content">
+<div class="dashboard-header">
+<h2 class="dashboard-title">MIS RESEÑAS</h2>
+<button class="close-btn" onclick="cerrarMisReviews()"><i class="fas fa-times"></i></button>
+</div>
+<div id="misReviewsList">
+<!-- Se llena dinámicamente -->
+</div>
+</div>
+</div>
+
+<!-- MODAL RECARGA -->
+<div class="modal" id="modalRecarga">
+<div class="modal-content">
+
+<!-- STEP 1 -->
+<div class="step-panel active" id="step1">
+<div class="stepper-header">
+<div class="stepper-left">
+<div class="step-info">
+<div class="step-counter">PASO 1 / 5</div>
+<h2>Cargar Saldo</h2>
+</div>
+</div>
+<button class="close-btn" onclick="cerrarRecarga()">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<p class="step-title">Elige cómo quieres recargar</p>
+<div class="method-cards">
+<div class="method-card" onclick="selectMethod('bank')">
+<div class="method-icon"><i class="fas fa-building-columns"></i></div>
+<div class="method-info">
+<h3>Pago Bancario</h3>
+<p>Transferencias bancarias y wallets</p>
+<div class="country-flags">
+<span>🇦🇷</span><span>🇻🇪</span><span>🇵🇪</span><span>🇲🇽</span><span>🇨🇴</span><span>🇺🇸</span><span>🇩🇴</span><span>🇨🇱</span><span>🇧🇷</span><span>🇬🇹</span><span></🇳🇮></span>
+</div>
+</div>
+<i class="fas fa-chevron-right method-arrow"></i>
+</div>
+<div class="method-card" onclick="selectMethod('crypto')">
+<div class="method-icon"><i class="fab fa-bitcoin"></i></div>
+<div class="method-info">
+<h3>Cripto</h3>
+<p>Binance Pay · USDT</p>
+<div class="country-flags"><span style="font-size:24px;">₿</span></div>
+</div>
+<i class="fas fa-chevron-right method-arrow"></i>
+</div>
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step-panel" id="step2">
+<div class="stepper-header">
+<div class="stepper-left">
+<button class="back-btn" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i></button>
+<div class="step-info">
+<div class="step-counter">PASO 2 / 5</div>
+<h2>Elige tu País</h2>
+</div>
+</div>
+<button class="close-btn" onclick="cerrarRecarga()"><i class="fas fa-times"></i></button>
+</div>
+<p class="step-title">Selecciona tu país</p>
+<div class="country-grid" id="countryGrid"></div>
+<button class="continue-btn" id="btnStep2" onclick="goToStep(3)" disabled>
+Continuar <i class="fas fa-arrow-right"></i>
+</button>
+</div>
+
+<!-- STEP 3 -->
+<div class="step-panel" id="step3">
+<div class="stepper-header">
+<div class="stepper-left">
+<button class="back-btn" onclick="goToStep(2)"><i class="fas fa-arrow-left"></i></button>
+<div class="step-info">
+<div class="step-counter">PASO 3 / 5</div>
+<h2>¿Cuánto depositas?</h2>
+</div>
+</div>
+<button class="close-btn" onclick="cerrarRecarga()"><i class="fas fa-times"></i></button>
+</div>
+<div class="amount-section">
+<div class="selected-country-display">
+<div class="left">
+<span class="flag" id="selectedFlag">🇦🇷</span>
+<span class="name" id="selectedCountryName">Argentina</span>
+</div>
+<button class="change-btn" onclick="goToStep(2)">Cambiar</button>
+</div>
+<p class="amount-label">Monto a pagar (USD) - Mínimo $1</p>
+<div class="amount-presets">
+<button class="amount-preset" onclick="selectAmount(5)">$5</button>
+<button class="amount-preset" onclick="selectAmount(10)">$10</button>
+<button class="amount-preset" onclick="selectAmount(25)">$25</button>
+<button class="amount-preset" onclick="selectAmount(50)">$50</button>
+<button class="amount-preset" onclick="selectAmount(100)">$100</button>
+</div>
+<div class="custom-amount">
+<i class="fas fa-dollar-sign"></i>
+<input type="number" id="customAmountInput" placeholder="Monto personalizado (mínimo 1)" min="1" step="0.01" oninput="handleCustomAmount(this)">
+<span>USD</span>
+</div>
+<button class="continue-btn" onclick="goToStep(4)">
+Ver instrucciones <i class="fas fa-arrow-right"></i>
+</button>
+</div>
+</div>
+
+<!-- STEP 4 (ANTES ERA 5) -->
+<div class="step-panel" id="step4">
+<div class="stepper-header">
+<div class="stepper-left">
+<button class="back-btn" onclick="goToStep(3)"><i class="fas fa-arrow-left"></i></button>
+<div class="step-info">
+<div class="step-counter">PASO 4 / 5</div>
+<h2>Instrucciones</h2>
+</div>
+</div>
+<button class="close-btn" onclick="cerrarRecarga()"><i class="fas fa-times"></i></button>
+</div>
+
+<div class="instruction-card">
+<div class="instruction-header">
+<div class="flag" id="instrFlag">🇦🇷</div>
+<div class="info">
+<h3 id="instrMethod">Mercado Pago</h3>
+<p id="instrOrder">Orden #<span id="orderNumber">00000</span></p>
+</div>
+<div class="amount-display">
+<div class="label">Pagas</div>
+<div class="value" id="instrAmount">$1.00</div>
+<div class="converted" id="instrConverted">1,500 ARS</div>
+</div>
+</div>
+<div class="divider"></div>
+<div class="wallet-credit">
+<span>Acreditación wallet</span>
+<strong id="instrNet">$1.00 USD</strong>
+</div>
+</div>
+
+<div class="rules-box">
+<div class="rules-box-header">
+<i class="fas fa-exclamation-triangle"></i>
+<h4>Reglas Importantes</h4>
+</div>
+<ul>
+<li>Prohibido subir comprobantes falsos o editados</li>
+<li>El monto debe coincidir exactamente con el indicado</li>
+<li>Solo se aceptan capturas de pantalla originales</li>
+<li>Cualquier intento de fraude resultará en ban permanente</li>
+<li>El tiempo de verificación es de 5-30 minutos</li>
+</ul>
+</div>
+
+<div class="rules-box">
+<div class="rules-box-header">
+<i class="fas fa-exclamation-triangle"></i>
+<h4>Reglas #2</h4>
+</div>
+<ul>
+<li>Prohibido hacerle SPAM a cualquier admin via WhatsApp</li>
+<li>Prohibido subir el mismo comprobante mas de 1 vez (Importante)</li>
+<li>Evita infringir alguna de estas normativas</li>
+</ul>
+</div>  
+
+<div class="payment-details">
+<h4>Datos de Pago</h4>
+<div id="paymentDetailsContent"></div>
+</div>
+
+<div class="rate-info">
+<p id="rateInfoText">Tipo de cambio actualizado</p>
+</div>
+
+<button class="upload-btn-large" onclick="goToStep(5)">
+<i class="fas fa-upload"></i> Ya Pagué — Subir comprobante
+</button>
+</div>
+
+<!-- STEP 5 (ANTES ERA 6) -->
+<div class="step-panel" id="step5">
+<div class="stepper-header">
+<div class="stepper-left">
+<button class="back-btn" onclick="goToStep(4)"><i class="fas fa-arrow-left"></i></button>
+<div class="step-info">
+<div class="step-counter">PASO 5 / 5</div>
+<h2>Subir Comprobante</h2>
+</div>
+</div>
+<button class="close-btn" onclick="cerrarRecarga()"><i class="fas fa-times"></i></button>
+</div>
+<p class="step-title">Sube el screenshot de tu pago</p>
+
+<div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+<i class="fas fa-image" id="uploadIcon"></i>
+<h3 id="uploadText">Toca para seleccionar</h3>
+<p>PNG, JPG · máx 10 MB</p>
+<input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileSelect(this)">
+</div>
+
+<button class="select-gallery-btn" onclick="document.getElementById('fileInput').click()">
+<i class="fas fa-upload"></i> Seleccionar desde galería
+</button>
+
+<div class="notes-section">
+<label>Notas opcionales (referencia, confirmación...)</label>
+<input type="text" class="notes-input" id="paymentNotes" placeholder="Ej: Ref. 123456789">
+</div>
+
+<div class="whatsapp-notice">
+<i class="fab fa-whatsapp"></i>
+<p>El comprobante se envía al admin vía WhatsApp. Aprobación en minutos.</p>
+</div>
+
+<button class="send-proof-btn" id="btnSendProof" onclick="enviarComprobante()" disabled>
+<i class="fas fa-paper-plane"></i> Enviar Comprobante
+</button>
+</div>
+
+</div>
+</div>
+
+<!-- MODAL MIS RECARGAS -->
+<div class="modal" id="modalRecargas">
+<div class="modal-content">
+<div class="stepper-header">
+<div class="stepper-left">
+<div class="step-info">
+<div class="step-counter">HISTORIAL</div>
+<h2>Mis Recargas</h2>
+</div>
+</div>
+<button class="close-btn" onclick="cerrarMisRecargas()"><i class="fas fa-times"></i></button>
+</div>
+<p class="step-title">Historial de depósitos enviados</p>
+<div id="listaRecargasUser"></div>
+<button class="btn-cancel" onclick="cerrarMisRecargas()" style="margin-top:20px;width:100%;">CERRAR</button>
+</div>
+</div>
+
+<!-- MODAL KEY -->
+<div class="modal" id="modalKey" style="align-items:center;justify-content:center;display:none;">
+<div style="background:var(--bg-secondary);border-radius:32px;padding:28px;border:1px solid var(--border);max-width:440px;width:90%;">
+<h2 style="font-size:24px;margin-bottom:24px;color:var(--text-primary);">LLAVE ENTREGADA</h2>
+<div class="key-box" id="keyGenerada"></div>
+<button class="auth-btn" onclick="copiarKey()">COPIAR LLAVE</button>
+<button class="btn-cancel" onclick="cerrarKey()" style="width:100%;padding:16px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:16px;color:var(--text-primary);font-weight:600;margin-top:12px;">CERRAR</button>
+</div>
+</div>
+
+<!-- DASHBOARD - PERFIL MEJORADO -->
+<div class="dashboard-panel" id="panelDashboard">
+<div class="dashboard-content">
+<div class="dashboard-header">
+<h2 class="dashboard-title">MI PERFIL</h2>
+<button class="close-btn" onclick="cerrarDashboard()"><i class="fas fa-times"></i></button>
+</div>
+
+<!-- PROFILE HERO -->
+<div class="profile-hero">
+<div class="profile-photo-large" onclick="document.getElementById('editPhotoInput').click()">
+<img id="userPhotoLarge" style="display:none">
+<i class="fas fa-user" id="userPhotoIcon"></i>
+<div class="edit-overlay"><i class="fas fa-camera"></i></div>
+<input type="file" id="editPhotoInput" accept="image/*" style="display:none" onchange="updateProfilePhoto(this)">
+</div>
+<h2 id="profileName">Cargando...</h2>
+<p id="profileEmail">Cargando...</p>
+<div class="user-id-badge">
+<i class="fas fa-fingerprint"></i>
+<span id="profileUserId">ID: ---</span>
+</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-grid">
+<div class="stat-box">
+<h3 id="statSaldo">$0.00</h3>
+<p>Saldo</p>
+</div>
+<div class="stat-box">
+<h3 id="statCompras">0</h3>
+<p>Compras</p>
+</div>
+<div class="stat-box">
+<h3 id="statGastado">$0.00</h3>
+<p>Gastado</p>
+</div>
+<div class="stat-box">
+<h3 id="statDesde">---</h3>
+<p>Miembro</p>
+</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-container">
+<div class="tabs">
+<button class="tab-btn active" onclick="cambiarTab('info')">Información</button>
+<button class="tab-btn" onclick="cambiarTab('editar')">Editar Perfil</button>
+<button class="tab-btn" onclick="cambiarTab('seguridad')">Seguridad</button>
+</div>
+</div>
+
+<!-- TAB INFO -->
+<div id="tabInfo" class="tab-content active">
+<div class="info-card">
+<h4>Datos Personales</h4>
+<div class="info-row">
+<i class="fas fa-user"></i>
+<div class="content">
+<div class="label">Nombre</div>
+<div class="value" id="infoName">---</div>
+</div>
+</div>
+<div class="info-row">
+<i class="fas fa-envelope"></i>
+<div class="content">
+<div class="label">Correo</div>
+<div class="value" id="infoEmail">---</div>
+</div>
+</div>
+<div class="info-row">
+<i class="fas fa-phone"></i>
+<div class="content">
+<div class="label">Teléfono</div>
+<div class="value" id="infoPhone">---</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TAB EDITAR -->
+<div id="tabEditar" class="tab-content">
+<div class="edit-form active">
+<h4><i class="fas fa-edit"></i> Editar Información</h4>
+<div class="form-group">
+<label>Nombre completo</label>
+<input type="text" id="editName" placeholder="Tu nombre">
+</div>
+<div class="form-group">
+<label>Teléfono</label>
+<input type="tel" id="editPhone" placeholder="Tu número">
+</div>
+<div class="form-actions">
+<button class="btn-save" onclick="guardarPerfil()">Guardar Cambios</button>
+<button class="btn-cancel" onclick="cambiarTab('info')">Cancelar</button>
+</div>
+</div>
+</div>
+
+<!-- TAB SEGURIDAD -->
+<div id="tabSeguridad" class="tab-content">
+<div class="edit-form active">
+<h4><i class="fas fa-lock"></i> Cambiar Contraseña</h4>
+<div class="form-group">
+<label>Contraseña actual</label>
+<input type="password" id="currentPassword" placeholder="••••••••">
+</div>
+<div class="form-group">
+<label>Nueva contraseña</label>
+<input type="password" id="newPassword" placeholder="Mínimo 6 caracteres">
+</div>
+<div class="form-group">
+<label>Confirmar nueva contraseña</label>
+<input type="password" id="confirmPassword" placeholder="Repite la contraseña">
+</div>
+<div class="form-actions">
+<button class="btn-save" onclick="cambiarContrasena()">Actualizar Contraseña</button>
+<button class="btn-cancel" onclick="cambiarTab('info')">Cancelar</button>
+</div>
+</div>
+</div>
+
+<button class="btn-cancel" onclick="cerrarDashboard()" style="margin-top:20px;width:100%;">CERRAR</button>
+</div>
+</div>
+
+<!-- PANEL TRANSFERIR -->
+<div class="dashboard-panel" id="panelTransferir">
+<div class="dashboard-content">
+<div class="dashboard-header">
+<h2 class="dashboard-title">TRANSFERIR SALDO</h2>
+<button class="close-btn" onclick="cerrarTransferir()"><i class="fas fa-times"></i></button>
+</div>
+
+<div class="transfer-section">
+<h3><i class="fas fa-exchange-alt"></i> Nueva Transferencia</h3>
+<p>Envía saldo a otros usuarios de xOrochiModz instantáneamente y sin comisiones.</p>
+
+<div class="transfer-balance">
+<div class="label">Tu saldo disponible</div>
+<div class="amount" id="transferBalance">$0.00</div>
+</div>
+
+<div class="transfer-form">
+<div class="transfer-input-group">
+<label>ID de usuario o correo</label>
+<input type="text" id="transferTo" placeholder="Ej: 123456 o usuario@email.com">
+<i class="fas fa-search"></i>
+</div>
+<div class="transfer-input-group">
+<label>Monto a transferir (USD)</label>
+<input type="number" id="transferAmount" placeholder="0.00" min="1" step="0.01">
+</div>
+<div class="transfer-input-group">
+<label>Mensaje (opcional)</label>
+<input type="text" id="transferMessage" placeholder="Ej: Pago por servicio">
+</div>
+<button class="transfer-btn" onclick="realizarTransferencia()">
+<i class="fas fa-paper-plane"></i> TRANSFERIR AHORA
+</button>
+</div>
+</div>
+
+<div class="transfer-history">
+<h4><i class="fas fa-history"></i> Historial de Transferencias</h4>
+<div id="transferHistoryList">
+<!-- Se llena dinámicamente -->
+</div>
+</div>
+
+<button class="btn-cancel" onclick="cerrarTransferir()" style="width:100%;">CERRAR</button>
+</div>
+</div>
+
+<!-- CONTACTO/SOPORTE PANEL -->
+<div class="dashboard-panel" id="panelContacto">
+<div class="dashboard-content">
+<div class="dashboard-header">
+<h2 class="dashboard-title">CONTACTO & SOPORTE</h2>
+<button class="close-btn" onclick="cerrarContacto()"><i class="fas fa-times"></i></button>
+</div>
+
+<div class="contact-hero">
+<i class="fas fa-headset"></i>
+<h2>¿Necesitas ayuda?</h2>
+<p>Estamos aquí para ayudarte 24/7</p>
+</div>
+
+<div class="contact-grid">
+<div class="contact-card" onclick="window.open('https://wa.me/18493986892','_blank')">
+<i class="fab fa-whatsapp"></i>
+<h3>WhatsApp</h3>
+<p>Respuesta inmediata</p>
+<div class="contact-btn">Abrir Chat <i class="fas fa-arrow-right"></i></div>
+</div>
+
+<div class="contact-card" onclick="window.open('https://t.me/xorochimodz','_blank')">
+<i class="fab fa-telegram"></i>
+<h3>Telegram</h3>
+<p>Canal oficial</p>
+<div class="contact-btn">Unirse <i class="fas fa-arrow-right"></i></div>
+</div>
+
+<div class="contact-card" onclick="window.location.href='mailto:gdehidania@gmail.com'">
+<i class="fas fa-envelope"></i>
+<h3>Email</h3>
+<p>soporte@xorochimodz.com</p>
+<div class="contact-btn">Enviar <i class="fas fa-arrow-right"></i></div>
+</div>
+</div>
+
+<div class="info-card">
+<h4><i class="fas fa-clock"></i> Horarios de Atención</h4>
+<p style="color:var(--text-secondary);line-height:1.8;margin-top:10px;">
+<strong style="color:var(--text-primary);">Lunes a Viernes:</strong> 9:00 AM - 10:00 PM<br>
+<strong style="color:var(--text-primary);">Sábados y Domingos:</strong> 10:00 AM - 8:00 PM<br>
+<strong style="color:var(--accent);">Tiempo de respuesta promedio:</strong> 15 minutos
+</p>
+</div>
+
+<div class="info-card">
+<h4><i class="fas fa-question-circle"></i> Preguntas Frecuentes</h4>
+<div style="margin-top:15px;">
+<details style="margin-bottom:12px;">
+<summary style="cursor:pointer;color:var(--text-primary);font-weight:600;padding:12px;background:var(--bg-tertiary);border-radius:10px;">¿Cuánto tarda la entrega?</summary>
+<p style="color:var(--text-secondary);padding:12px;">Las entregas son inmediatas automáticas después de la compra.</p>
+</details>
+<details style="margin-bottom:12px;">
+<summary style="cursor:pointer;color:var(--text-primary);font-weight:600;padding:12px;background:var(--bg-tertiary);border-radius:10px;">¿Cómo recargo saldo?</summary>
+<p style="color:var(--text-secondary);padding:12px;">Ve a "Recargar Saldo", elige tu país y método de pago, sigue las instrucciones y sube el comprobante.</p>
+</details>
+<details>
+<summary style="cursor:pointer;color:var(--text-primary);font-weight:600;padding:12px;background:var(--bg-tertiary);border-radius:10px;">¿Tienen garantía?</summary>
+<p style="color:var(--text-secondary);padding:12px;">Sí, todos los productos tienen garantía de 2 días.</p>
+</details>
+</div>
+</div>
+
+<button class="btn-cancel" onclick="cerrarContacto()" style="margin-top:20px;width:100%;">VOLVER</button>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-logo">
+<i class="fas fa-terminal"></i> xOrochiModz
+</div>
+<div class="footer-tagline">Premium Market</div>
+<div class="footer-links">
+<a href="#" onclick="abrirRecarga();return false;">Recargar Saldo</a>
+<a href="#" onclick="verDashboard();return false;">Mi Perfil</a>
+<a href="#" onclick="abrirContacto();return false;">Soporte</a>
+</div>
+<div class="footer-social">
+<a href="#" target="_blank"><i class="fab fa-telegram"></i></a>
+<a href="https://wa.me/18493986892" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+</div>
+<div class="footer-bottom">
+© 2026 xOrochiModz. Todos los derechos reservados.<br>
+Sistema Premium Automatizado
+</div>
+</footer>
+
+</div><!-- END MAIN APP -->
+
+<!-- FIREBASE & APP LOGIC -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { 
+getAuth, 
+createUserWithEmailAndPassword, 
+signInWithEmailAndPassword, 
+onAuthStateChanged, 
+updateProfile, 
+updatePassword,
+reauthenticateWithCredential,
+EmailAuthProvider,
+sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import {
+getFirestore,
+collection,
+doc,
+addDoc,
+updateDoc,
+getDoc,
+setDoc,
+onSnapshot,
+query,
+orderBy,
+where,
+getDocs,
+increment,
+writeBatch
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyAStEGcHnYZDpDtXWIhGDpGSUE1evtbhSg",
+authDomain:"xorochimodz.firebaseapp.com",
+projectId:"xorochimodz",
+storageBucket:"xorochimodz.firebasestorage.app",
+messagingSenderId:"1045786433620",
+appId:"1:1045786433620:web:1b594c8f3bf6226d6035c1"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+// THEME
+let currentTheme=localStorage.getItem('theme')||'dark';
+document.documentElement.setAttribute('data-theme',currentTheme);
+updateThemeIcon();
+
+window.toggleTheme=function(){
+currentTheme=currentTheme==='dark'?'light':'dark';
+document.documentElement.setAttribute('data-theme',currentTheme);
+localStorage.setItem('theme',currentTheme);
+updateThemeIcon();
+};
+
+function updateThemeIcon(){
+const icon=document.getElementById('themeIcon');
+if(icon) icon.className=currentTheme==='dark'?'fas fa-eye':'fas fa-eye-slash';
+}
+
+// WELCOME MODAL
+window.closeWelcome=function(){
+document.getElementById('welcomeModal').style.display='none';
+localStorage.setItem('welcomeShown','true');
+};
+
+// Mostrar welcome solo la primera vez
+if(localStorage.getItem('welcomeShown')){
+document.getElementById('welcomeModal').style.display='none';
+}
+
+// AUTH STATE
+let currentUser=null;
+let userData={};
+let productos=[];
+let productoActual=null;
+let recargaData={method:null,country:null,amount:null,file:null};
+let currentReviewProduct=null;
+let reviewRating=0;
+let reviewImages=[];
+
+// FUNCION PARA GENERAR ID NUMERICO UNICO (SIMPLE Y ROBUSTA)
+function generarIdNumericoUnico() {
+    // Usar timestamp (últimos 4 dígitos del tiempo) + random de 2 dígitos
+    const timestamp = Date.now().toString().slice(-4); // Ej: 8472
+    const random = Math.floor(10 + Math.random() * 90).toString(); // Ej: 91
+    return timestamp + random; // Ej: 847291 (6 dígitos)
+}
+
+// COUNTRIES DATA
+const countriesData={
+AR:{
+name:"Argentina",
+flag:"🇦🇷",
+methods:"Mercado Pago",
+rate:1500,
+symbol:"ARS",
+payment:{
+banco:"Mercado Pago",
+nombre:"César Correa",
+alias:"cescorrea1",
+cuenta:"0000177506175000981872",
+}
+},
+VE:{
+name:"Venezuela",
+flag:"🇻🇪",
+methods:"Pago Movil",
+rate:71450,
+symbol:"VES",
+payment:{
+banco:"Mercantil",
+telefono:"04128975265",
+cedula:"V-31303430",
+}
+},
+PE:{
+name:"Perú",
+flag:"🇵🇪",
+methods:"Yape / Plin ",
+rate:3.6,
+symbol:"PEN",
+payment:{
+banco:"Yape / Plin",
+nombre:"Freddy Agüero",
+alias:"",
+cuenta:"900863465",
+}
+},
+MX:{
+name:"México",
+flag:"🇲🇽",
+methods:"OXXO / ALBO",
+rate:20,
+symbol:"MXN",
+payment:{
+banco:"OXXO / ALBO",
+nombre:"Radi López",
+alias:"",
+oxxo: "5101250686919389",
+albo:"721180100042683432",
+}
+},
+CO:{
+name:"Colombia",
+flag:"🇨🇴",
+methods:"Nequi",
+rate:12000,
+symbol:"COP",
+payment:{
+banco:"Nequi",
+nombre:"Xio Gue",
+alias:"",
+cuenta:"3016043120",
+}
+},
+US:{
+name:"Estados Unidos",
+flag:"🇺🇸",
+methods:"Zelle",
+rate:1,
+symbol:"USD",
+payment:{
+banco:"Zelle",
+nombre:"Michael Suazo",
+alias:"",
+numero:"(804) 630-7411",
+}
+},
+DO:{
+name:"República Dominicana",
+flag:"🇩🇴",
+methods:"Banreservas / Popular / BHD / Qik",
+rate:65,
+symbol:"DOP",
+payment:{
+banco:"Múltiples bancos",
+nombre:"Ezequiel Moisés Gómez Ramos",
+cedula:"402-2287617-5",
+banreservas:"9601546622",
+popular:"837147719",
+bhd:"34478720012",
+qik:"1002173707",
+}
+},
+CL:{
+name:"Chile",
+flag:"🇨🇱",
+methods:"Transferencia",
+rate:23000,
+symbol:"CLP",
+payment:{
+banco:"Cuenta RUT/Transferencia",
+nombre:"Xavier Fuenzalida",
+rut:"23710151-0",
+cuenta:"23710151-0",
+}
+},
+BRL:{
+name:"Brasil",
+flag:"🇧🇷",
+methods:"Transferencia",
+rate:51,
+symbol:"BRL",
+payment:{
+banco:"NU BANK",
+nombre:"Melania Gonzáles",
+cpf:"713.299.442-59",
+llave: "16111d38-e319-4d0a-bc9e-62853af31bea",
+}
+},
+GTM:{
+name:"Guatemala",
+flag:"🇬🇹",
+methods:"Transferencia",
+rate:763,
+symbol:"GTQ",
+payment:{
+banco:"BANRURAL",
+nombre:"Elder Virula Ramirez",
+cuenta:"4431164091",
+}
+}, 
+NIO:{
+name:"Nicaragua",
+flag:"🇳🇮",
+methods:"Transferencia",
+rate:37,
+symbol:"NIO",
+payment:{
+banco:"BAC CREDOMATIC",
+nombre:"MARNUTH GABRIEL SANCHEZ GUTIERREZ",
+cuenta:"371674409",
+iban:"NI37BAMC00000000000371674409",
+} 
+},   
+WORLD:{
+name:"Otros Países",
+flag:"🌍",
+methods:"WhatsApp",
+rate:1,
+symbol:"USD",
+payment:{
+banco:"Contactar",
+nombre:"Soporte",
+alias:"",
+cuenta:"+18493986892",
+total:"Consultar"
+},
+whatsapp:"https://wa.me/18493986892"
+},
+CRYPTO:{
+name:"Binance",
+flag:"₿",
+methods:"Binance Pay / USDT",
+rate:1,
+symbol:"USDT",
+payment:{
+banco:"Binance",
+nombre:"USDT TRC20",
+alias:"",
+cuenta:"0xB03F9A6D5335fF34C5C5dC7891de10dae66e7c08",
+id:"1240705583",
+total:"Consultar"
+}
+}
+};
+
+// AUTH FUNCTIONS
+window.switchAuthTab=function(tab){
+document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('active'));
+event.target.classList.add('active');
+document.getElementById(tab==='login'?'loginForm':'registerForm').classList.add('active');
+};
+
+window.previewRegPhoto=function(input){
+const file=input.files[0];
+if(file){
+const reader=new FileReader();
+reader.onload=e=>{
+document.getElementById('regPhotoPreview').src=e.target.result;
+document.getElementById('regPhotoPreview').style.display='block';
+document.getElementById('regPhotoIcon').style.display='none';
+};
+reader.onerror=()=>{
+alert('Error al cargar la imagen');
+};
+reader.readAsDataURL(file);
+}
+};
+
+window.handleRegister=async function(e){
+e.preventDefault();
+
+const submitBtn = e.target.querySelector('button[type="submit"]');
+submitBtn.disabled = true;
+submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> CREANDO...';
+
+try {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regPasswordConfirm').value;
+    const photoInput = document.getElementById('regPhoto');
+    
+    if(password !== confirm) {
+        throw new Error('Las contraseñas no coinciden');
+    }
+    
+    // 1. Crear usuario en Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    
+    // 2. Generar ID numérico simple (timestamp + random)
+    const userIdNumerico = generarIdNumericoUnico();
+    
+    // 3. Actualizar displayName en Auth
+    await updateProfile(user, { displayName: name });
+    
+    // 4. Preparar datos
+    const userDataToSave = {
+        uid: user.uid,
+        userId: userIdNumerico,
+        name: name,
+        email: email,
+        phone: phone,
+        photoURL: null,
+        saldo: 0,
+        createdAt: new Date().toISOString(),
+        role: 'user'
+    };
+    
+    // 5. Procesar foto si existe
+    if(photoInput.files[0]) {
+        try {
+            const photoBase64 = await compressImage(photoInput.files[0], 0.5, 400);
+            userDataToSave.photoURL = photoBase64;
+        } catch(e) {
+            console.log('Error foto:', e);
+        }
+    }
+    
+    // 6. Guardar en Firestore (usando UID como ID de documento)
+    await setDoc(doc(db, 'usuarios', user.uid), userDataToSave);
+    
+    alert('Cuenta creada exitosamente. Tu ID es: ' + userIdNumerico);
+    
+} catch(error) {
+    console.error('Error registro:', error);
+    let mensaje = 'Error: ';
+    if(error.code === 'auth/email-already-in-use') {
+        mensaje += 'Este correo ya está registrado';
+    } else if(error.code === 'auth/weak-password') {
+        mensaje += 'Contraseña débil (mín 6 caracteres)';
+    } else {
+        mensaje += error.message;
+    }
+    alert(mensaje);
+} finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> CREAR CUENTA';
+}
+};
+
+window.handleLogin=async function(e){
+e.preventDefault();
+const email=document.getElementById('loginEmail').value;
+const password=document.getElementById('loginPassword').value;
+try{
+await signInWithEmailAndPassword(auth,email,password);
+}catch(error){
+alert('Error: '+error.message);
+}
+};
+
+window.resetPassword=async function(){
+const email=prompt('Ingresa tu correo para recuperar la contraseña:');
+if(email){
+try{
+await sendPasswordResetEmail(auth,email);
+alert('Se ha enviado un correo para restablecer tu contraseña');
+}catch(e){
+alert('Error: '+e.message);
+}
+}
+};
+
+window.logout=async function(){
+await auth.signOut();
+};
+
+// PROFILE FUNCTIONS
+window.updateProfilePhoto=async function(input){
+if(!input.files[0]||!currentUser)return;
+try{
+const photoBase64=await compressImage(input.files[0],0.5,400);
+await updateDoc(doc(db,'usuarios',currentUser.uid),{photoURL:photoBase64});
+userData.photoURL=photoBase64;
+document.getElementById('userPhotoLarge').src=photoBase64;
+document.getElementById('userPhotoLarge').style.display='block';
+document.getElementById('userPhotoIcon').style.display='none';
+alert('Foto actualizada');
+}catch(e){
+alert('Error: '+e.message);
+}
+};
+
+window.guardarPerfil=async function(){
+if(!currentUser)return;
+const name=document.getElementById('editName').value;
+const phone=document.getElementById('editPhone').value;
+try{
+await updateDoc(doc(db,'usuarios',currentUser.uid),{name,phone});
+await updateProfile(currentUser,{displayName:name});
+userData.name=name;
+userData.phone=phone;
+actualizarUIPerfil();
+alert('Perfil actualizado');
+cambiarTab('info');
+}catch(e){
+alert('Error: '+e.message);
+}
+};
+
+window.cambiarContrasena=async function(){
+if(!currentUser)return;
+const current=document.getElementById('currentPassword').value;
+const newPass=document.getElementById('newPassword').value;
+const confirm=document.getElementById('confirmPassword').value;
+
+if(newPass!==confirm){
+alert('Las contraseñas no coinciden');
+return;
+}
+
+try{
+const credential=EmailAuthProvider.credential(currentUser.email,current);
+await reauthenticateWithCredential(currentUser,credential);
+await updatePassword(currentUser,newPass);
+alert('Contraseña actualizada exitosamente');
+document.getElementById('currentPassword').value='';
+document.getElementById('newPassword').value='';
+document.getElementById('confirmPassword').value='';
+cambiarTab('info');
+}catch(e){
+alert('Error: '+e.message);
+}
+};
+
+// INIT AUTH
+onAuthStateChanged(auth,async(user)=>{
+if(user){
+currentUser=user;
+document.getElementById('authContainer').style.display='none';
+document.getElementById('mainApp').style.display='block';
+await cargarDatosUsuario();
+iniciarApp();
+}else{
+document.getElementById('authContainer').style.display='flex';
+document.getElementById('mainApp').style.display='none';
+}
+});
+
+async function cargarDatosUsuario(){
+    if(!currentUser) return;
+    
+    try {
+        const userDocRef = doc(db, 'usuarios', currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if(userDoc.exists()) {
+            userData = userDoc.data();
+            
+            // IMPORTANTE: Si el usuario antiguo no tiene userId, se lo creamos ahora
+            if(!userData.userId) {
+                const nuevoId = generarIdNumericoUnico();
+                await updateDoc(userDocRef, { userId: nuevoId });
+                userData.userId = nuevoId;
+                console.log('ID asignado a usuario existente:', nuevoId);
+            }
+            
+            // Sincronizar UID si es necesario
+            if(userData.uid !== currentUser.uid) {
+                await updateDoc(userDocRef, { uid: currentUser.uid });
+                userData.uid = currentUser.uid;
+            }
+            
+            actualizarUIPerfil();
+        } else {
+            // Crear documento si no existe (caso raro)
+            const userIdNumerico = generarIdNumericoUnico();
+            userData = {
+                uid: currentUser.uid,
+                userId: userIdNumerico,
+                name: currentUser.displayName || 'Usuario',
+                email: currentUser.email,
+                phone: '',
+                photoURL: null,
+                saldo: 0,
+                createdAt: new Date().toISOString(),
+                role: 'user'
+            };
+            await setDoc(userDocRef, userData);
+            actualizarUIPerfil();
+        }
+    } catch(error) {
+        console.error('Error cargando datos:', error);
+    }
+}
+
+function actualizarUIPerfil(){
+const saldoFormateado = parseFloat(userData.saldo || 0).toFixed(2);
+const displayName = userData.name || currentUser.displayName || 'Usuario';
+const displayEmail = userData.email || currentUser.email || 'Sin correo';
+const displayUserId = userData.userId || '---';
+
+document.getElementById('profileName').textContent=displayName;
+document.getElementById('profileEmail').textContent=displayEmail;
+document.getElementById('profileUserId').textContent='ID: '+displayUserId;
+
+if(userData.photoURL){
+document.getElementById('userPhotoLarge').src=userData.photoURL;
+document.getElementById('userPhotoLarge').style.display='block';
+document.getElementById('userPhotoIcon').style.display='none';
+}else{
+document.getElementById('userPhotoLarge').style.display='none';
+document.getElementById('userPhotoIcon').style.display='flex';
+}
+
+document.getElementById('statSaldo').textContent='$'+saldoFormateado;
+document.getElementById('statDesde').textContent=userData.createdAt?new Date(userData.createdAt).toLocaleDateString():'---';
+
+document.getElementById('infoName').textContent=displayName;
+document.getElementById('infoEmail').textContent=displayEmail;
+document.getElementById('infoPhone').textContent=userData.phone||'No especificado';
+
+document.getElementById('editName').value=userData.name||'';
+document.getElementById('editPhone').value=userData.phone||'';
+
+// Actualizar saldo en transferencias y compras
+const saldoTransfer=document.getElementById('transferBalance');
+if(saldoTransfer) saldoTransfer.textContent='$'+saldoFormateado;
+document.getElementById('saldoActual').textContent='$'+saldoFormateado+' USD';
+}
+
+// APP FUNCTIONS
+function iniciarApp(){
+// Listen products
+onSnapshot(collection(db,"productos"),snap=>{
+productos=snap.docs.map(d=>({
+firebaseId:d.id,
+...d.data()
+}));
+renderCatalogo();
+},error=>{
+console.error('Error cargando productos:', error);
+document.getElementById('catalogo').innerHTML='<div class="loading">Error cargando productos</div>';
+});
+
+// Listen user data
+if(currentUser){
+onSnapshot(doc(db,"usuarios",currentUser.uid),doc=>{
+if(doc.exists()){
+userData=doc.data();
+actualizarUIPerfil();
+}
+});
+
+// Listen purchases
+if(userData.userId){
+onSnapshot(query(collection(db,"compras"),where("userId","==",userData.userId)),snap=>{
+const compras=snap.docs.map(d=>d.data());
+document.getElementById('statCompras').textContent=compras.length;
+const totalGastado = compras.reduce((a,b)=>a+(b.total||0),0);
+document.getElementById('statGastado').textContent='$'+totalGastado.toFixed(2);
+renderCompras(compras);
+updateTopVip();
+});
+
+// Listen recargas
+onSnapshot(query(collection(db,"recargas"),where("userId","==",userData.userId)),snap=>{
+const recargas=snap.docs.map(d=>d.data()).reverse();
+renderRecargasUsuario(recargas);
+});
+}
+}
+
+// Listen transferencias
+cargarTransferencias();
+
+renderCountries();
+}
+
+// REVIEWS SYSTEM
+window.abrirReviews=function(productId){
+currentReviewProduct=productos.find(p=>p.firebaseId===productId);
+if(!currentReviewProduct){
+alert('Producto no encontrado');
+return;
+}
+document.getElementById('reviewsModal').style.display='block';
+cargarReviews(productId);
+};
+
+window.cerrarReviews=function(){
+document.getElementById('reviewsModal').style.display='none';
+currentReviewProduct=null;
+reviewRating=0;
+reviewImages=[];
+};
+
+async function cargarReviews(productId){
+try{
+const q=query(collection(db,"reviews"),where("productId","==",productId),orderBy("timestamp","desc"));
+const snap=await getDocs(q);
+const reviews=snap.docs.map(d=>d.data());
+
+const total=reviews.length;
+const avg=total>0?(reviews.reduce((a,b)=>a+b.rating,0)/total).toFixed(1):0;
+document.getElementById('avgRating').textContent=avg;
+document.getElementById('totalReviews').textContent=total+' reseñas';
+
+const starsContainer=document.getElementById('avgStars');
+starsContainer.innerHTML='';
+for(let i=1;i<=5;i++){
+if(i<=Math.round(avg)){
+starsContainer.innerHTML+='<i class="fas fa-star"></i>';
+}else if(i-0.5<=avg){
+starsContainer.innerHTML+='<i class="fas fa-star-half-alt"></i>';
+}else{
+starsContainer.innerHTML+='<i class="far fa-star"></i>';
+}
+}
+
+const counts=[0,0,0,0,0];
+reviews.forEach(r=>counts[5-r.rating]++);
+const max=Math.max(...counts)||1;
+let barsHTML='';
+for(let i=5;i>=1;i--){
+const count=counts[5-i];
+const percent=(count/max)*100;
+barsHTML+=`
+<div class="rating-bar">
+<span>${i}★</span>
+<div class="bar"><div class="fill" style="width:${percent}%"></div></div>
+<span>${count}</span>
+</div>
+`;
+}
+document.getElementById('ratingBars').innerHTML=barsHTML;
+
+const listContainer=document.getElementById('reviewsList');
+if(total===0){
+listContainer.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-muted);">Sin reseñas aún. ¡Sé el primero!</div>';
+return;
+}
+
+listContainer.innerHTML=reviews.map(r=>{
+const fecha=new Date(r.timestamp).toLocaleDateString();
+const stars=Array(5).fill(0).map((_,i)=>i<r.rating?'<i class="fas fa-star"></i>':'<i class="far fa-star"></i>').join('');
+const images=r.images?r.images.map(img=>`<img src="${img}" onclick="window.open('${img}')">`).join(''):'';
+return `
+<div class="review-card">
+<div class="review-header">
+<div class="reviewer-avatar">
+${r.userPhoto?`<img src="${r.userPhoto}">`:'<i class="fas fa-user"></i>'}
+</div>
+<div class="reviewer-info">
+<div class="reviewer-name">${r.userName}</div>
+${r.verified?'<div class="reviewer-badge"><i class="fas fa-check-circle"></i> Compra verificada</div>':''}
+</div>
+<div class="review-date">${fecha}</div>
+</div>
+<div class="review-stars">${stars}</div>
+<div class="review-text">${r.text}</div>
+${images?`<div class="review-images">${images}</div>`:''}
+</div>
+`;
+}).join('');
+
+}catch(e){
+console.error('Error cargando reviews:',e);
+}
+}
+
+window.mostrarFormReview=function(){
+document.getElementById('addReviewForm').classList.add('active');
+document.getElementById('btnAddReview').style.display='none';
+
+document.querySelectorAll('#starRatingInput i').forEach((star,index)=>{
+star.onclick=function(){
+reviewRating=index+1;
+document.querySelectorAll('#starRatingInput i').forEach((s,i)=>{
+s.classList.toggle('active',i<reviewRating);
+});
+};
+});
+};
+
+window.ocultarFormReview=function(){
+document.getElementById('addReviewForm').classList.remove('active');
+document.getElementById('btnAddReview').style.display='flex';
+reviewRating=0;
+reviewImages=[];
+document.getElementById('reviewText').value='';
+document.getElementById('reviewImagesPreview').innerHTML='';
+};
+
+window.previewReviewImages=async function(input){
+const files=Array.from(input.files);
+for(const file of files){
+const base64=await compressImage(file,0.5,600);
+reviewImages.push(base64);
+}
+renderReviewImagesPreview();
+};
+
+function renderReviewImagesPreview(){
+const container=document.getElementById('reviewImagesPreview');
+container.innerHTML=reviewImages.map((img,i)=>`
+<div class="review-image-preview">
+<img src="${img}">
+<div class="remove" onclick="removeReviewImage(${i})"><i class="fas fa-times"></i></div>
+</div>
+`).join('');
+}
+
+window.removeReviewImage=function(index){
+reviewImages.splice(index,1);
+renderReviewImagesPreview();
+};
+
+window.enviarReview=async function(){
+if(!currentReviewProduct)return;
+if(reviewRating===0){
+alert('Por favor selecciona una calificación');
+return;
+}
+
+const text=document.getElementById('reviewText').value.trim();
+if(!text){
+alert('Por favor escribe una reseña');
+return;
+}
+
+try{
+await addDoc(collection(db,"reviews"),{
+productId:currentReviewProduct.firebaseId,
+userId:userData.userId,
+uid:currentUser.uid,
+userName:userData.name||currentUser.displayName||'Usuario',
+userPhoto:userData.photoURL||null,
+rating:reviewRating,
+text:text,
+images:reviewImages,
+timestamp:Date.now(),
+verified:true
+});
+
+alert('Reseña publicada exitosamente');
+ocultarFormReview();
+cargarReviews(currentReviewProduct.firebaseId);
+}catch(e){
+alert('Error: '+e.message);
+}
+};
+
+// MY REVIEWS FUNCTIONS
+window.abrirMisReviews=function(){
+document.getElementById('panelMisReviews').style.display='flex';
+cargarMisReviews();
+};
+
+window.cerrarMisReviews=function(){
+document.getElementById('panelMisReviews').style.display='none';
+};
+
+async function cargarMisReviews(){
+try{
+const container=document.getElementById('misReviewsList');
+container.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-muted);">Cargando...</div>';
+
+const q=query(collection(db,"reviews"),where("uid","==",currentUser.uid),orderBy("timestamp","desc"));
+const snap=await getDocs(q);
+const reviews=snap.docs.map(d=>d.data());
+
+if(reviews.length===0){
+container.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-muted);">No has hecho ninguna reseña todavía.</div>';
+return;
+}
+
+// Obtener nombres de productos
+const reviewsConProductos=await Promise.all(reviews.map(async(r)=>{
+const prodDoc=await getDoc(doc(db,"productos",r.productId));
+const prodName=prodDoc.exists()?prodDoc.data().nombre:'Producto eliminado';
+return{...r,productName:prodName};
+}));
+
+container.innerHTML=reviewsConProductos.map(r=>{
+const fecha=new Date(r.timestamp).toLocaleDateString();
+const stars=Array(5).fill(0).map((_,i)=>i<r.rating?'<i class="fas fa-star"></i>':'<i class="far fa-star"></i>').join('');
+const images=r.images&&r.images.length?`<div style="margin-top:10px;"><i class="fas fa-image"></i> ${r.images.length} foto(s)</div>`:'';
+return `
+<div class="compra-card">
+<div class="compra-top">
+<h3>${r.productName}</h3>
+<div class="badge aprobada">${r.rating}★</div>
+</div>
+<div style="color:var(--vip-gold);margin-bottom:8px;">${stars}</div>
+<p style="color:var(--text-secondary);font-size:14px;">${r.text}</p>
+${images}
+<p style="color:var(--text-muted);font-size:12px;margin-top:10px;"><i class="fas fa-calendar"></i> ${fecha}</p>
+</div>
+`;
+}).join('');
+
+}catch(e){
+console.error('Error cargando mis reviews:',e);
+document.getElementById('misReviewsList').innerHTML='<div style="text-align:center;padding:40px;color:var(--text-muted);">Error cargando reseñas.</div>';
+}
+};
+
+// RENDER FUNCTIONS
+function renderCatalogo(lista=productos){
+const c=document.getElementById("catalogo");
+const topVipSection=document.getElementById("topVipSection");
+
+if(currentFilter==='topvip'){
+c.style.display='none';
+topVipSection.classList.add('active');
+return;
+}else{
+c.style.display='grid';
+topVipSection.classList.remove('active');
+}
+
+let filteredProducts=lista;
+if(currentFilter==='vip'){
+filteredProducts=lista.filter(p=>p.vip===true);
+}
+
+if(!filteredProducts.length){
+c.innerHTML='<div class="loading">No hay productos disponibles</div>';
+return;
+}
+
+c.innerHTML=filteredProducts.map((p)=>{
+const menor=Math.min(...p.precios.map(x=>x.precio));
+const totalKeys=p.precios.reduce((a,b)=>a+b.keys.length,0);
+const vipBadge=p.vip?`<div class="vip-badge"><i class="fas fa-crown"></i> VIP</div>`:'';
+const stockClass=totalKeys>10?'in-stock':totalKeys>0?'low-stock':'';
+const stockText=totalKeys>10?'Disponible':totalKeys>0?'Últimas unidades':'Agotado';
+return `
+<div class="product-card">
+${vipBadge}
+<div class="product-img-container">
+<img loading="lazy" src="${p.img}" class="product-img">
+</div>
+<div class="product-info">
+<h3>${p.nombre}</h3>
+<p>${p.desc}</p>
+<div class="product-meta">
+<div class="price-sale">$${menor.toFixed(2)}</div>
+<div class="stock-info ${stockClass}"><i class="fas fa-circle"></i> ${stockText}</div>
+</div>
+<div class="catalog-info">
+<div><i class="fas fa-key"></i> ${totalKeys} Llaves</div>
+<span>Premium</span>
+</div>
+<div class="product-actions">
+<button class="buy-btn" onclick="abrirCompra('${p.firebaseId}')">
+<i class="fas fa-shopping-cart"></i> COMPRAR
+</button>
+<button class="review-btn" onclick="abrirReviews('${p.firebaseId}')" title="Ver reseñas">
+<i class="fas fa-star"></i>
+</button>
+</div>
+</div>
+</div>
+`;
+}).join("");
+}
+
+// TOP VIP
+async function updateTopVip(){
+try{
+const comprasQuery=query(collection(db,"compras"),orderBy("timestamp","desc"));
+const snap=await getDocs(comprasQuery);
+const allCompras=snap.docs.map(d=>d.data());
+
+const userTotals={};
+for(const c of allCompras){
+if(!userTotals[c.userId]){
+userTotals[c.userId]={total:0,compras:0};
+}
+userTotals[c.userId].total+=c.total;
+userTotals[c.userId].compras++;
+}
+
+const sorted=Object.entries(userTotals)
+.map(([uid,data])=>({uid,...data}))
+.sort((a,b)=>b.total-a.total)
+.slice(0,5);
+
+for(let i=0;i<sorted.length;i++){
+const userDoc=await getDoc(doc(db,'usuarios',sorted[i].uid));
+if(userDoc.exists()){
+const uData=userDoc.data();
+sorted[i].name=uData.name||'Usuario';
+sorted[i].photo=uData.photoURL;
+sorted[i].userId=uData.userId||'---';
+}else{
+sorted[i].name='Usuario';
+sorted[i].userId='---';
+}
+}
+
+const container=document.getElementById('topVipGrid');
+const rankNumbers=[1,2,3,4,5];
+const icons=['crown','medal','award','star','user'];
+
+container.innerHTML=sorted.map((user,index)=>{
+const rankClass=index===0?'rank-1':index===1?'rank-2':index===2?'rank-3':index===3?'rank-4':'rank-5';
+const avatarContent=user.photo?
+`<img src="${user.photo}">`:
+`<i class="fas fa-${icons[index]}"></i>`;
+const crown=index===0?'<i class="fas fa-crown vip-crown"></i>':'';
+
+return `
+<div class="vip-card ${rankClass}">
+<div class="vip-rank">${rankNumbers[index]}</div>
+<div class="vip-avatar">
+${avatarContent}
+${crown}
+</div>
+<div class="vip-name">${user.name}</div>
+<div class="vip-amount">$${user.total.toFixed(2)}</div>
+<div class="vip-label">TOP ${rankNumbers[index]}</div>
+<div class="vip-stats">
+<div class="vip-stat">
+<div class="vip-stat-value">${user.compras}</div>
+<div class="vip-stat-label">Compras</div>
+</div>
+<div class="vip-stat">
+<div class="vip-stat-value">${user.userId}</div>
+<div class="vip-stat-label">ID</div>
+</div>
+</div>
+</div>
+`;
+}).join('');
+
+}catch(e){
+console.log('Error TOP VIP:',e);
+}
+}
+
+// COUNTRY RENDER
+function renderCountries(){
+const grid=document.getElementById("countryGrid");
+const countries=Object.entries(countriesData).map(([code,data])=>({code,...data}));
+grid.innerHTML=countries.map(c=>`
+<div class="country-card" onclick="selectCountry('${c.code}')" data-code="${c.code}">
+<div class="country-flag">${c.flag}</div>
+<div class="country-name">${c.name}</div>
+<div class="country-methods">${c.methods}</div>
+</div>
+`).join("");
+}
+
+// RECARGA FUNCTIONS
+window.selectMethod=function(method){
+recargaData.method=method;
+document.querySelectorAll('.method-card').forEach(c=>c.classList.remove('selected'));
+event.currentTarget.classList.add('selected');
+setTimeout(()=>goToStep(2),200);
+};
+
+window.selectCountry=function(code){
+recargaData.country=code;
+
+if(code==='WORLD'){
+window.open(countriesData.WORLD.whatsapp,'_blank');
+return;
+}
+
+document.querySelectorAll('.country-card').forEach(c=>c.classList.remove('selected'));
+document.querySelector(`[data-code="${code}"]`).classList.add('selected');
+document.getElementById('btnStep2').disabled=false;
+};
+
+window.selectAmount=function(amount){
+recargaData.amount=amount;
+document.getElementById('customAmountInput').value='';
+document.querySelectorAll('.amount-preset').forEach(b=>b.classList.remove('selected'));
+event.target.classList.add('selected');
+};
+
+window.handleCustomAmount=function(input){
+const val=parseFloat(input.value);
+if(val>=1){
+recargaData.amount=val;
+document.querySelectorAll('.amount-preset').forEach(b=>b.classList.remove('selected'));
+}else{
+recargaData.amount=null;
+}
+};
+
+window.goToStep=function(step){
+document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+document.getElementById(`step${step}`).classList.add('active');
+
+if(step===4 && recargaData.country && recargaData.amount){
+updateInstructions();
+}
+};
+
+function updateInstructions(){
+const country=countriesData[recargaData.country];
+const amount=recargaData.amount;
+const localAmount=Math.round(amount*country.rate);
+
+document.getElementById('selectedFlag').textContent=country.flag;
+document.getElementById('selectedCountryName').textContent=country.name;
+document.getElementById('instrFlag').textContent=country.flag;
+document.getElementById('instrMethod').textContent=country.methods.split(' / ')[0];
+document.getElementById('orderNumber').textContent=Math.floor(10000+Math.random()*90000);
+document.getElementById('instrAmount').textContent=`$${amount.toFixed(2)}`;
+document.getElementById('instrConverted').textContent=`${localAmount.toLocaleString()} ${country.symbol}`;
+document.getElementById('instrNet').textContent=`$${amount.toFixed(2)} USD`;
+
+let paymentHTML='';
+if(recargaData.country==='WORLD'){
+paymentHTML=`
+<div class="payment-row"><i class="fas fa-globe"></i><span class="label">Contacto</span><span class="value">WhatsApp</span></div>
+<div class="payment-row"><i class="fas fa-phone"></i><span class="label">Número</span><span class="value">${country.payment.cuenta}</span></div>
+`;
+}else if(recargaData.country==='CRYPTO'){
+paymentHTML=`
+<div class="payment-row"><i class="fas fa-wallet"></i><span class="label">Red</span><span class="value">TRC20</span></div>
+<div class="payment-row"><i class="fas fa-key"></i><span class="label">Clave</span><span class="value" style="font-size:12px;">${country.payment.cuenta}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.cuenta}')"><i class="fas fa-copy"></i></button></div>
+<div class="payment-row"><i class="fas fa-id-card"></i><span class="label">ID</span><span class="value">${country.payment.id}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.id}')"><i class="fas fa-copy"></i></button></div>
+`;
+}else if(recargaData.country==='DO'){
+paymentHTML=`
+<div class="payment-row"><i class="fas fa-user"></i><span class="label">Titular</span><span class="value">${country.payment.nombre}</span></div>
+<div class="payment-row"><i class="fas fa-id-card"></i><span class="label">Cédula</span><span class="value">${country.payment.cedula}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.cedula}')"><i class="fas fa-copy"></i></button></div>
+<div class="payment-row"><i class="fas fa-building-columns"></i><span class="label">Banreservas</span><span class="value">${country.payment.banreservas}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.banreservas}')"><i class="fas fa-copy"></i></button></div>
+<div class="payment-row"><i class="fas fa-building-columns"></i><span class="label">Popular</span><span class="value">${country.payment.popular}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.popular}')"><i class="fas fa-copy"></i></button></div>
+<div class="payment-row"><i class="fas fa-building-columns"></i><span class="label">BHD</span><span class="value">${country.payment.bhd}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.bhd}')"><i class="fas fa-copy"></i></button></div>
+<div class="payment-row"><i class="fas fa-wallet"></i><span class="label">Qik</span><span class="value">${country.payment.qik}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.qik}')"><i class="fas fa-copy"></i></button></div>
+`;
+}else if(recargaData.country==='CL'){
+paymentHTML=`
+<div class="payment-row"><i class="fas fa-user"></i><span class="label">Nombre</span><span class="value">${country.payment.nombre}</span></div>
+<div class="payment-row"><i class="fas fa-id-card"></i><span class="label">RUT/Cuenta</span><span class="value">${country.payment.rut}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.rut}')"><i class="fas fa-copy"></i></button></div>
+`;
+}else{
+paymentHTML=`
+<div class="payment-row"><i class="fas fa-building-columns"></i><span class="label">Banco</span><span class="value">${country.payment.banco}</span></div>
+<div class="payment-row"><i class="fas fa-user"></i><span class="label">Nombre</span><span class="value">${country.payment.nombre}</span></div>
+${country.payment.alias?`<div class="payment-row"><i class="fas fa-at"></i><span class="label">Alias</span><span class="value">${country.payment.alias}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.alias}')"><i class="fas fa-copy"></i></button></div>`:''}
+${country.payment.cuenta?`<div class="payment-row"><i class="fas fa-hashtag"></i><span class="label">Cuenta</span><span class="value">${country.payment.cuenta}</span><button class="copy-btn-small" onclick="copiarDato('${country.payment.cuenta}')"><i class="fas fa-copy"></i></button></div>`:''}
+`;
+}
+
+document.getElementById('paymentDetailsContent').innerHTML=paymentHTML;
+document.getElementById('rateInfoText').textContent=`1 USD = ${country.rate.toLocaleString()} ${country.symbol}`;
+}
+
+window.copiarDato=function(text){
+navigator.clipboard.writeText(text);
+alert('Copiado: '+text);
+};
+
+window.handleFileSelect=function(input){
+const file=input.files[0];
+if(file){
+recargaData.file=file;
+const uploadArea=document.getElementById('uploadArea');
+uploadArea.classList.add('has-file');
+document.getElementById('uploadIcon').className='fas fa-check-circle';
+document.getElementById('uploadText').textContent=file.name;
+document.getElementById('btnSendProof').disabled=false;
+}
+};
+
+window.enviarComprobante=async function(){
+if(!recargaData.file||!currentUser||!userData.userId)return;
+
+try{
+const comprobante=await compressImage(recargaData.file,0.40,700);
+const country=countriesData[recargaData.country];
+
+if(recargaData.country==='WORLD'){
+window.open(country.whatsapp,'_blank');
+cerrarRecarga();
+resetRecargaFlow();
+return;
+}
+
+await addDoc(collection(db,"recargas"),{
+userId:userData.userId,
+uid:currentUser.uid,
+monto:parseFloat(recargaData.amount.toFixed(2)),
+pais:recargaData.country,
+paisNombre:country.name,
+estado:"pendiente",
+fecha:new Date().toLocaleString(),
+timestamp:Date.now(),
+comprobante,
+notas:document.getElementById('paymentNotes').value||''
+});
+
+alert('Recarga enviada correctamente. El admin la revisará por WhatsApp.');
+cerrarRecarga();
+resetRecargaFlow();
+}catch(e){
+console.log(e);
+alert('Error enviando recarga: '+e.message);
+}
+};
+
+function resetRecargaFlow(){
+recargaData={method:null,country:null,amount:null,file:null};
+document.querySelectorAll('.method-card, .country-card, .amount-preset').forEach(el=>el.classList.remove('selected'));
+document.getElementById('customAmountInput').value='';
+document.getElementById('fileInput').value='';
+document.getElementById('paymentNotes').value='';
+document.getElementById('uploadArea').classList.remove('has-file');
+document.getElementById('uploadIcon').className='fas fa-image';
+document.getElementById('uploadText').textContent='Toca para seleccionar';
+document.getElementById('btnSendProof').disabled=true;
+document.getElementById('btnStep2').disabled=true;
+goToStep(1);
+}
+
+// IMAGE COMPRESSION
+function compressImage(file,quality=0.45,maxWidth=800){
+return new Promise((resolve,reject)=>{
+const reader=new FileReader();
+reader.onload=e=>{
+const img=new Image();
+img.onload=()=>{
+const canvas=document.createElement("canvas");
+let ratio=img.width/img.height;
+let width=maxWidth;
+let height=maxWidth/ratio;
+if(img.width<maxWidth){
+width=img.width;
+height=img.height;
+}
+canvas.width=width;
+canvas.height=height;
+const ctx=canvas.getContext("2d");
+ctx.drawImage(img,0,0,width,height);
+resolve(canvas.toDataURL("image/webp",quality));
+};
+img.onerror=reject;
+img.src=e.target.result;
+};
+reader.onerror=reject;
+reader.readAsDataURL(file);
+});
+}
+
+// PRODUCT BUY
+window.abrirCompra=function(firebaseId){
+productoActual=productos.find(p=>p.firebaseId===firebaseId);
+if(!productoActual){
+alert('Producto no encontrado');
+return;
+}
+document.getElementById('tituloCompra').innerText=productoActual.nombre;
+const saldoFormateado = parseFloat(userData.saldo || 0).toFixed(2);
+document.getElementById('saldoActual').innerText="$"+saldoFormateado+" USD";
+const diasSelect=document.getElementById('diasSelect');
+diasSelect.innerHTML=productoActual.precios.map((x,n)=>
+`<option value="${n}">${x.dias} Días - $${x.precio.toFixed(2)}</option>`
+).join('');
+document.getElementById('modalCompra').style.display='flex';
+};
+
+window.cerrarCompra=()=>{
+document.getElementById('modalCompra').style.display='none';
+};
+
+window.confirmarCompra=async function(){
+const index=parseInt(document.getElementById('diasSelect').value);
+const data=productoActual.precios[index];
+const cantidad=parseInt(document.getElementById('cantidadSelect').value);
+const total=parseFloat((data.precio*cantidad).toFixed(2));
+
+if(!data.keys || data.keys.length<cantidad){
+alert("No hay suficientes llaves");
+return;
+}
+if(parseFloat(userData.saldo||0)<total){
+alert("Saldo insuficiente. Necesitas $"+total.toFixed(2)+" USD");
+return;
+}
+
+const keys=data.keys.splice(0,cantidad);
+const keyEntregada=keys.join(" | ");
+
+const compraData={
+userId:userData.userId,
+uid:currentUser.uid,
+producto:productoActual.nombre,
+productId:productoActual.firebaseId,
+dias:data.dias,
+cantidad,
+total,
+key:keyEntregada,
+fecha:new Date().toLocaleString(),
+timestamp:Date.now()
+};
+
+const nuevoSaldo = parseFloat((userData.saldo - total).toFixed(2));
+
+await Promise.all([
+updateDoc(doc(db,"usuarios",currentUser.uid),{saldo:nuevoSaldo}),
+updateDoc(doc(db,"productos",productoActual.firebaseId),{precios:productoActual.precios}),
+addDoc(collection(db,"compras"),compraData)
+]);
+
+document.getElementById('keyGenerada').innerText=keyEntregada;
+cerrarCompra();
+document.getElementById('modalKey').style.display='flex';
+};
+
+window.copiarKey=async function(){
+await navigator.clipboard.writeText(document.getElementById('keyGenerada').innerText);
+alert("Llave copiada");
+};
+
+window.cerrarKey=()=>{
+document.getElementById('modalKey').style.display='none';
+};
+
+// TRANSFERENCIAS
+window.abrirTransferir=function(){
+document.getElementById('panelTransferir').style.display='flex';
+cargarTransferencias();
+};
+
+window.cerrarTransferir=function(){
+document.getElementById('panelTransferir').style.display='none';
+};
+
+async function cargarTransferencias(){
+if(!currentUser)return;
+const q=query(collection(db,"transferencias"),where("fromUid","==",currentUser.uid));
+const q2=query(collection(db,"transferencias"),where("toUid","==",currentUser.uid));
+const [snap1,snap2]=await Promise.all([getDocs(q),getDocs(q2)]);
+const transfers=[...snap1.docs.map(d=>({...d.data(),id:d.id,type:'sent'})),...snap2.docs.map(d=>({...d.data(),id:d.id,type:'received'}))];
+transfers.sort((a,b)=>b.timestamp-a.timestamp);
+
+const container=document.getElementById('transferHistoryList');
+if(transfers.length===0){
+container.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-muted);">Sin transferencias aún</div>';
+return;
+}
+
+container.innerHTML=transfers.map(t=>{
+const fecha=new Date(t.timestamp).toLocaleDateString();
+const isSent=t.type==='sent';
+return `
+<div class="transfer-item ${isSent?'sent':'received'}">
+<div class="transfer-icon">
+<i class="fas fa-${isSent?'paper-plane':'download'}"></i>
+</div>
+<div class="transfer-details">
+<div class="type">${isSent?'Enviado':'Recibido'}</div>
+<div class="user">${isSent?`Para: ${t.toName||t.toUserId}`:`De: ${t.fromName||t.fromUserId}`}</div>
+<div class="date">${fecha}</div>
+</div>
+<div class="transfer-amount">${isSent?'-':'+'}$${parseFloat(t.amount).toFixed(2)}</div>
+</div>
+`;
+}).join('');
+}
+
+window.realizarTransferencia=async function(){
+const toInput=document.getElementById('transferTo').value.trim();
+const amount=parseFloat(document.getElementById('transferAmount').value);
+const message=document.getElementById('transferMessage').value.trim();
+
+if(!toInput||!amount){
+alert('Completa todos los campos');
+return;
+}
+
+if(amount<1){
+alert('Mínimo $1.00 USD');
+return;
+}
+
+if(parseFloat(userData.saldo||0)<amount){
+alert('Saldo insuficiente. Tienes $'+parseFloat(userData.saldo||0).toFixed(2)+' USD');
+return;
+}
+
+try{
+let destUid, destData, destUserId;
+
+if(toInput.includes('@')){
+// Buscar por email
+const snap=await getDocs(query(collection(db,"usuarios"),where("email","==",toInput)));
+if(snap.empty){
+alert('Usuario no encontrado');
+return;
+}
+destData=snap.docs[0].data();
+destUid=snap.docs[0].id;
+destUserId=destData.userId;
+}else{
+// Buscar por userId numérico
+const snap=await getDocs(query(collection(db,"usuarios"),where("userId","==",toInput)));
+if(snap.empty){
+alert('Usuario no encontrado');
+return;
+}
+destData=snap.docs[0].data();
+destUid=snap.docs[0].id;
+destUserId=destData.userId;
+}
+
+if(destUid===currentUser.uid){
+alert('No puedes transferirte a ti mismo');
+return;
+}
+
+// Realizar transferencia
+const batch=writeBatch(db);
+
+const nuevoSaldoOrigen = parseFloat((userData.saldo - amount).toFixed(2));
+const nuevoSaldoDestino = parseFloat(((destData.saldo||0) + amount).toFixed(2));
+
+// Actualizar saldos
+batch.update(doc(db,"usuarios",currentUser.uid),{saldo:nuevoSaldoOrigen});
+batch.update(doc(db,"usuarios",destUid),{saldo:nuevoSaldoDestino});
+
+// Crear registro de transferencia
+const transferRef=doc(collection(db,"transferencias"));
+batch.set(transferRef,{
+fromUid:currentUser.uid,
+fromUserId:userData.userId,
+fromName:userData.name,
+toUid:destUid,
+toUserId:destUserId,
+toName:destData.name,
+amount:parseFloat(amount.toFixed(2)),
+message:message,
+timestamp:Date.now()
+});
+
+await batch.commit();
+
+alert(`Transferencia de $${amount.toFixed(2)} USD realizada exitosamente a ${destData.name}`);
+document.getElementById('transferTo').value='';
+document.getElementById('transferAmount').value='';
+document.getElementById('transferMessage').value='';
+cargarTransferencias();
+}catch(e){
+console.error(e);
+alert('Error: '+e.message);
+}
+};
+
+// MODALS
+window.abrirRecarga=()=>{
+resetRecargaFlow();
+document.getElementById('modalRecarga').style.display='flex';
+};
+
+window.cerrarRecarga=()=>{
+document.getElementById('modalRecarga').style.display='none';
+};
+
+window.abrirMisRecargas=()=>{
+document.getElementById('modalRecargas').style.display='flex';
+};
+
+window.cerrarMisRecargas=()=>{
+document.getElementById('modalRecargas').style.display='none';
+};
+
+window.abrirContacto=()=>{
+document.getElementById('panelContacto').style.display='flex';
+};
+
+window.cerrarContacto=()=>{
+document.getElementById('panelContacto').style.display='none';
+};
+
+function renderRecargasUsuario(lista){
+const box=document.getElementById('listaRecargasUser');
+if(!lista.length){
+box.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-muted);">No tienes recargas todavía</div>';
+return;
+}
+box.innerHTML=lista.map(r=>{
+const estado=(r.estado||"pendiente").toLowerCase();
+const estadoClass=estado==='aprobada'?'aprobada':estado==='rechazada'?'rechazada':'pendiente';
+const estadoText=estado==='aprobada'?'APROBADA':estado==='rechazada'?'RECHAZADA':'PENDIENTE';
+return `
+<div class="compra-card">
+<div class="compra-top">
+<h3>$${parseFloat(r.monto).toFixed(2)}</h3>
+<div class="badge ${estadoClass}">${estadoText}</div>
+</div>
+<p><i class="fas fa-globe"></i> ${r.paisNombre||r.pais}</p>
+<p><i class="fas fa-calendar"></i> ${r.fecha}</p>
+</div>
+`;
+}).join('');
+}
+
+// DASHBOARD
+window.verDashboard=()=>{
+document.getElementById('panelDashboard').style.display='flex';
+};
+
+window.abrirCompras=()=>{
+document.getElementById('panelDashboard').style.display='flex';
+cambiarTab('info');
+};
+
+window.cerrarDashboard=()=>{
+document.getElementById('panelDashboard').style.display='none';
+};
+
+window.cambiarTab=function(tab){
+document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+document.querySelectorAll(".tab-content").forEach(b=>b.classList.remove("active"));
+
+if(tab==='info'){
+document.querySelectorAll(".tab-btn")[0].classList.add("active");
+document.getElementById('tabInfo').classList.add("active");
+}else if(tab==='editar'){
+document.querySelectorAll(".tab-btn")[1].classList.add("active");
+document.getElementById('tabEditar').classList.add("active");
+}else if(tab==='seguridad'){
+document.querySelectorAll(".tab-btn")[2].classList.add("active");
+document.getElementById('tabSeguridad').classList.add("active");
+}
+};
+
+function renderCompras(compras){
+// Función para mostrar compras si se implementa lista específica
+}
+
+// MENU & UTILS
+window.toggleMenu=function(){
+const menu=document.getElementById('menuBox');
+menu.style.display=menu.style.display==="block"?"none":"block";
+};
+
+// FLOATING MENU
+window.toggleFloatingMenu=function(){
+const menu=document.getElementById('floatingMenu');
+menu.style.display=menu.style.display==="flex"?"none":"flex";
+};
+
+// ADMIN ACCESS
+window.mostrarLoginAdmin=function(){
+const pass=prompt('🔐 Contraseña Admin:');
+if(pass){
+const hashed=btoa(pass);
+if(hashed==='eG9yb2NoaTEyMzQ1Njc4OQ=='){
+window.location.href='admin.html';
+}else{
+alert('❌ Contraseña incorrecta');
+}
+}
+};
+
+// FILTER
+let currentFilter='all';
+window.filterProducts=function(filter){
+currentFilter=filter;
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+if(filter==='all'){
+document.querySelectorAll('.filter-btn')[0].classList.add('active');
+}else if(filter==='vip'){
+document.querySelectorAll('.filter-btn')[1].classList.add('active');
+}
+renderCatalogo();
+};
+
+window.showTopVip=function(){
+currentFilter='topvip';
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+document.querySelector('.vip-tab').classList.add('active');
+renderCatalogo();
+updateTopVip();
+};
+
+window.backToCatalog=function(){
+currentFilter='all';
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+document.querySelectorAll('.filter-btn')[0].classList.add('active');
+renderCatalogo();
+};
+
+// SEARCH
+document.getElementById('buscador')?.addEventListener("input",e=>{
+const t=e.target.value.toLowerCase();
+renderCatalogo(productos.filter(p=>
+p.nombre.toLowerCase().includes(t)||p.desc.toLowerCase().includes(t)
+));
+});
+
+// CLOSE MODALS ON CLICK OUTSIDE
+window.onclick=function(e){
+if(e.target.classList.contains('modal')){
+if(e.target.id==='modalCompra')cerrarCompra();
+if(e.target.id==='modalRecarga')cerrarRecarga();
+if(e.target.id==='modalKey')cerrarKey();
+if(e.target.id==='panelDashboard')cerrarDashboard();
+if(e.target.id==='modalRecargas')cerrarMisRecargas();
+if(e.target.id==='panelContacto')cerrarContacto();
+if(e.target.id==='reviewsModal')cerrarReviews();
+if(e.target.id==='panelTransferir')cerrarTransferir();
+if(e.target.id==='panelMisReviews')cerrarMisReviews();
+}
+if(!e.target.closest('.top-bar')&&!e.target.closest('.menu-box')&&!e.target.closest('.dashboard-btn')&&!e.target.closest('.floating-menu')){
+const menu=document.getElementById('menuBox');
+const floatingMenu=document.getElementById('floatingMenu');
+if(menu) menu.style.display='none';
+if(floatingMenu) floatingMenu.style.display='none';
+}
+};
+</script>
+
+</body>
+</html>

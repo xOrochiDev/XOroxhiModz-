@@ -1,0 +1,4138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>xOrochiModz Admin - Sistema Seguro</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+    --bg-primary: #050505;
+    --bg-secondary: #0a0a0a;
+    --bg-tertiary: #111;
+    --bg-card: #161616;
+    --text-primary: #fff;
+    --text-secondary: #a0a0a0;
+    --text-muted: #666;
+    --accent: #00ff88;
+    --accent-dark: #00d26a;
+    --accent-glow: rgba(0,255,136,0.3);
+    --border: rgba(255,255,255,.08);
+    --border-hover: rgba(0,255,136,0.3);
+    --card-bg: #161616;
+    --danger: #ff4d6d;
+    --info: #3b82f6;
+    --warning: #fbbf24;
+    --vip-gold: #ffd700;
+    --superadmin: #ff6b35;
+    --gradient-1: linear-gradient(135deg, #00ff88 0%, #00d26a 100%);
+    --gradient-2: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+    --shadow-glow: 0 0 40px rgba(0,255,136,0.15);
+}
+
+[data-theme="light"] {
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f5f5f5;
+    --bg-card: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --accent: #00b359;
+    --accent-dark: #00994d;
+    --accent-glow: rgba(0,179,89,0.2);
+    --border: rgba(0,0,0,.08);
+    --border-hover: rgba(0,179,89,0.4);
+    --card-bg: #ffffff;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+    --shadow-glow: 0 0 40px rgba(0,179,89,0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background .3s, color .3s;
+    line-height: 1.6;
+}
+
+/* Background Effect Mejorado */
+.bg-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bg-gradient {
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0,255,136,.12) 0%, transparent 60%);
+    border-radius: 50%;
+    top: -300px;
+    right: -300px;
+    animation: float 25s ease-in-out infinite;
+}
+
+.bg-gradient-2 {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,107,53,.08) 0%, transparent 60%);
+    border-radius: 50%;
+    bottom: -200px;
+    left: -200px;
+    animation: float 20s ease-in-out infinite reverse;
+}
+
+.bg-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0,255,136,.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: .6;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(30px,-30px) scale(1.05); }
+    66% { transform: translate(-20px,20px) scale(0.95); }
+}
+
+/* Login Overlay Mejorado */
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5,5,5,.95);
+    backdrop-filter: blur(30px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 440px;
+    background: var(--bg-secondary);
+    border-radius: 28px;
+    padding: 48px 40px;
+    border: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,255,136,.1);
+}
+
+.login-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-1);
+}
+
+.login-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 24px;
+    background: var(--gradient-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 40px;
+    color: #000;
+    box-shadow: 0 20px 50px rgba(0,255,136,.4);
+    animation: pulse 3s ease-in-out infinite;
+    transform: rotate(-5deg);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(-5deg) scale(1.05); }
+}
+
+.login-box h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(45deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.login-box p {
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    font-size: 15px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 15px;
+    margin-bottom: 16px;
+    transition: all .3s ease;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(0,255,136,.1);
+}
+
+.login-input::placeholder {
+    color: var(--text-muted);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 14px;
+    background: var(--gradient-1);
+    color: #000;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .3s;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(0,255,136,.3);
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,255,136,.4);
+}
+
+.login-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.login-error {
+    color: var(--danger);
+    font-size: 14px;
+    margin-top: 16px;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Main Layout */
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 24px;
+    display: none;
+}
+
+.container.active {
+    display: block;
+    animation: fadeIn .5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header Mejorado */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding: 20px 28px;
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--gradient-1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #000;
+    box-shadow: 0 8px 30px rgba(0,255,136,.3);
+    transition: transform .3s;
+}
+
+.logo-icon:hover {
+    transform: rotate(10deg) scale(1.05);
+}
+
+.logo h1 {
+    font-size: 26px;
+    font-weight: 800;
+    background: linear-gradient(45deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-info span {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.user-info strong {
+    color: var(--text-primary);
+}
+
+.user-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-size: 18px;
+    transition: all .3s;
+}
+
+.user-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0,255,136,.3);
+}
+
+.rango-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rango-superadmin {
+    background: var(--gradient-2);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255,107,53,.3);
+}
+
+.rango-admin {
+    background: rgba(0,255,136,.15);
+    color: var(--accent);
+    border: 1px solid rgba(0,255,136,.2);
+}
+
+.logout-btn {
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 14px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all .3s;
+}
+
+.logout-btn:hover {
+    background: var(--danger);
+    color: #fff;
+    border-color: var(--danger);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255,77,109,.3);
+}
+
+/* Tabs Mejorados */
+.tabs-container {
+    margin-bottom: 32px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    background: var(--bg-secondary);
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-sm);
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab {
+    padding: 14px 22px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all .3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+
+.tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-1);
+    opacity: 0;
+    transition: opacity .3s;
+    z-index: 0;
+}
+
+.tab:hover {
+    color: var(--text-primary);
+    background: rgba(255,255,255,.05);
+}
+
+.tab.active {
+    color: #000;
+    box-shadow: 0 4px 20px rgba(0,255,136,.3);
+}
+
+.tab.active::before {
+    opacity: 1;
+}
+
+.tab span, .tab i {
+    position: relative;
+    z-index: 1;
+}
+
+.tab i {
+    font-size: 16px;
+}
+
+.tab-badge {
+    background: var(--danger);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+/* Content Sections */
+.content-section {
+    display: none;
+    animation: fadeIn .5s ease;
+}
+
+.content-section.active {
+    display: block;
+}
+
+/* Stats Grid Mejorado */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all .4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-glow);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-1);
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: transform .3s;
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.stat-icon.purple { background: rgba(0,255,136,.1); color: var(--accent); }
+.stat-icon.green { background: rgba(16,185,129,.1); color: #10b981; }
+.stat-icon.orange { background: rgba(251,191,36,.1); color: var(--warning); }
+.stat-icon.red { background: rgba(255,77,109,.1); color: var(--danger); }
+.stat-icon.blue { background: rgba(59,130,246,.1); color: var(--info); }
+
+.stat-value {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Grid Layout Mejorado */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+}
+
+.box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 32px;
+    transition: all .3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.box:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.box-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.box-title {
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.box-title i {
+    color: var(--accent);
+    font-size: 22px;
+}
+
+/* Inputs Mejorados */
+.input-group {
+    margin-bottom: 22px;
+}
+
+.input-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.input, textarea, select {
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    outline: none;
+    border-radius: 16px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 15px;
+    transition: all .3s ease;
+}
+
+.input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(0,255,136,.1);
+}
+
+.input::placeholder {
+    color: var(--text-muted);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+/* Buttons Mejorados */
+.btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all .3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+    transition: left .5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: var(--gradient-1);
+    color: #000;
+    box-shadow: 0 4px 20px rgba(0,255,136,.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,255,136,.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(16,185,129,.3);
+}
+
+.btn-success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(16,185,129,.4);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(239,68,68,.3);
+}
+
+.btn-danger:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(239,68,68,.4);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #000;
+    box-shadow: 0 4px 20px rgba(251,191,36,.3);
+}
+
+.btn-warning:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(251,191,36,.4);
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn-sm {
+    padding: 10px 18px;
+    font-size: 13px;
+}
+
+/* Cards Mejoradas */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: all .4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.card-meta {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin: 16px 0;
+    background: var(--bg-tertiary);
+    transition: transform .3s;
+}
+
+.card:hover .card-img {
+    transform: scale(1.02);
+}
+
+.card-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.card-actions .btn {
+    flex: 1;
+    min-width: 140px;
+}
+
+/* Price Box Mejorado */
+.precio-box {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+    transition: all .3s;
+}
+
+.precio-box:hover {
+    border-color: var(--border-hover);
+}
+
+.precio-box-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.precio-box-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-remove {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,77,109,.1);
+    color: var(--danger);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+}
+
+.btn-remove:hover {
+    background: var(--danger);
+    color: #fff;
+    transform: rotate(90deg);
+}
+
+/* Stock & Keys Mejorados */
+.stock-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stock-ok {
+    background: rgba(0,255,136,.12);
+    color: var(--accent);
+    border: 1px solid rgba(0,255,136,.2);
+}
+
+.stock-empty {
+    background: rgba(255,77,109,.12);
+    color: var(--danger);
+    border: 1px solid rgba(255,77,109,.2);
+}
+
+.stock-warning {
+    background: rgba(251,191,36,.12);
+    color: var(--warning);
+    border: 1px solid rgba(251,191,36,.2);
+}
+
+.key-box {
+    background: linear-gradient(135deg, rgba(0,255,136,.08), rgba(0,255,136,.02));
+    border: 1px solid rgba(0,255,136,.2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    word-break: break-all;
+    position: relative;
+}
+
+.key-box::before {
+    content: '\f084';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    opacity: .2;
+    font-size: 20px;
+}
+
+/* Preview Mejorado */
+.preview-container {
+    position: relative;
+    margin: 20px 0;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--bg-tertiary);
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--border);
+    transition: all .3s;
+}
+
+.preview-container:hover {
+    border-color: var(--accent);
+}
+
+.preview-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: none;
+}
+
+.preview-img.show {
+    display: block;
+}
+
+.preview-placeholder {
+    position: absolute;
+    color: var(--text-muted);
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.preview-placeholder i {
+    font-size: 48px;
+    opacity: .3;
+}
+
+.preview-img.show + .preview-placeholder {
+    display: none;
+}
+
+/* Loading & Empty States Mejorados */
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+}
+
+.loading i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: .5;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: .2;
+}
+
+/* Flex */
+.flex {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Theme Toggle Mejorado */
+.theme-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gradient-1);
+    color: #000;
+    border: none;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 8px 30px rgba(0,255,136,.4);
+    transition: all .3s;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-4px) rotate(180deg);
+    box-shadow: 0 12px 40px rgba(0,255,136,.5);
+}
+
+/* Toggle Switch Mejorado */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 12px;
+    transition: background .3s;
+}
+
+.toggle-switch:hover {
+    background: rgba(255,255,255,.03);
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-slider {
+    width: 52px;
+    height: 28px;
+    background: var(--bg-tertiary);
+    border-radius: 14px;
+    position: relative;
+    transition: all .3s;
+    border: 1px solid var(--border);
+}
+
+.toggle-slider::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: all .3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background: rgba(0,255,136,.2);
+    border-color: var(--accent);
+}
+
+.toggle-switch input:checked + .toggle-slider::after {
+    background: var(--accent);
+    transform: translateX(24px);
+}
+
+.toggle-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.toggle-switch input:checked ~ .toggle-label {
+    color: var(--accent);
+}
+
+/* Permisos Grid Mejorado */
+.permisos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.permiso-item {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.permiso-item:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+}
+
+.permiso-item.activo {
+    border-color: var(--accent);
+    background: rgba(0,255,136,.08);
+    box-shadow: 0 4px 20px rgba(0,255,136,.1);
+}
+
+.permiso-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.permiso-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 20px;
+    transition: all .3s;
+}
+
+.permiso-item.activo .permiso-icon {
+    background: var(--accent);
+    color: #000;
+}
+
+.permiso-text {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.permiso-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* User Info Card Mejorado */
+.user-info-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 36px;
+    margin-top: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.user-info-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+}
+
+.user-info-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--gradient-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: #000;
+    box-shadow: 0 10px 40px rgba(0,255,136,.3);
+}
+
+.user-info-details h3 {
+    font-size: 26px;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.user-info-details p {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+.user-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.user-info-item {
+    background: var(--bg-tertiary);
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    transition: all .3s;
+}
+
+.user-info-item:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+}
+
+.user-info-item label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 600;
+}
+
+.user-info-item value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Logs Mejorados */
+.log-entry {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    transition: background .3s;
+}
+
+.log-entry:hover {
+    background: rgba(255,255,255,.02);
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+}
+
+.log-icon.success { background: rgba(16,185,129,.12); color: #10b981; }
+.log-icon.warning { background: rgba(251,191,36,.12); color: var(--warning); }
+.log-icon.danger { background: rgba(255,77,109,.12); color: var(--danger); }
+.log-icon.info { background: rgba(59,130,246,.12); color: var(--info); }
+
+.log-content {
+    flex: 1;
+}
+
+.log-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.log-meta {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* Limite diario indicator Mejorado */
+.limite-indicator {
+    background: var(--bg-tertiary);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+}
+
+.limite-bar {
+    height: 10px;
+    background: var(--bg-secondary);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 12px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+}
+
+.limite-progress {
+    height: 100%;
+    background: var(--gradient-1);
+    border-radius: 5px;
+    transition: width .4s ease;
+    box-shadow: 0 0 10px rgba(0,255,136,.3);
+}
+
+.limite-progress.warning {
+    background: linear-gradient(90deg, var(--warning), #f59e0b);
+    box-shadow: 0 0 10px rgba(251,191,36,.3);
+}
+
+.limite-progress.danger {
+    background: linear-gradient(90deg, var(--danger), #dc2626);
+    box-shadow: 0 0 10px rgba(255,77,109,.3);
+}
+
+/* Tag system Mejorado */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all .3s;
+}
+
+.tag-success { background: rgba(0,255,136,.12); color: var(--accent); border: 1px solid rgba(0,255,136,.2); }
+.tag-warning { background: rgba(251,191,36,.12); color: var(--warning); border: 1px solid rgba(251,191,36,.2); }
+.tag-danger { background: rgba(255,77,109,.12); color: var(--danger); border: 1px solid rgba(255,77,109,.2); }
+.tag-info { background: rgba(59,130,246,.12); color: var(--info); border: 1px solid rgba(59,130,246,.2); }
+
+.tag:hover {
+    transform: translateY(-2px);
+}
+
+.tag-remove {
+    cursor: pointer;
+    opacity: .6;
+    transition: all .2s;
+}
+
+.tag-remove:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Responsive Mejorado */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+    
+    header {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+        position: relative;
+        top: 0;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .tabs {
+        padding: 6px;
+    }
+    
+    .tab {
+        padding: 12px 18px;
+        font-size: 13px;
+    }
+    
+    .stat-value {
+        font-size: 32px;
+    }
+    
+    .user-info-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .user-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .box {
+        padding: 24px;
+    }
+    
+    .permisos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Scrollbar Mejorado */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-tertiary);
+    border-radius: 5px;
+    border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-in {
+    animation: slideIn .5s ease;
+}
+
+/* Access denied Mejorado */
+.access-denied {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-muted);
+}
+
+.access-denied i {
+    font-size: 72px;
+    color: var(--danger);
+    margin-bottom: 24px;
+    opacity: .5;
+}
+
+.access-denied h3 {
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    font-size: 24px;
+}
+
+/* Producto inestable Mejorado */
+.producto-inestable {
+    border: 2px solid var(--warning) !important;
+    position: relative;
+    animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(251,191,36,.4); }
+    50% { box-shadow: 0 0 20px 5px rgba(251,191,36,.2); }
+}
+
+.producto-inestable::before {
+    content: 'INESTABLE';
+    position: absolute;
+    top: -1px;
+    right: 24px;
+    background: var(--warning);
+    color: #000;
+    padding: 6px 16px;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 0 0 12px 12px;
+    letter-spacing: 1px;
+    z-index: 10;
+}
+
+/* Modal Mejorado */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.85);
+    backdrop-filter: blur(15px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn .3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 32px;
+    padding: 36px;
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp .4s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-title i {
+    color: var(--accent);
+}
+
+.modal-close {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: none;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all .3s;
+}
+
+.modal-close:hover {
+    background: var(--danger);
+    color: #fff;
+    transform: rotate(90deg);
+}
+
+/* NUEVO: Vista de Solo Agregar Stock */
+.stock-only-view {
+    background: linear-gradient(135deg, rgba(0,255,136,.05), rgba(0,255,136,.02));
+    border: 2px solid rgba(0,255,136,.2);
+    border-radius: 24px;
+    padding: 32px;
+    margin-bottom: 24px;
+}
+
+.stock-only-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stock-only-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--gradient-1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #000;
+    box-shadow: 0 10px 40px rgba(0,255,136,.3);
+}
+
+.stock-only-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.stock-only-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Mejoras adicionales visuales */
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 32px 0;
+}
+
+.glass-effect {
+    background: rgba(255,255,255,.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.05);
+}
+
+.highlight-text {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Nuevos botones de acción rápida */
+.quick-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.quick-action-btn {
+    padding: 12px 20px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quick-action-btn:hover {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* Mejoras en tablas de datos */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.data-table tr:hover td {
+    background: rgba(255,255,255,.02);
+}
+
+/* Nuevo: Indicador de permisos activos */
+.permiso-activo-indicador {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(0,255,136,.1);
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.permiso-activo-indicador::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(1.2); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-effect">
+    <div class="bg-grid"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-gradient-2"></div>
+</div>
+
+<!-- Login Overlay -->
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+        <div class="login-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h1>xOrochiModz</h1>
+        <p>Panel de Administración Seguro</p>
+        
+        <input type="email" class="login-input" id="loginEmail" placeholder="Correo electrónico">
+        <input type="password" class="login-input" id="loginPass" placeholder="Contraseña">
+        
+        <button class="login-btn" id="btnLogin" onclick="doLogin()">
+            <i class="fas fa-sign-in-alt"></i> Ingresar
+        </button>
+        
+        <div class="login-error" id="loginError"></div>
+        
+        <button class="btn-secondary" onclick="volverAlIndex()" style="margin-top: 12px;">
+            <i class="fas fa-arrow-left"></i> Volver al Inicio
+        </button>
+    </div>
+</div>
+
+<!-- Main App -->
+<div class="container" id="mainApp">
+    <header>
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h1>xOrochiModz Admin</h1>
+        </div>
+        <div class="user-info">
+            <div style="text-align: right;">
+                <span>Bienvenido, <strong id="adminName">Admin</strong></span>
+                <div id="adminRango" class="rango-badge rango-admin" style="margin-top: 4px;">ADMIN</div>
+            </div>
+            <div class="user-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <button class="logout-btn" onclick="logout()" title="Cerrar sesión">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </header>
+
+ <!-- Tabs -->
+    <div class="tabs-container">
+        <div class="tabs" id="mainTabs">
+            <button class="tab active" onclick="switchTab('dashboard')" data-tab="dashboard">
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </button>
+            <button class="tab" onclick="switchTab('productos')" data-tab="productos" data-permiso="productos">
+                <i class="fas fa-box"></i> Productos
+            </button>
+            <button class="tab" onclick="switchTab('stock')" data-tab="stock" data-permiso="agregarStock">
+                <i class="fas fa-plus-circle"></i> Agregar Stock
+            </button>
+            <button class="tab" onclick="switchTab('recargas')" data-tab="recargas" data-permiso="recargas">
+                <i class="fas fa-wallet"></i> Recargas
+                <span class="tab-badge" id="badgeRecargas" style="display: none;">0</span>
+            </button>
+            <button class="tab" onclick="switchTab('compras')" data-tab="compras">
+                <i class="fas fa-shopping-cart"></i> Compras
+            </button>
+            <button class="tab" onclick="switchTab('usuarios')" data-tab="usuarios" data-permiso="usuarios">
+                <i class="fas fa-users"></i> Usuarios
+            </button>
+            <button class="tab" onclick="switchTab('saldo')" data-tab="saldo" data-permiso="saldo">
+                <i class="fas fa-coins"></i> Gestión Saldo
+            </button>
+            <button class="tab" onclick="switchTab('admins')" data-tab="admins" data-permiso="admins">
+                <i class="fas fa-users-cog"></i> Admins
+            </button>
+            <button class="tab" onclick="switchTab('logs')" data-tab="logs" data-permiso="logs">
+                <i class="fas fa-history"></i> Logs
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div class="content-section active" id="tab-dashboard">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon purple"><i class="fas fa-box"></i></div>
+                </div>
+                <div class="stat-value" id="statProductos">0</div>
+                <div class="stat-label">Productos Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange"><i class="fas fa-wallet"></i></div>
+                </div>
+                <div class="stat-value" id="statRecargas">0</div>
+                <div class="stat-label">Recargas Pendientes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green"><i class="fas fa-shopping-cart"></i></div>
+                </div>
+                <div class="stat-value" id="statCompras">0</div>
+                <div class="stat-label">Total Compras</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+                </div>
+                <div class="stat-value" id="statUsuarios">0</div>
+                <div class="stat-label">Usuarios Registrados</div>
+            </div>
+            <div class="stat-card" id="limiteCard" style="display: none;">
+                <div class="stat-header">
+                    <div class="stat-icon red"><i class="fas fa-coins"></i></div>
+                </div>
+                <div class="stat-value" id="statLimite">$0</div>
+                <div class="stat-label">Límite Diario Restante</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-clock"></i> Actividad Reciente</div>
+                </div>
+                <div id="actividadReciente">
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <p>Sin actividad reciente</p>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Alertas Stock</div>
+                </div>
+                <div id="alertasStock">
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Todo en orden</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Productos Section (Solo para admins con permiso completo) -->
+    <div class="content-section" id="tab-productos">
+        <div class="grid">
+            <div class="box" id="boxAgregarProducto">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-plus-circle"></i> Agregar Producto</div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Nombre del Producto</label>
+                    <input id="nombre" class="input" placeholder="Ej: Netflix Premium">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">URL de la Imagen</label>
+                    <input id="imagen" class="input" placeholder="https://...">
+                </div>
+
+                <div class="preview-container">
+                    <img id="preview" class="preview-img">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>Vista previa de la imagen</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Descripción</label>
+                    <textarea id="descripcion" placeholder="Descripción del producto..."></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Etiquetas</label>
+                    <div class="tag-container" id="tagsContainer"></div>
+                    <div class="flex" style="margin-top: 8px;">
+                        <input id="nuevaTag" class="input" placeholder="Nueva etiqueta..." style="flex: 1;">
+                        <button class="btn btn-secondary" onclick="agregarTag()" style="width: auto;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="esVip">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label">Producto VIP (TOP)</span>
+                    </label>
+                </div>
+
+                <div class="input-group">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="esInestable">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label">Marcar como INESTABLE</span>
+                    </label>
+                </div>
+
+                <div id="preciosBox"></div>
+
+                <button class="btn btn-secondary btn-block" onclick="agregarPrecio()" style="margin-bottom: 12px;">
+                    <i class="fas fa-plus"></i> Agregar Días y Precio
+                </button>
+
+                <button class="btn btn-primary btn-block" id="btnAgregar" onclick="agregarProducto()">
+                    <i class="fas fa-upload"></i> Agregar Producto
+                </button>
+            </div>
+
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-list"></i> Productos Existentes</div>
+                </div>
+                <div id="listaProductos">
+                    <div class="loading">
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                        <p>Cargando productos...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUEVA SECCIÓN: Solo Agregar Stock -->
+    <div class="content-section" id="tab-stock">
+        <div class="stock-only-view">
+            <div class="stock-only-header">
+                <div class="stock-only-icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <div>
+                    <div class="stock-only-title">Gestión de Stock</div>
+                    <div class="stock-only-subtitle">Solo puedes agregar llaves a productos existentes</div>
+                </div>
+            </div>
+            <div class="permiso-activo-indicador" style="margin-bottom: 16px;">
+                Permiso: Agregar Stock
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">
+                <div class="box-title"><i class="fas fa-boxes"></i> Productos - Solo Agregar Stock</div>
+            </div>
+            <div id="listaStockSolo">
+                <div class="loading">
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                    <p>Cargando productos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recargas Section -->
+    <div class="content-section" id="tab-recargas">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-title"><i class="fas fa-wallet"></i> Recargas Pendientes</div>
+            </div>
+            <div id="listaRecargas">
+                <div class="loading">
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                    <p>Cargando recargas...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compras Section -->
+    <div class="content-section" id="tab-compras">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-title"><i class="fas fa-shopping-cart"></i> Historial de Compras</div>
+            </div>
+            <div id="listaCompras">
+                <div class="loading">
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                    <p>Cargando compras...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Usuarios Section -->
+    <div class="content-section" id="tab-usuarios">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-title"><i class="fas fa-search"></i> Buscar Usuario</div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">ID de Usuario, Email o UID</label>
+                <div class="flex">
+                    <input id="buscarUsuarioInput" class="input" placeholder="Ej: 123456 o usuario@email.com">
+                    <button class="btn btn-primary" onclick="buscarUsuario()" style="width: auto;">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+            </div>
+
+            <div id="resultadoBusquedaUsuario"></div>
+        </div>
+
+        <div class="box" style="margin-top: 24px;">
+            <div class="box-header">
+                <div class="box-title"><i class="fas fa-users"></i> Últimos Usuarios Registrados</div>
+            </div>
+            <div id="listaUsuariosRecientes">
+                <div class="loading">
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                    <p>Cargando usuarios...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saldo Section -->
+    <div class="content-section" id="tab-saldo">
+        <div class="grid" style="max-width: 800px; margin: 0 auto;">
+            <div class="box" id="boxLimiteDiario" style="display: none;">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-chart-line"></i> Tu Límite Diario</div>
+                </div>
+                <div class="limite-indicator">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: var(--text-secondary);">Usado hoy: <strong id="limiteUsado">$0</strong></span>
+                        <span style="color: var(--text-secondary);">Límite: <strong id="limiteTotal">$0</strong></span>
+                    </div>
+                    <div class="limite-bar">
+                        <div class="limite-progress" id="limiteProgress" style="width: 0%"></div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 13px; color: var(--text-muted);">
+                        <i class="fas fa-info-circle"></i> El límite se reinicia cada día a las 00:00 UTC
+                    </p>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-coins"></i> Gestión de Saldo</div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">ID de Usuario (numérico) o Email</label>
+                    <input id="idUsuarioSaldo" class="input" placeholder="Ej: 123456 o usuario@email.com">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Monto (USD)</label>
+                    <input id="montoSaldo" type="number" class="input" placeholder="0.00" step="0.01">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Motivo (opcional)</label>
+                    <input id="motivoSaldo" class="input" placeholder="Ej: Recarga aprobada, Corrección, etc.">
+                </div>
+
+                <div class="flex">
+                    <button class="btn btn-success btn-block" onclick="agregarSaldo()">
+                        <i class="fas fa-plus"></i> Agregar Saldo
+                    </button>
+                    <button class="btn btn-danger btn-block" onclick="descontarSaldo()">
+                        <i class="fas fa-minus"></i> Quitar Saldo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admins Section -->
+    <div class="content-section" id="tab-admins">
+        <div class="grid">
+            <div class="box" id="boxCrearAdmin">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-user-plus"></i> Crear Nuevo Admin</div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Correo del nuevo admin</label>
+                    <input id="nuevoAdminEmail" class="input" placeholder="correo@ejemplo.com">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Contraseña</label>
+                    <input id="nuevoAdminPass" type="password" class="input" placeholder="********">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Nombre</label>
+                    <input id="nuevoAdminNombre" class="input" placeholder="Nombre del admin">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Límite diario de saldo ($)</label>
+                    <input id="nuevoAdminLimite" type="number" class="input" placeholder="100" value="100">
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+                        <i class="fas fa-info-circle"></i> Cantidad máxima que este admin puede dar/quitar por día
+                    </p>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" style="margin-bottom: 12px;">Permisos del Admin:</label>
+                    <div class="permisos-grid">
+                        <div class="permiso-item" onclick="togglePermiso(this, 'productos')">
+                            <div class="permiso-info">
+                                <div class="permiso-icon"><i class="fas fa-box"></i></div>
+                                <div>
+                                    <div class="permiso-text">Productos</div>
+                                    <div class="permiso-desc">Crear y editar</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--accent); opacity: 0;"></i>
+                        </div>
+                        <div class="permiso-item" onclick="togglePermiso(this, 'agregarStock')">
+                            <div class="permiso-info">
+                                <div class="permiso-icon"><i class="fas fa-plus-circle"></i></div>
+                                <div>
+                                    <div class="permiso-text">Agregar Stock</div>
+                                    <div class="permiso-desc">Solo agregar llaves</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--accent); opacity: 0;"></i>
+                        </div>
+                        <div class="permiso-item" onclick="togglePermiso(this, 'recargas')">
+                            <div class="permiso-info">
+                                <div class="permiso-icon"><i class="fas fa-wallet"></i></div>
+                                <div>
+                                    <div class="permiso-text">Recargas</div>
+                                    <div class="permiso-desc">Aprobar/rechazar</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--accent); opacity: 0;"></i>
+                        </div>
+                        <div class="permiso-item" onclick="togglePermiso(this, 'saldo')">
+                            <div class="permiso-info">
+                                <div class="permiso-icon"><i class="fas fa-coins"></i></div>
+                                <div>
+                                    <div class="permiso-text">Saldo</div>
+                                    <div class="permiso-desc">Gestionar saldo</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--accent); opacity: 0;"></i>
+                        </div>
+                        <div class="permiso-item" onclick="togglePermiso(this, 'usuarios')">
+                            <div class="permiso-info">
+                                <div class="permiso-icon"><i class="fas fa-users"></i></div>
+                                <div>
+                                    <div class="permiso-text">Usuarios</div>
+                                    <div class="permiso-desc">Ver info completa</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--accent); opacity: 0;"></i>
+                        </div>
+                        <div class="permiso-item" onclick="togglePermiso(this, 'admins')">
+                            <div class="permiso-info">
+                                <div class="permiso-icon"><i class="fas fa-users-cog"></i></div>
+                                <div>
+                                    <div class="permiso-text">Admins</div>
+                                    <div class="permiso-desc">Gestionar admins</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--accent); opacity: 0;"></i>
+                        </div>
+                        <div class="permiso-item" onclick="togglePermiso(this, 'logs')">
+                            <div class="permiso-info">
+                                <div class="permiso-icon"><i class="fas fa-history"></i></div>
+                                <div>
+                                    <div class="permiso-text">Logs</div>
+                                    <div class="permiso-desc">Ver registros</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--accent); opacity: 0;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block" onclick="crearNuevoAdmin()">
+                    <i class="fas fa-user-shield"></i> Crear Admin
+                </button>
+            </div>
+
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-users"></i> Administradores</div>
+                </div>
+                <div id="listaAdmins">
+                    <div class="loading">
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                        <p>Cargando admins...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logs Section -->
+    <div class="content-section" id="tab-logs">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-title"><i class="fas fa-history"></i> Logs de Actividad</div>
+            </div>
+            <div id="listaLogs">
+                <div class="loading">
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                    <p>Cargando logs...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar Producto -->
+<div class="modal-overlay" id="modalEditar">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title"><i class="fas fa-edit"></i> Editar Producto</div>
+            <button class="modal-close" onclick="cerrarModal()"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="input-group">
+            <label class="input-label">Nombre del Producto</label>
+            <input id="editNombre" class="input">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">URL de la Imagen</label>
+            <input id="editImagen" class="input">
+        </div>
+
+        <div class="preview-container" style="min-height: 150px;">
+            <img id="editPreview" class="preview-img">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">Descripción</label>
+            <textarea id="editDescripcion"></textarea>
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">Etiquetas (separadas por coma)</label>
+            <input id="editTags" class="input" placeholder="tag1, tag2, tag3">
+        </div>
+
+        <div class="input-group">
+            <label class="toggle-switch">
+                <input type="checkbox" id="editEsVip">
+                <span class="toggle-slider"></span>
+                <span class="toggle-label">Producto VIP</span>
+            </label>
+        </div>
+
+        <div class="input-group">
+            <label class="toggle-switch">
+                <input type="checkbox" id="editEsInestable">
+                <span class="toggle-slider"></span>
+                <span class="toggle-label">Marcar como INESTABLE</span>
+            </label>
+        </div>
+
+        <div id="editPreciosBox"></div>
+
+        <button class="btn btn-secondary btn-block" onclick="agregarPrecioEdit()" style="margin-bottom: 12px;">
+            <i class="fas fa-plus"></i> Agregar Plan de Precio
+        </button>
+
+        <button class="btn btn-success btn-block" onclick="guardarEdicionProducto()">
+            <i class="fas fa-save"></i> Guardar Cambios
+        </button>
+    </div>
+</div>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
+    <i class="fas fa-eye" id="themeIcon"></i>
+</button>
+
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    doc,
+    deleteDoc,
+    updateDoc,
+    getDoc,
+    getDocs,
+    onSnapshot,
+    query,
+    orderBy,
+    where,
+    setDoc,
+    increment,
+    limit
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAStEGcHnYZDpDtXWIhGDpGSUE1evtbhSg",
+    authDomain: "xorochimodz.firebaseapp.com",
+    projectId: "xorochimodz",
+    storageBucket: "xorochimodz.firebasestorage.app",
+    messagingSenderId: "1045786433620",
+    appId: "1:1045786433620:web:1b594c8f3bf6226d6035c1"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Constantes
+const ADMIN_PRINCIPAL = 'gdehidania@gmail.com';
+const SUPERADMIN_ROLE = 'superadmin';
+const ADMIN_ROLE = 'admin';
+
+// Estado global
+let productos = [];
+let compras = [];
+let recargas = [];
+let usuarios = {};
+let admins = [];
+let logs = [];
+let currentUser = null;
+let currentAdminData = null;
+let currentTheme = localStorage.getItem('theme') || 'dark';
+let productoEditandoId = null;
+let tagsActuales = [];
+let permisosNuevoAdmin = {};
+
+// Theme
+document.documentElement.setAttribute('data-theme', currentTheme);
+updateThemeIcon();
+
+window.toggleTheme = function() {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    localStorage.setItem('theme', currentTheme);
+    updateThemeIcon();
+};
+
+function updateThemeIcon() {
+    const icon = document.getElementById('themeIcon');
+    if(icon) icon.className = currentTheme === 'dark' ? 'fas fa-eye' : 'fas fa-eye-slash';
+}
+
+// ============ SISTEMA DE SEGURIDAD Y AUTENTICACIÓN ============
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        currentUser = user;
+        await cargarDatosAdmin(user);
+    } else {
+        document.getElementById('loginOverlay').style.display = 'flex';
+        document.getElementById('mainApp').classList.remove('active');
+    }
+});
+
+async function cargarDatosAdmin(user) {
+    try {
+        const adminDoc = await getDoc(doc(db, 'admins', user.uid));
+        const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+        
+        if (user.email === ADMIN_PRINCIPAL) {
+            currentAdminData = {
+                uid: user.uid,
+                email: user.email,
+                name: user.displayName || 'Admin Principal',
+                role: SUPERADMIN_ROLE,
+                permisos: {
+                    productos: true,
+                    agregarStock: true,
+                    recargas: true,
+                    saldo: true,
+                    usuarios: true,
+                    admins: true,
+                    logs: true,
+                    editarTodo: true
+                },
+                limiteDiario: 999999,
+                limiteUsadoHoy: 0,
+                createdAt: new Date().toISOString()
+            };
+            
+            await setDoc(doc(db, 'admins', user.uid), currentAdminData, { merge: true });
+            await setDoc(doc(db, 'usuarios', user.uid), {
+                uid: user.uid,
+                email: user.email,
+                name: currentAdminData.name,
+                role: ADMIN_ROLE
+            }, { merge: true });
+            
+            mostrarPanel(user);
+            return;
+        }
+        
+        if (adminDoc.exists()) {
+            currentAdminData = adminDoc.data();
+            
+            if (currentAdminData.estado === 'inactivo') {
+                mostrarErrorAcceso('Tu cuenta ha sido desactivada. Contacta al admin principal.');
+                await signOut(auth);
+                return;
+            }
+            
+            await verificarResetLimite();
+            
+            mostrarPanel(user);
+        } else if (userDoc.exists() && userDoc.data().role === 'admin') {
+            // Migrar de usuarios a admins
+            currentAdminData = {
+                uid: user.uid,
+                email: user.email,
+                name: userDoc.data().name || 'Administrador',
+                role: ADMIN_ROLE,
+                permisos: { agregarStock: true },
+                limiteDiario: 100,
+                limiteUsadoHoy: 0,
+                createdAt: new Date().toISOString()
+            };
+            
+            await setDoc(doc(db, 'admins', user.uid), currentAdminData);
+            mostrarPanel(user);
+        } else {
+            mostrarErrorAcceso('No tienes permisos de administrador');
+            await signOut(auth);
+        }
+    } catch (error) {
+        console.error('Error cargando datos admin:', error);
+        mostrarErrorAcceso('Error al verificar permisos');
+    }
+}
+
+async function verificarResetLimite() {
+    if (!currentAdminData) return;
+    
+    const hoy = new Date().toDateString();
+    const ultimaActualizacion = currentAdminData.ultimaActualizacionLimite;
+    
+    if (ultimaActualizacion !== hoy) {
+        await updateDoc(doc(db, 'admins', currentUser.uid), {
+            limiteUsadoHoy: 0,
+            ultimaActualizacionLimite: hoy
+        });
+        currentAdminData.limiteUsadoHoy = 0;
+    }
+}
+
+function mostrarPanel(user) {
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('mainApp').classList.add('active');
+    document.getElementById('adminName').textContent = currentAdminData.name || user.email;
+    
+    const rangoBadge = document.getElementById('adminRango');
+    if (currentAdminData.role === SUPERADMIN_ROLE) {
+        rangoBadge.className = 'rango-badge rango-superadmin';
+        rangoBadge.innerHTML = '<i class="fas fa-crown"></i> SUPERADMIN';
+        document.getElementById('boxCrearAdmin').style.display = 'block';
+        document.getElementById('limiteCard').style.display = 'none';
+        document.getElementById('boxLimiteDiario').style.display = 'none';
+    } else {
+        rangoBadge.className = 'rango-badge rango-admin';
+        rangoBadge.textContent = 'ADMIN';
+        
+        if (!tienePermiso('admins')) {
+            document.getElementById('boxCrearAdmin').style.display = 'none';
+        }
+        
+        document.getElementById('limiteCard').style.display = 'block';
+        document.getElementById('boxLimiteDiario').style.display = 'block';
+        actualizarIndicadorLimite();
+    }
+    
+    ocultarTabsSinPermiso();
+    
+    iniciarApp();
+}
+
+function ocultarTabsSinPermiso() {
+    const tabs = document.querySelectorAll('.tab[data-permiso]');
+    tabs.forEach(tab => {
+        const permiso = tab.getAttribute('data-permiso');
+        if (!tienePermiso(permiso)) {
+            tab.style.display = 'none';
+        }
+    });
+}
+
+function tienePermiso(permiso) {
+    if (!currentAdminData) return false;
+    if (currentAdminData.role === SUPERADMIN_ROLE) return true;
+    return currentAdminData.permisos && currentAdminData.permisos[permiso] === true;
+}
+
+function mostrarErrorAcceso(mensaje) {
+    const errorDiv = document.getElementById('loginError');
+    errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${mensaje}`;
+    errorDiv.style.display = 'block';
+}
+
+// Login
+window.doLogin = async function() {
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPass').value;
+    const btn = document.getElementById('btnLogin');
+    
+    if (!email || !pass) {
+        mostrarErrorAcceso('Ingresa correo y contraseña');
+        return;
+    }
+    
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verificando...';
+    
+    try {
+        await signInWithEmailAndPassword(auth, email, pass);
+    } catch (error) {
+        console.error(error);
+        let msg = 'Error al iniciar sesión';
+        if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado';
+        if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta';
+        if (error.code === 'auth/invalid-email') msg = 'Correo inválido';
+        if (error.code === 'auth/invalid-credential') msg = 'Credenciales inválidas';
+        mostrarErrorAcceso(msg);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Ingresar';
+    }
+};
+
+window.logout = async function() {
+    await signOut(auth);
+    window.location.href = 'index.html';
+};
+
+window.volverAlIndex = function() {
+    window.location.href = 'index.html';
+};
+
+// ============ SISTEMA DE LOGS ============
+
+async function registrarLog(accion, detalles = {}, tipo = 'info') {
+    try {
+        const logData = {
+            accion,
+            detalles: JSON.stringify(detalles),
+            tipo,
+            adminUid: currentUser.uid,
+            adminEmail: currentUser.email,
+            adminName: currentAdminData.name || currentUser.email,
+            timestamp: Date.now(),
+            fecha: new Date().toISOString()
+        };
+        
+        await addDoc(collection(db, 'logs'), logData);
+    } catch (e) {
+        console.error('Error registrando log:', e);
+    }
+}
+
+// ============ TABS ============
+
+window.switchTab = function(tabName) {
+    const tabBtn = document.querySelector(`.tab[data-tab="${tabName}"]`);
+    if (tabBtn && tabBtn.dataset.permiso && !tienePermiso(tabBtn.dataset.permiso)) {
+        alert('No tienes permiso para acceder a esta sección');
+        return;
+    }
+    
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+    
+    event.target.closest('.tab').classList.add('active');
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+};
+
+// ============ PRODUCTOS ============
+
+document.getElementById('imagen')?.addEventListener('input', function() {
+    const preview = document.getElementById('preview');
+    const val = this.value.trim();
+    
+    if (val) {
+        preview.src = val;
+        preview.classList.add('show');
+    } else {
+        preview.classList.remove('show');
+    }
+});
+
+window.agregarTag = function() {
+    const input = document.getElementById('nuevaTag');
+    const tag = input.value.trim();
+    
+    if (tag && !tagsActuales.includes(tag)) {
+        tagsActuales.push(tag);
+        renderTags();
+        input.value = '';
+    }
+};
+
+function renderTags() {
+    const container = document.getElementById('tagsContainer');
+    container.innerHTML = tagsActuales.map((tag, i) => `
+        <span class="tag tag-info">
+            ${tag}
+            <i class="fas fa-times tag-remove" onclick="quitarTag(${i})"></i>
+        </span>
+    `).join('');
+}
+
+window.quitarTag = function(index) {
+    tagsActuales.splice(index, 1);
+    renderTags();
+};
+
+window.agregarPrecio = function(dias = "", precio = "", keys = "") {
+    const container = document.getElementById('preciosBox');
+    const id = Date.now() + Math.random().toString(36).substr(2, 9);
+    
+    container.insertAdjacentHTML('beforeend', `
+        <div class="precio-box" id="precio-${id}">
+            <div class="precio-box-header">
+                <span class="precio-box-title"><i class="fas fa-tag"></i> Plan de Precio</span>
+                <button class="btn-remove" onclick="document.getElementById('precio-${id}').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex" style="gap: 12px; margin-bottom: 12px;">
+                <div style="flex: 1;">
+                    <label class="input-label">Días</label>
+                    <input type="number" class="input dias" placeholder="30" value="${dias}">
+                </div>
+                <div style="flex: 1;">
+                    <label class="input-label">Precio USD</label>
+                    <input type="number" class="input precio" placeholder="10.00" step="0.01" value="${precio}">
+                </div>
+            </div>
+            <label class="input-label">Llaves (separadas por coma)</label>
+            <textarea class="input keys" placeholder="KEY1, KEY2, KEY3...">${keys}</textarea>
+        </div>
+    `);
+};
+
+if (document.getElementById('preciosBox')) {
+    agregarPrecio();
+}
+
+window.agregarProducto = async function() {
+    if (!tienePermiso('productos')) {
+        alert('No tienes permiso para agregar productos');
+        return;
+    }
+    
+    const btn = document.getElementById('btnAgregar');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Subiendo...';
+
+    try {
+        const nombre = document.getElementById('nombre').value.trim();
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const imagen = document.getElementById('imagen').value.trim();
+        const esVip = document.getElementById('esVip').checked;
+        const esInestable = document.getElementById('esInestable').checked;
+
+        if (!nombre || !descripcion || !imagen) {
+            alert('Completa todos los campos');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-upload"></i> Agregar Producto';
+            return;
+        }
+
+        const precios = [];
+        document.querySelectorAll('.precio-box').forEach(box => {
+            const dias = parseInt(box.querySelector('.dias').value);
+            const precio = parseFloat(box.querySelector('.precio').value);
+            const keys = box.querySelector('.keys').value
+                .split(',')
+                .map(x => x.trim())
+                .filter(Boolean);
+
+            if (dias && precio) {
+                precios.push({ dias, precio, keys });
+            }
+        });
+
+        if (!precios.length) {
+            alert('Agrega al menos un precio');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-upload"></i> Agregar Producto';
+            return;
+        }
+
+        const productoData = {
+            nombre,
+            desc: descripcion,
+            img: imagen,
+            precios,
+            vip: esVip,
+            inestable: esInestable,
+            tags: tagsActuales,
+            createdAt: Date.now(),
+            createdBy: currentUser.uid,
+            createdByName: currentAdminData.name || currentUser.email
+        };
+
+        const docRef = await addDoc(collection(db, 'productos'), productoData);
+        
+        await registrarLog('PRODUCTO_CREADO', {
+            productoId: docRef.id,
+            nombre,
+            vip: esVip,
+            inestable: esInestable
+        }, 'success');
+
+        document.getElementById('nombre').value = '';
+        document.getElementById('descripcion').value = '';
+        document.getElementById('imagen').value = '';
+        document.getElementById('esVip').checked = false;
+        document.getElementById('esInestable').checked = false;
+        document.getElementById('preview').classList.remove('show');
+        document.getElementById('preciosBox').innerHTML = '';
+        tagsActuales = [];
+        renderTags();
+        agregarPrecio();
+
+        alert('Producto agregado correctamente');
+    } catch (e) {
+        console.error(e);
+        alert('Error al subir el producto: ' + e.message);
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-upload"></i> Agregar Producto';
+};
+
+// ============ EDICIÓN DE PRODUCTOS ============
+
+window.editarProducto = function(productoId) {
+    if (!tienePermiso('productos') && !currentAdminData.permisos?.editarTodo) {
+        alert('No tienes permiso para editar productos');
+        return;
+    }
+    
+    const producto = productos.find(p => p.firebaseId === productoId);
+    if (!producto) return;
+    
+    productoEditandoId = productoId;
+    
+    document.getElementById('editNombre').value = producto.nombre;
+    document.getElementById('editImagen').value = producto.img;
+    document.getElementById('editDescripcion').value = producto.desc;
+    document.getElementById('editTags').value = (producto.tags || []).join(', ');
+    document.getElementById('editEsVip').checked = producto.vip || false;
+    document.getElementById('editEsInestable').checked = producto.inestable || false;
+    
+    const preview = document.getElementById('editPreview');
+    preview.src = producto.img;
+    preview.classList.add('show');
+    
+    const container = document.getElementById('editPreciosBox');
+    container.innerHTML = '';
+    producto.precios.forEach(p => {
+        agregarPrecioEdit(p.dias, p.precio, p.keys ? p.keys.join(', ') : '');
+    });
+    
+    document.getElementById('modalEditar').classList.add('active');
+};
+
+window.agregarPrecioEdit = function(dias = "", precio = "", keys = "") {
+    const container = document.getElementById('editPreciosBox');
+    const id = Date.now() + Math.random().toString(36).substr(2, 9);
+    
+    container.insertAdjacentHTML('beforeend', `
+        <div class="precio-box" id="edit-precio-${id}">
+            <div class="precio-box-header">
+                <span class="precio-box-title"><i class="fas fa-tag"></i> Plan de Precio</span>
+                <button class="btn-remove" onclick="document.getElementById('edit-precio-${id}').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex" style="gap: 12px; margin-bottom: 12px;">
+                <div style="flex: 1;">
+                    <label class="input-label">Días</label>
+                    <input type="number" class="input edit-dias" placeholder="30" value="${dias}">
+                </div>
+                <div style="flex: 1;">
+                    <label class="input-label">Precio USD</label>
+                    <input type="number" class="input edit-precio" placeholder="10.00" step="0.01" value="${precio}">
+                </div>
+            </div>
+            <label class="input-label">Llaves (separadas por coma)</label>
+            <textarea class="input edit-keys" placeholder="KEY1, KEY2, KEY3...">${keys}</textarea>
+        </div>
+    `);
+};
+
+window.cerrarModal = function() {
+    document.getElementById('modalEditar').classList.remove('active');
+    productoEditandoId = null;
+};
+
+window.guardarEdicionProducto = async function() {
+    if (!productoEditandoId) return;
+    
+    try {
+        const nombre = document.getElementById('editNombre').value.trim();
+        const descripcion = document.getElementById('editDescripcion').value.trim();
+        const imagen = document.getElementById('editImagen').value.trim();
+        const esVip = document.getElementById('editEsVip').checked;
+        const esInestable = document.getElementById('editEsInestable').checked;
+        const tags = document.getElementById('editTags').value.split(',').map(t => t.trim()).filter(Boolean);
+        
+        const precios = [];
+        document.querySelectorAll('#editPreciosBox .precio-box').forEach(box => {
+            const dias = parseInt(box.querySelector('.edit-dias').value);
+            const precio = parseFloat(box.querySelector('.edit-precio').value);
+            const keys = box.querySelector('.edit-keys').value
+                .split(',')
+                .map(x => x.trim())
+                .filter(Boolean);
+
+            if (dias && precio) {
+                precios.push({ dias, precio, keys });
+            }
+        });
+        
+        await updateDoc(doc(db, 'productos', productoEditandoId), {
+            nombre,
+            desc: descripcion,
+            img: imagen,
+            precios,
+            vip: esVip,
+            inestable: esInestable,
+            tags,
+            updatedAt: Date.now(),
+            updatedBy: currentUser.uid
+        });
+        
+        await registrarLog('PRODUCTO_EDITADO', {
+            productoId: productoEditandoId,
+            nombre
+        }, 'warning');
+        
+        cerrarModal();
+        alert('Producto actualizado correctamente');
+    } catch (e) {
+        console.error(e);
+        alert('Error al actualizar: ' + e.message);
+    }
+};
+
+window.guardarCambios = async function(i) {
+    if (!tienePermiso('productos') && !tienePermiso('agregarStock')) {
+        alert('No tienes permiso para editar stock');
+        return;
+    }
+    
+    try {
+        const producto = productos[i];
+        
+        producto.precios.forEach((p, x) => {
+            const val = document.getElementById(`keys${i}_${x}`).value;
+            producto.precios[x].keys = val.split(',').map(y => y.trim()).filter(Boolean);
+        });
+
+        await updateDoc(doc(db, 'productos', producto.firebaseId), { 
+            precios: producto.precios,
+            updatedAt: Date.now(),
+            updatedBy: currentUser.uid
+        });
+        
+        await registrarLog('STOCK_ACTUALIZADO', {
+            productoId: producto.firebaseId,
+            nombre: producto.nombre
+        }, 'success');
+        
+        const btn = event.target;
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Guardado';
+        btn.style.background = '#10b981';
+        setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.style.background = '';
+        }, 2000);
+    } catch (e) {
+        console.error(e);
+        alert('Error al actualizar');
+    }
+};
+
+window.eliminarProducto = async function(id) {
+    if (!tienePermiso('productos')) {
+        alert('No tienes permiso para eliminar productos');
+        return;
+    }
+    
+    if (!confirm('¿Eliminar este producto permanentemente?')) return;
+    
+    try {
+        const producto = productos.find(p => p.firebaseId === id);
+        await deleteDoc(doc(db, 'productos', id));
+        
+        await registrarLog('PRODUCTO_ELIMINADO', {
+            productoId: id,
+            nombre: producto?.nombre
+        }, 'danger');
+        
+        alert('Producto eliminado');
+    } catch (e) {
+        alert('Error al eliminar: ' + e.message);
+    }
+};
+
+// ============ RECARGAS ============
+
+window.aprobarRecarga = async function(firebaseId, index, userUid) {
+    if (!tienePermiso('recargas')) {
+        alert('No tienes permiso para aprobar recargas');
+        return;
+    }
+    
+    try {
+        const monto = parseFloat(document.getElementById(`saldoCustom${index}`).value);
+        
+        if (!monto || monto <= 0) {
+            alert('Ingresa un monto válido');
+            return;
+        }
+
+        if (currentAdminData.role !== SUPERADMIN_ROLE) {
+            const limiteRestante = currentAdminData.limiteDiario - (currentAdminData.limiteUsadoHoy || 0);
+            if (monto > limiteRestante) {
+                alert(`Has excedido tu límite diario. Restante: $${limiteRestante.toFixed(2)}`);
+                return;
+            }
+        }
+
+        let uidReal = userUid;
+        if (!usuarios[userUid] || !usuarios[userUid].uid) {
+            const snap = await getDocs(query(collection(db, 'usuarios'), where('userId', '==', userUid)));
+            if (!snap.empty) {
+                uidReal = snap.docs[0].id;
+            }
+        }
+
+        const ref = doc(db, 'usuarios', uidReal);
+        const snap = await getDoc(ref);
+
+        if (!snap.exists()) {
+            alert('Usuario no existe');
+            return;
+        }
+
+        const data = snap.data();
+        const saldoActual = parseFloat(data.saldo || 0);
+        const nuevoSaldo = parseFloat((saldoActual + monto).toFixed(2));
+
+        await updateDoc(ref, { saldo: nuevoSaldo });
+        
+        await updateDoc(doc(db, 'recargas', firebaseId), { 
+            estado: 'aprobada',
+            montoAprobado: monto,
+            aprobadoPor: currentUser.uid,
+            aprobadoPorName: currentAdminData.name || currentUser.email,
+            fechaAprobacion: new Date().toISOString()
+        });
+
+        if (currentAdminData.role !== SUPERADMIN_ROLE) {
+            const nuevoUsado = (currentAdminData.limiteUsadoHoy || 0) + monto;
+            await updateDoc(doc(db, 'admins', currentUser.uid), {
+                limiteUsadoHoy: nuevoUsado
+            });
+            currentAdminData.limiteUsadoHoy = nuevoUsado;
+            actualizarIndicadorLimite();
+        }
+
+        await registrarLog('RECARGA_APROBADA', {
+            recargaId: firebaseId,
+            usuario: uidReal,
+            monto,
+            aprobadoPor: currentUser.email
+        }, 'success');
+
+        alert(`Saldo de $${monto.toFixed(2)} acreditado correctamente`);
+    } catch (e) {
+        console.error(e);
+        alert('Error al aprobar: ' + e.message);
+    }
+};
+
+window.rechazarRecarga = async function(firebaseId) {
+    if (!tienePermiso('recargas')) {
+        alert('No tienes permiso para rechazar recargas');
+        return;
+    }
+    
+    try {
+        await updateDoc(doc(db, 'recargas', firebaseId), { 
+            estado: 'rechazada',
+            rechazadoPor: currentUser.uid,
+            rechazadoPorName: currentAdminData.name || currentUser.email,
+            fechaRechazo: new Date().toISOString()
+        });
+        
+        await registrarLog('RECARGA_RECHAZADA', {
+            recargaId: firebaseId
+        }, 'warning');
+        
+        alert('Recarga rechazada');
+    } catch (e) {
+        console.error(e);
+        alert('Error al rechazar: ' + e.message);
+    }
+};
+
+// ============ GESTIÓN DE SALDO ============
+
+function actualizarIndicadorLimite() {
+    if (!currentAdminData || currentAdminData.role === SUPERADMIN_ROLE) return;
+    
+    const usado = currentAdminData.limiteUsadoHoy || 0;
+    const total = currentAdminData.limiteDiario || 100;
+    const restante = total - usado;
+    const porcentaje = (usado / total) * 100;
+    
+    document.getElementById('statLimite').textContent = `$${restante.toFixed(2)}`;
+    document.getElementById('limiteUsado').textContent = `$${usado.toFixed(2)}`;
+    document.getElementById('limiteTotal').textContent = `$${total.toFixed(2)}`;
+    
+    const progress = document.getElementById('limiteProgress');
+    progress.style.width = `${Math.min(porcentaje, 100)}%`;
+    
+    if (porcentaje > 90) {
+        progress.className = 'limite-progress danger';
+    } else if (porcentaje > 70) {
+        progress.className = 'limite-progress warning';
+    } else {
+        progress.className = 'limite-progress';
+    }
+}
+
+window.agregarSaldo = async function() {
+    await cambiarSaldo('agregar');
+};
+
+window.descontarSaldo = async function() {
+    await cambiarSaldo('quitar');
+};
+
+async function cambiarSaldo(tipo) {
+    if (!tienePermiso('saldo')) {
+        alert('No tienes permiso para gestionar saldo');
+        return;
+    }
+    
+    try {
+        const idInput = document.getElementById('idUsuarioSaldo').value.trim();
+        const monto = parseFloat(document.getElementById('montoSaldo').value);
+        const motivo = document.getElementById('motivoSaldo').value.trim();
+
+        if (!idInput || !monto || monto <= 0) {
+            alert('Completa todos los campos con valores válidos');
+            return;
+        }
+
+        if (currentAdminData.role !== SUPERADMIN_ROLE) {
+            const limiteRestante = currentAdminData.limiteDiario - (currentAdminData.limiteUsadoHoy || 0);
+            if (monto > limiteRestante) {
+                alert(`Has excedido tu límite diario. Restante: $${limiteRestante.toFixed(2)}`);
+                return;
+            }
+        }
+
+        let uid = null;
+        let userData = null;
+
+        if (idInput.includes('@')) {
+            const snap = await getDocs(query(collection(db, 'usuarios'), where('email', '==', idInput)));
+            if (!snap.empty) {
+                uid = snap.docs[0].id;
+                userData = snap.docs[0].data();
+            }
+        } else {
+            const snap = await getDocs(query(collection(db, 'usuarios'), where('userId', '==', idInput)));
+            if (!snap.empty) {
+                uid = snap.docs[0].id;
+                userData = snap.docs[0].data();
+            } else {
+                const docSnap = await getDoc(doc(db, 'usuarios', idInput));
+                if (docSnap.exists()) {
+                    uid = idInput;
+                    userData = docSnap.data();
+                }
+            }
+        }
+
+        if (!uid) {
+            alert('Usuario no encontrado');
+            return;
+        }
+
+        const ref = doc(db, 'usuarios', uid);
+        const saldoActual = parseFloat(userData.saldo || 0);
+        let nuevoSaldo;
+
+        if (tipo === 'quitar') {
+            if (saldoActual < monto) {
+                alert('El usuario no tiene saldo suficiente');
+                return;
+            }
+            nuevoSaldo = parseFloat((saldoActual - monto).toFixed(2));
+        } else {
+            nuevoSaldo = parseFloat((saldoActual + monto).toFixed(2));
+        }
+
+        await updateDoc(ref, { saldo: nuevoSaldo });
+        
+        if (currentAdminData.role !== SUPERADMIN_ROLE && tipo === 'agregar') {
+            const nuevoUsado = (currentAdminData.limiteUsadoHoy || 0) + monto;
+            await updateDoc(doc(db, 'admins', currentUser.uid), {
+                limiteUsadoHoy: nuevoUsado
+            });
+            currentAdminData.limiteUsadoHoy = nuevoUsado;
+            actualizarIndicadorLimite();
+        }
+        
+        await registrarLog(tipo === 'agregar' ? 'SALDO_AGREGADO' : 'SALDO_DESCONTADO', {
+            usuario: uid,
+            usuarioEmail: userData.email,
+            monto,
+            motivo: motivo || 'Sin motivo'
+        }, tipo === 'agregar' ? 'success' : 'warning');
+        
+        document.getElementById('idUsuarioSaldo').value = '';
+        document.getElementById('montoSaldo').value = '';
+        document.getElementById('motivoSaldo').value = '';
+        
+        alert(`Saldo ${tipo === 'agregar' ? 'agregado' : 'descontado'} correctamente. Nuevo saldo: $${nuevoSaldo.toFixed(2)}`);
+    } catch (e) {
+        console.error(e);
+        alert('Error al actualizar saldo: ' + e.message);
+    }
+}
+
+// ============ BÚSQUEDA DE USUARIOS ============
+
+window.buscarUsuario = async function() {
+    const input = document.getElementById('buscarUsuarioInput').value.trim();
+    const container = document.getElementById('resultadoBusquedaUsuario');
+    
+    if (!input) {
+        alert('Ingresa un ID o email');
+        return;
+    }
+    
+    container.innerHTML = '<div class="loading"><i class="fas fa-circle-notch fa-spin"></i><p>Buscando...</p></div>';
+    
+    try {
+        let usuario = null;
+        let uid = null;
+        
+        if (input.includes('@')) {
+            const snap = await getDocs(query(collection(db, 'usuarios'), where('email', '==', input)));
+            if (!snap.empty) {
+                usuario = snap.docs[0].data();
+                uid = snap.docs[0].id;
+            }
+        } else {
+            const snap = await getDocs(query(collection(db, 'usuarios'), where('userId', '==', input)));
+            if (!snap.empty) {
+                usuario = snap.docs[0].data();
+                uid = snap.docs[0].id;
+            } else {
+                const docSnap = await getDoc(doc(db, 'usuarios', input));
+                if (docSnap.exists()) {
+                    usuario = docSnap.data();
+                    uid = input;
+                }
+            }
+        }
+        
+        if (!usuario) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-user-slash"></i>
+                    <p>Usuario no encontrado</p>
+                </div>
+            `;
+            return;
+        }
+        
+        const comprasSnap = await getDocs(query(collection(db, 'compras'), where('uid', '==', uid)));
+        const comprasUsuario = comprasSnap.docs.map(d => d.data());
+        
+        const recargasSnap = await getDocs(query(collection(db, 'recargas'), where('uid', '==', uid)));
+        const recargasUsuario = recargasSnap.docs.map(d => d.data());
+        
+        const totalGastado = comprasUsuario.reduce((sum, c) => sum + (parseFloat(c.total) || 0), 0);
+        const totalRecargado = recargasUsuario
+            .filter(r => r.estado === 'aprobada')
+            .reduce((sum, r) => sum + (parseFloat(r.montoAprobado || r.monto) || 0), 0);
+        
+        container.innerHTML = `
+            <div class="user-info-card">
+                <div class="user-info-header">
+                    <div class="user-info-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info-details">
+                        <h3>${usuario.name || 'Sin nombre'}</h3>
+                        <p>${usuario.email}</p>
+                        <div class="tag-container" style="margin-top: 8px;">
+                            <span class="tag tag-info">ID: ${usuario.userId || 'N/A'}</span>
+                            <span class="tag ${usuario.role === 'admin' ? 'tag-warning' : 'tag-success'}">
+                                ${usuario.role === 'admin' ? 'ADMIN' : 'USUARIO'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-info-grid">
+                    <div class="user-info-item">
+                        <label>Saldo Actual</label>
+                        <value style="color: var(--accent);">$${parseFloat(usuario.saldo || 0).toFixed(2)}</value>
+                    </div>
+                    <div class="user-info-item">
+                        <label>Total Recargado</label>
+                        <value style="color: var(--info);">$${totalRecargado.toFixed(2)}</value>
+                    </div>
+                    <div class="user-info-item">
+                        <label>Total Gastado</label>
+                        <value style="color: var(--danger);">$${totalGastado.toFixed(2)}</value>
+                    </div>
+                    <div class="user-info-item">
+                        <label>Compras Realizadas</label>
+                        <value>${comprasUsuario.length}</value>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 24px;">
+                    <h4 style="margin-bottom: 12px; font-size: 16px;">Últimas Compras</h4>
+                    ${comprasUsuario.slice(0, 3).map(c => `
+                        <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 10px; margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>${c.producto}</span>
+                                <span style="color: var(--accent);">$${parseFloat(c.total).toFixed(2)}</span>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-muted);">${c.fecha || new Date(c.timestamp).toLocaleDateString()}</div>
+                        </div>
+                    `).join('') || '<p style="color: var(--text-muted);">Sin compras</p>'}
+                </div>
+                
+                ${currentAdminData.role === SUPERADMIN_ROLE ? `
+                <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+                    <h4 style="margin-bottom: 12px; font-size: 16px;">Acciones de SuperAdmin</h4>
+                    <div class="flex">
+                        <button class="btn btn-warning" onclick="convertirAdmin('${uid}')">
+                            <i class="fas fa-user-shield"></i> Hacer Admin
+                        </button>
+                        <button class="btn btn-danger" onclick="banearUsuario('${uid}')">
+                            <i class="fas fa-ban"></i> Banear
+                        </button>
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+        `;
+    } catch (e) {
+        console.error(e);
+        container.innerHTML = '<p style="color: var(--danger);">Error al buscar usuario</p>';
+    }
+};
+
+window.convertirAdmin = async function(uid) {
+    if (!confirm('¿Convertir este usuario en administrador?')) return;
+    
+    try {
+        await updateDoc(doc(db, 'usuarios', uid), { role: 'admin' });
+        
+        const adminData = {
+            uid: uid,
+            role: ADMIN_ROLE,
+            permisos: { agregarStock: true },
+            limiteDiario: 100,
+            limiteUsadoHoy: 0,
+            createdAt: new Date().toISOString(),
+            createdBy: currentUser.uid
+        };
+        
+        await setDoc(doc(db, 'admins', uid), adminData);
+        
+        await registrarLog('USUARIO_PROMOVIDO', { usuario: uid }, 'success');
+        
+        alert('Usuario convertido en admin');
+        buscarUsuario();
+    } catch (e) {
+        alert('Error: ' + e.message);
+    }
+};
+
+window.banearUsuario = async function(uid) {
+    if (!confirm('¿Banear permanentemente este usuario?')) return;
+    
+    try {
+        await updateDoc(doc(db, 'usuarios', uid), { 
+            estado: 'baneado',
+            baneadoPor: currentUser.uid,
+            fechaBaneo: new Date().toISOString()
+        });
+        
+        await registrarLog('USUARIO_BANEADO', { usuario: uid }, 'danger');
+        
+        alert('Usuario baneado');
+        buscarUsuario();
+    } catch (e) {
+        alert('Error: ' + e.message);
+    }
+};
+
+// ============ GESTIÓN DE ADMINS ============
+
+window.togglePermiso = function(element, permiso) {
+    const icon = element.querySelector('.fa-check-circle');
+    const isActive = element.classList.contains('activo');
+    
+    if (isActive) {
+        element.classList.remove('activo');
+        icon.style.opacity = '0';
+        permisosNuevoAdmin[permiso] = false;
+    } else {
+        element.classList.add('activo');
+        icon.style.opacity = '1';
+        permisosNuevoAdmin[permiso] = true;
+    }
+};
+
+window.crearNuevoAdmin = async function() {
+    if (currentAdminData.role !== SUPERADMIN_ROLE) {
+        alert('Solo el admin principal puede crear admins');
+        return;
+    }
+    
+    const email = document.getElementById('nuevoAdminEmail').value;
+    const pass = document.getElementById('nuevoAdminPass').value;
+    const nombre = document.getElementById('nuevoAdminNombre').value;
+    const limite = parseFloat(document.getElementById('nuevoAdminLimite').value) || 100;
+    
+    if (!email || !pass || !nombre) {
+        alert('Completa todos los campos');
+        return;
+    }
+    
+    if (pass.length < 6) {
+        alert('La contraseña debe tener al menos 6 caracteres');
+        return;
+    }
+    
+    // CORRECCIÓN DEL BUG: Solo usar los permisos seleccionados, sin defaults
+    // Eliminar todos los permisos que no fueron explícitamente seleccionados
+    const permisosFinales = {};
+    
+    // Solo incluir permisos que fueron activados explícitamente
+    Object.keys(permisosNuevoAdmin).forEach(key => {
+        if (permisosNuevoAdmin[key] === true) {
+            permisosFinales[key] = true;
+        }
+    });
+    
+    // Si no se seleccionó ningún permiso, mostrar error
+    if (Object.keys(permisosFinales).length === 0) {
+        alert('Debes seleccionar al menos un permiso');
+        return;
+    }
+    
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+        const user = userCredential.user;
+        
+        await setDoc(doc(db, 'usuarios', user.uid), {
+            uid: user.uid,
+            userId: Date.now().toString().slice(-6) + Math.floor(10 + Math.random() * 90),
+            email: email,
+            name: nombre,
+            phone: '',
+            photoURL: null,
+            saldo: 0,
+            role: 'admin',
+            createdAt: new Date().toISOString()
+        });
+        
+        await setDoc(doc(db, 'admins', user.uid), {
+            uid: user.uid,
+            email: email,
+            name: nombre,
+            role: ADMIN_ROLE,
+            permisos: permisosFinales,  // Solo los permisos seleccionados explícitamente
+            limiteDiario: limite,
+            limiteUsadoHoy: 0,
+            ultimaActualizacionLimite: new Date().toDateString(),
+            estado: 'activo',
+            createdAt: new Date().toISOString(),
+            createdBy: currentUser.uid
+        });
+        
+        await updateProfile(user, { displayName: nombre });
+        
+        await registrarLog('ADMIN_CREADO', {
+            nuevoAdmin: email,
+            permisos: permisosFinales,
+            limiteDiario: limite
+        }, 'success');
+        
+        alert('Nuevo admin creado correctamente con permisos: ' + Object.keys(permisosFinales).join(', '));
+        
+        document.getElementById('nuevoAdminEmail').value = '';
+        document.getElementById('nuevoAdminPass').value = '';
+        document.getElementById('nuevoAdminNombre').value = '';
+        document.getElementById('nuevoAdminLimite').value = '100';
+        document.querySelectorAll('.permiso-item').forEach(el => {
+            el.classList.remove('activo');
+            el.querySelector('.fa-check-circle').style.opacity = '0';
+        });
+        permisosNuevoAdmin = {};
+    } catch (error) {
+        console.error(error);
+        alert('Error: ' + error.message);
+    }
+};
+
+window.editarAdmin = async function(adminId) {
+    if (currentAdminData.role !== SUPERADMIN_ROLE) {
+        alert('Solo el admin principal puede editar admins');
+        return;
+    }
+    
+    const admin = admins.find(a => a.uid === adminId);
+    if (!admin) return;
+    
+    const nuevoLimite = prompt('Nuevo límite diario (actual: $' + (admin.limiteDiario || 100) + '):', admin.limiteDiario || 100);
+    if (nuevoLimite === null) return;
+    
+    try {
+        await updateDoc(doc(db, 'admins', adminId), {
+            limiteDiario: parseFloat(nuevoLimite) || 100
+        });
+        
+        await registrarLog('ADMIN_EDITADO', {
+            admin: admin.email,
+            nuevoLimite: parseFloat(nuevoLimite)
+        }, 'warning');
+        
+        alert('Límite actualizado');
+    } catch (e) {
+        alert('Error: ' + e.message);
+    }
+};
+
+window.cambiarEstadoAdmin = async function(adminId, nuevoEstado) {
+    if (currentAdminData.role !== SUPERADMIN_ROLE) {
+        alert('Solo el admin principal puede cambiar estados');
+        return;
+    }
+    
+    if (adminId === currentUser.uid) {
+        alert('No puedes desactivarte a ti mismo');
+        return;
+    }
+    
+    try {
+        await updateDoc(doc(db, 'admins', adminId), { estado: nuevoEstado });
+        
+        await registrarLog('ADMIN_' + (nuevoEstado === 'activo' ? 'ACTIVADO' : 'DESACTIVADO'), {
+            adminId
+        }, nuevoEstado === 'activo' ? 'success' : 'danger');
+        
+        alert('Estado actualizado');
+    } catch (e) {
+        alert('Error: ' + e.message);
+    }
+};
+
+// ============ RENDERIZADO ============
+
+function renderProductos() {
+    const container = document.getElementById('listaProductos');
+    
+    if (!productos.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-box-open"></i>
+                <p>No hay productos registrados</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    productos.forEach((p, i) => {
+        const puedeEditar = tienePermiso('productos') || currentAdminData.permisos?.editarTodo;
+        
+        let preciosHTML = '';
+        p.precios.forEach((pr, x) => {
+            const stock = pr.keys ? pr.keys.length : 0;
+            const stockClass = stock === 0 ? 'stock-empty' : stock < 5 ? 'stock-warning' : 'stock-ok';
+            const vipBadge = p.vip ? '<span class="stock-badge" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-left: 8px;"><i class="fas fa-crown"></i> VIP</span>' : '';
+            const inestableBadge = p.inestable ? '<span class="stock-badge" style="background: rgba(251,191,36,0.2); color: var(--warning); margin-left: 8px;"><i class="fas fa-exclamation-triangle"></i> INESTABLE</span>' : '';
+            
+            preciosHTML += `
+                <div style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                        <span style="font-weight: 600; color: var(--text-primary);">${pr.dias} días - $${pr.precio.toFixed(2)} ${vipBadge} ${inestableBadge}</span>
+                        <span class="stock-badge ${stockClass}">
+                            <i class="fas fa-${stock > 0 ? 'check' : 'times'}"></i>
+                            ${stock} llaves
+                        </span>
+                    </div>
+                    ${puedeEditar ? `<textarea class="input" id="keys${i}_${x}" rows="3" 
+                        placeholder="Agregar llaves separadas por coma...">${pr.keys ? pr.keys.join(', ') : ''}</textarea>` : ''}
+                </div>
+            `;
+        });
+
+        const tagsHTML = (p.tags || []).map(t => `<span class="tag tag-info" style="font-size: 11px;">${t}</span>`).join('');
+
+        html += `
+            <div class="card animate-in ${p.inestable ? 'producto-inestable' : ''}">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">${p.nombre} ${p.vip ? '<i class="fas fa-crown" style="color: #ffd700;"></i>' : ''}</div>
+                        <div class="card-meta">ID: ${p.firebaseId.substring(0, 8)}... • Creado por: ${p.createdByName || 'Desconocido'}</div>
+                        <div class="tag-container">${tagsHTML}</div>
+                    </div>
+                </div>
+                <img src="${p.img}" class="card-img" onerror="this.style.display='none'">
+                <p style="color: var(--text-secondary); margin-bottom: 16px;">${p.desc}</p>
+                
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">
+                        Stock de Llaves
+                    </div>
+                    ${preciosHTML}
+                </div>
+
+                ${puedeEditar ? `
+                <div class="card-actions">
+                    <button class="btn btn-success" onclick="guardarCambios(${i})">
+                        <i class="fas fa-save"></i> Guardar Stock
+                    </button>
+                    <button class="btn btn-warning" onclick="editarProducto('${p.firebaseId}')">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <button class="btn btn-danger" onclick="eliminarProducto('${p.firebaseId}')">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+                ` : '<p style="color: var(--text-muted); font-size: 13px;"><i class="fas fa-lock"></i> Solo lectura</p>'}
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+// NUEVA FUNCIÓN: Renderizar vista solo de stock (para permiso agregarStock)
+function renderStockSolo() {
+    const container = document.getElementById('listaStockSolo');
+    
+    if (!productos.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-box-open"></i>
+                <p>No hay productos registrados</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    productos.forEach((p, i) => {
+        let preciosHTML = '';
+        p.precios.forEach((pr, x) => {
+            const stock = pr.keys ? pr.keys.length : 0;
+            const stockClass = stock === 0 ? 'stock-empty' : stock < 5 ? 'stock-warning' : 'stock-ok';
+            
+            preciosHTML += `
+                <div style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                        <span style="font-weight: 600; color: var(--text-primary);">${pr.dias} días - $${pr.precio.toFixed(2)}</span>
+                        <span class="stock-badge ${stockClass}">
+                            <i class="fas fa-box"></i>
+                            ${stock} llaves
+                        </span>
+                    </div>
+                    <textarea class="input" id="stockKeys${i}_${x}" rows="3" 
+                        placeholder="Agregar llaves separadas por coma...">${pr.keys ? pr.keys.join(', ') : ''}</textarea>
+                </div>
+            `;
+        });
+
+        html += `
+            <div class="card animate-in">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title"><i class="fas fa-box"></i> ${p.nombre}</div>
+                        <div class="card-meta">ID: ${p.firebaseId.substring(0, 8)}...</div>
+                    </div>
+                </div>
+                <img src="${p.img}" class="card-img" style="height: 150px;" onerror="this.style.display='none'">
+                
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">
+                        Agregar Llaves
+                    </div>
+                    ${preciosHTML}
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn btn-success btn-block" onclick="guardarStockSolo('${p.firebaseId}', ${i})">
+                        <i class="fas fa-plus"></i> Agregar Stock
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+// NUEVA FUNCIÓN: Guardar stock desde vista solo stock
+window.guardarStockSolo = async function(productoId, index) {
+    try {
+        const producto = productos.find(p => p.firebaseId === productoId);
+        if (!producto) return;
+        
+        const nuevasKeys = [];
+        
+        producto.precios.forEach((p, x) => {
+            const val = document.getElementById(`stockKeys${index}_${x}`).value;
+            const keysArray = val.split(',').map(y => y.trim()).filter(Boolean);
+            nuevasKeys.push({
+                dias: p.dias,
+                precio: p.precio,
+                keys: keysArray
+            });
+        });
+
+        await updateDoc(doc(db, 'productos', productoId), { 
+            precios: nuevasKeys,
+            updatedAt: Date.now(),
+            updatedBy: currentUser.uid
+        });
+        
+        await registrarLog('STOCK_AGREGADO', {
+            productoId: productoId,
+            nombre: producto.nombre
+        }, 'success');
+        
+        alert('Stock agregado correctamente');
+    } catch (e) {
+        console.error(e);
+        alert('Error al agregar stock: ' + e.message);
+    }
+};
+
+function renderRecargas() {
+    const container = document.getElementById('listaRecargas');
+    const pendientes = recargas.filter(r => r.estado === 'pendiente');
+
+    if (!pendientes.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-check-circle" style="color: var(--accent);"></i>
+                <p>No hay recargas pendientes</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    pendientes.forEach((r, i) => {
+        const userData = usuarios[r.uid] || usuarios[r.userId] || {};
+        const userName = userData.name || userData.email || 'Usuario ' + (r.userId || r.uid || '').substring(0, 6);
+        const userId = userData.userId || r.userId || '---';
+        
+        html += `
+            <div class="card animate-in">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title"><i class="fas fa-user"></i> ${userName}</div>
+                        <div class="card-meta">${r.fecha || new Date(r.timestamp).toLocaleString()} • ID: ${userId}</div>
+                    </div>
+                    <span class="stock-badge" style="background: rgba(251,191,36,0.1); color: var(--warning);">
+                        $${parseFloat(r.monto).toFixed(2)}
+                    </span>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 10px;">
+                        <div style="font-size: 12px; color: var(--text-muted);">País</div>
+                        <div style="font-weight: 600; color: var(--text-primary);">${r.paisNombre || r.pais || 'N/A'}</div>
+                    </div>
+                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 10px;">
+                        <div style="font-size: 12px; color: var(--text-muted);">Monto Solicitado</div>
+                        <div style="font-weight: 600; color: var(--accent);">$${parseFloat(r.monto).toFixed(2)} USD</div>
+                    </div>
+                </div>
+
+                ${r.comprobante ? `
+                <img src="${r.comprobante}" class="card-img" style="height: 300px; cursor: pointer; object-fit: contain; background: var(--bg-tertiary);" 
+                    onclick="window.open('${r.comprobante}', '_blank')" title="Click para ampliar">
+                ` : '<p style="color: var(--text-muted); margin-bottom: 16px;"><i class="fas fa-image"></i> Sin comprobante</p>'}
+
+                ${r.notas ? `<p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;"><i class="fas fa-comment"></i> ${r.notas}</p>` : ''}
+
+                ${tienePermiso('recargas') ? `
+                <div class="input-group">
+                    <label class="input-label">Monto exacto a acreditar (USD)</label>
+                    <input type="number" class="input" id="saldoCustom${i}" placeholder="0.00" step="0.01" value="${r.monto}">
+                </div>
+
+                <div class="flex">
+                    <button class="btn btn-success btn-block" onclick="aprobarRecarga('${r.firebaseId}', ${i}, '${r.uid || r.userId}')">
+                        <i class="fas fa-check"></i> Aprobar
+                    </button>
+                    <button class="btn btn-danger btn-block" onclick="rechazarRecarga('${r.firebaseId}')">
+                        <i class="fas fa-times"></i> Rechazar
+                    </button>
+                </div>
+                ` : '<p style="color: var(--text-muted); font-size: 13px;"><i class="fas fa-lock"></i> Sin permisos para gestionar</p>'}
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function renderCompras() {
+    const container = document.getElementById('listaCompras');
+    
+    if (!compras.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-shopping-basket"></i>
+                <p>No hay compras registradas</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    compras.slice(0, 50).forEach(c => {
+        const userData = usuarios[c.uid] || usuarios[c.userId] || {};
+        const userName = userData.name || userData.email || 'Usuario ' + (c.userId || c.uid || '').substring(0, 6);
+        
+        html += `
+            <div class="card animate-in">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">${c.producto}</div>
+                        <div class="card-meta"><i class="fas fa-user"></i> ${userName}</div>
+                    </div>
+                    <span class="stock-badge stock-ok">$${parseFloat(c.total).toFixed(2)}</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 12px; color: var(--text-muted);">Días</div>
+                        <div style="font-weight: 700; color: var(--accent);">${c.dias}</div>
+                    </div>
+                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 12px; color: var(--text-muted);">Total</div>
+                        <div style="font-weight: 700; color: var(--accent);">$${parseFloat(c.total).toFixed(2)}</div>
+                    </div>
+                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 12px; color: var(--text-muted);">Fecha</div>
+                        <div style="font-weight: 600; font-size: 13px;">${c.fecha || new Date(c.timestamp).toLocaleDateString()}</div>
+                    </div>
+                </div>
+                <div class="key-box">${c.key}</div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function renderAdmins() {
+    const container = document.getElementById('listaAdmins');
+    
+    if (!admins.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-users"></i>
+                <p>No hay admins registrados</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    admins.forEach(a => {
+        const isMain = a.email === ADMIN_PRINCIPAL;
+        const isSuperAdmin = a.role === SUPERADMIN_ROLE;
+        const puedeEditar = currentAdminData.role === SUPERADMIN_ROLE && !isMain;
+        
+        const permisosHTML = a.permisos ? Object.entries(a.permisos)
+            .filter(([k, v]) => v === true)
+            .map(([k]) => `<span class="tag tag-success" style="font-size: 10px; padding: 2px 8px;">${k}</span>`)
+            .join('') : '';
+        
+        html += `
+            <div class="card animate-in">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="width: 48px; height: 48px; background: ${isSuperAdmin ? 'linear-gradient(135deg, #ff6b35, #f7931e)' : 'linear-gradient(135deg, var(--accent), var(--accent-dark))'}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000;">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; color: var(--text-primary);">${a.name || 'Sin nombre'}</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">${a.email}</div>
+                        <div style="margin-top: 4px;">
+                            ${isSuperAdmin ? '<span class="rango-badge rango-superadmin" style="font-size: 10px;"><i class="fas fa-crown"></i> PRINCIPAL</span>' : 
+                              a.estado === 'inactivo' ? '<span class="tag tag-danger" style="font-size: 10px;">INACTIVO</span>' : 
+                              '<span class="rango-badge rango-admin" style="font-size: 10px;">ADMIN</span>'}
+                            ${permisosHTML}
+                        </div>
+                        ${!isSuperAdmin ? `<div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Límite: $${a.limiteDiario || 100}/día • Usado hoy: $${a.limiteUsadoHoy || 0}</div>` : ''}
+                    </div>
+                    ${puedeEditar ? `
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-warning btn-sm" onclick="editarAdmin('${a.uid}')" title="Editar límite">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn ${a.estado === 'inactivo' ? 'btn-success' : 'btn-danger'} btn-sm" onclick="cambiarEstadoAdmin('${a.uid}', '${a.estado === 'inactivo' ? 'activo' : 'inactivo'}')" title="${a.estado === 'inactivo' ? 'Activar' : 'Desactivar'}">
+                            <i class="fas fa-${a.estado === 'inactivo' ? 'check' : 'ban'}"></i>
+                        </button>
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function renderLogs() {
+    const container = document.getElementById('listaLogs');
+    
+    if (!logs.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-history"></i>
+                <p>No hay registros de actividad</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    logs.slice(0, 100).forEach(log => {
+        const iconClass = log.tipo || 'info';
+        const iconMap = {
+            success: 'check-circle',
+            warning: 'exclamation-triangle',
+            danger: 'times-circle',
+            info: 'info-circle'
+        };
+        
+        const detalles = log.detalles ? JSON.parse(log.detalles) : {};
+        
+        html += `
+            <div class="log-entry">
+                <div class="log-icon ${iconClass}">
+                    <i class="fas fa-${iconMap[iconClass]}"></i>
+                </div>
+                <div class="log-content">
+                    <div class="log-title">${log.accion}</div>
+                    <div class="log-meta">
+                        Por: ${log.adminName || log.adminEmail || 'Desconocido'} • 
+                        ${new Date(log.timestamp).toLocaleString()}
+                    </div>
+                    ${Object.keys(detalles).length ? `
+                    <div style="margin-top: 8px; padding: 8px; background: var(--bg-tertiary); border-radius: 8px; font-size: 12px; color: var(--text-secondary);">
+                        ${Object.entries(detalles).map(([k, v]) => `${k}: ${v}`).join(' • ')}
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function renderUsuariosRecientes() {
+    const container = document.getElementById('listaUsuariosRecientes');
+    
+    const usuariosList = Object.entries(usuarios)
+        .filter(([id, u]) => u.userId)
+        .sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0))
+        .slice(0, 10);
+    
+    if (!usuariosList.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-users"></i>
+                <p>No hay usuarios registrados</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    usuariosList.forEach(([id, u]) => {
+        html += `
+            <div class="card animate-in" style="padding: 16px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 40px; height: 40px; background: var(--bg-tertiary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent);">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; color: var(--text-primary);">${u.name || 'Sin nombre'}</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">${u.email}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 12px; color: var(--accent); font-weight: 600;">ID: ${u.userId}</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">$${parseFloat(u.saldo || 0).toFixed(2)}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function actualizarStats() {
+    document.getElementById('statProductos').innerText = productos.length;
+    
+    const pendientes = recargas.filter(r => r.estado === 'pendiente');
+    document.getElementById('statRecargas').innerText = pendientes.length;
+    document.getElementById('badgeRecargas').innerText = pendientes.length;
+    document.getElementById('badgeRecargas').style.display = pendientes.length > 0 ? 'inline-flex' : 'none';
+    
+    document.getElementById('statCompras').innerText = compras.length;
+    
+    const totalUsuarios = Object.keys(usuarios).filter(k => usuarios[k].userId).length;
+    document.getElementById('statUsuarios').innerText = totalUsuarios;
+}
+
+function verificarStockBajo() {
+    const alertas = [];
+    productos.forEach(p => {
+        p.precios.forEach((pr, idx) => {
+            const stock = pr.keys ? pr.keys.length : 0;
+            if (stock < 3 && stock > 0) {
+                alertas.push({
+                    producto: p.nombre,
+                    dias: pr.dias,
+                    stock: stock
+                });
+            } else if (stock === 0) {
+                alertas.push({
+                    producto: p.nombre,
+                    dias: pr.dias,
+                    stock: 0,
+                    agotado: true
+                });
+            }
+        });
+    });
+    
+    const container = document.getElementById('alertasStock');
+    if (alertas.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-check-circle" style="color: var(--accent);"></i>
+                <p>Todo en orden</p>
+            </div>
+        `;
+    } else {
+        let html = '';
+        alertas.forEach(a => {
+            const icon = a.agotado ? 'times' : 'exclamation-triangle';
+            const color = a.agotado ? 'var(--danger)' : 'var(--warning)';
+            const texto = a.agotado ? 'AGOTADO' : `${a.stock} llaves`;
+            
+            html += `
+                <div class="card" style="border-left: 3px solid ${color}; animation: slideIn 0.3s ease;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <i class="fas fa-${icon}" style="color: ${color}; font-size: 20px;"></i>
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-primary);">${a.producto}</div>
+                            <div style="font-size: 13px; color: var(--text-muted);">
+                                ${a.dias} días - <span style="color: ${color}; font-weight: 600;">${texto}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+}
+
+// ============ INICIALIZACIÓN ============
+
+function iniciarApp() {
+    // Escuchar productos
+    onSnapshot(collection(db, 'productos'), snap => {
+        productos = snap.docs.map(d => ({ firebaseId: d.id, ...d.data() }));
+        renderProductos();
+        renderStockSolo(); // También actualizar vista de solo stock
+        actualizarStats();
+        verificarStockBajo();
+    });
+
+    // Escuchar compras
+    onSnapshot(query(collection(db, 'compras'), orderBy('timestamp', 'desc')), snap => {
+        compras = snap.docs.map(d => ({ firebaseId: d.id, ...d.data() }));
+        renderCompras();
+        actualizarStats();
+    });
+
+    // Escuchar recargas
+    onSnapshot(collection(db, 'recargas'), snap => {
+        recargas = snap.docs.map(d => ({ firebaseId: d.id, ...d.data() }));
+        renderRecargas();
+        actualizarStats();
+    });
+
+    // Escuchar usuarios
+    onSnapshot(collection(db, 'usuarios'), snap => {
+        usuarios = {};
+        snap.forEach(d => { 
+            usuarios[d.id] = d.data();
+            if (d.data().userId) {
+                usuarios[d.data().userId] = d.data();
+            }
+        });
+        actualizarStats();
+        renderUsuariosRecientes();
+    });
+
+    // Escuchar admins
+    onSnapshot(collection(db, 'admins'), snap => {
+        admins = snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+        renderAdmins();
+    });
+
+    // Escuchar logs (solo si tiene permiso)
+    if (tienePermiso('logs')) {
+        onSnapshot(query(collection(db, 'logs'), orderBy('timestamp', 'desc'), limit(100)), snap => {
+            logs = snap.docs.map(d => d.data());
+            renderLogs();
+        });
+    } else {
+        document.getElementById('listaLogs').innerHTML = `
+            <div class="access-denied">
+                <i class="fas fa-lock"></i>
+                <h3>Acceso Denegado</h3>
+                <p>No tienes permiso para ver los logs</p>
+            </div>
+        `;
+    }
+}
+
+// Cerrar modal al hacer click fuera
+document.getElementById('modalEditar')?.addEventListener('click', function(e) {
+    if (e.target === this) cerrarModal();
+});
+</script>
+</body>
+</html>
