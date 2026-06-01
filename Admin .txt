@@ -1812,6 +1812,9 @@ textarea {
                 <i class="fas fa-wallet"></i> Recargas
                 <span class="tab-badge" id="badgeRecargas" style="display: none;">0</span>
             </button>
+            <button class="tab" onclick="switchTab('notificaciones')" data-tab="notificaciones">
+                <i class="fas fa-bell"></i> Notificaciones
+            </button>
             <button class="tab" onclick="switchTab('compras')" data-tab="compras">
                 <i class="fas fa-shopping-cart"></i> Compras
             </button>
@@ -1939,6 +1942,16 @@ textarea {
                 </div>
 
                 <div class="input-group">
+                    <label class="input-label">Nombre de archivo descargable</label>
+                    <input id="downloadFileName" class="input" placeholder="clave-{{nombre}}.txt">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Plantilla de archivo descargable</label>
+                    <textarea id="downloadTemplate" class="input" placeholder="Llave: {{key}}\nProducto: {{nombre}}\nDías: {{dias}}\nGracias por comprar en xOrochiModz."></textarea>
+                    <span class="input-label" style="font-size:12px;color:var(--text-secondary);margin-top:6px;display:block;">Usa {{key}}, {{nombre}} y {{dias}} para personalizar el archivo.</span>
+                </div>
+
+                <div class="input-group">
                     <label class="toggle-switch">
                         <input type="checkbox" id="esVip">
                         <span class="toggle-slider"></span>
@@ -2019,6 +2032,39 @@ textarea {
                 <div class="loading">
                     <i class="fas fa-circle-notch fa-spin"></i>
                     <p>Cargando recargas...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificaciones Section -->
+    <div class="content-section" id="tab-notificaciones">
+        <div class="grid">
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-bell"></i> Enviar Notificación</div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Título</label>
+                    <input id="notifyTitle" class="input" placeholder="Ej: Recarga aprobada" />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Mensaje</label>
+                    <textarea id="notifyMessage" class="input" placeholder="Ej: Tu recarga fue aprobada y tu saldo se actualizó."></textarea>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="enviarNotificacion()">
+                    <i class="fas fa-paper-plane"></i> Enviar a todos los usuarios
+                </button>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-title"><i class="fas fa-list"></i> Notificaciones recientes</div>
+                </div>
+                <div id="listaNotificaciones">
+                    <div class="loading">
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                        <p>Cargando notificaciones...</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2297,6 +2343,16 @@ textarea {
         <div class="input-group">
             <label class="input-label">Etiquetas (separadas por coma)</label>
             <input id="editTags" class="input" placeholder="tag1, tag2, tag3">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">Nombre de archivo descargable</label>
+            <input id="editDownloadFileName" class="input" placeholder="clave-{{nombre}}.txt">
+        </div>
+        <div class="input-group">
+            <label class="input-label">Plantilla de archivo descargable</label>
+            <textarea id="editDownloadTemplate" class="input" placeholder="Llave: {{key}}\nProducto: {{nombre}}\nDías: {{dias}}\nGracias por comprar en xOrochiModz."></textarea>
+            <span class="input-label" style="font-size:12px;color:var(--text-secondary);margin-top:6px;display:block;">Usa {{key}}, {{nombre}} y {{dias}} para personalizar el archivo.</span>
         </div>
 
         <div class="input-group">
@@ -2622,6 +2678,65 @@ async function registrarLog(accion, detalles = {}, tipo = 'info') {
     }
 }
 
+async function enviarNotificacion() {
+    const title = document.getElementById('notifyTitle').value.trim();
+    const message = document.getElementById('notifyMessage').value.trim();
+
+    if (!title || !message) {
+        alert('Completa el título y el mensaje de la notificación.');
+        return;
+    }
+
+    try {
+        await addDoc(collection(db, 'notifications'), {
+            title,
+            message,
+            timestamp: Date.now(),
+            adminUid: currentUser.uid,
+            adminName: currentAdminData.name || currentUser.email
+        });
+
+        await registrarLog('NOTIFICACION_ENVIADA', {
+            title,
+            message
+        }, 'success');
+
+        document.getElementById('notifyTitle').value = '';
+        document.getElementById('notifyMessage').value = '';
+        alert('Notificación enviada correctamente.');
+    } catch (error) {
+        console.error(error);
+        alert('Error enviando notificación: ' + (error.message || 'error desconocido'));
+    }
+}
+
+function renderNotificacionesAdmin(notifications = []) {
+    const list = document.getElementById('listaNotificaciones');
+    if (!list) return;
+    if (notifications.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-bell-slash"></i>
+                <p>No hay notificaciones recientes</p>
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML = notifications.map(n => `
+        <div class="card" style="margin-bottom: 10px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <i class="fas fa-bell" style="color: var(--accent);"></i>
+                <div>
+                    <div style="font-weight:600; color: var(--text-primary);">${n.title}</div>
+                    <div style="font-size:13px; color: var(--text-secondary);">${n.message}</div>
+                    <div style="font-size:12px; color: var(--text-muted); margin-top:6px;">${n.time}</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
 // ============ TABS ============
 
 window.switchTab = function(tabName) {
@@ -2724,6 +2839,8 @@ window.agregarProducto = async function() {
         const nombre = document.getElementById('nombre').value.trim();
         const descripcion = document.getElementById('descripcion').value.trim();
         const imagen = document.getElementById('imagen').value.trim();
+        const downloadFileName = document.getElementById('downloadFileName').value.trim();
+        const downloadTemplate = document.getElementById('downloadTemplate').value.trim();
         const esVip = document.getElementById('esVip').checked;
         const esInestable = document.getElementById('esInestable').checked;
 
@@ -2763,6 +2880,8 @@ window.agregarProducto = async function() {
             vip: esVip,
             inestable: esInestable,
             tags: tagsActuales,
+            downloadFileName,
+            downloadTemplate,
             createdAt: Date.now(),
             createdBy: currentUser.uid,
             createdByName: currentAdminData.name || currentUser.email
@@ -2782,6 +2901,8 @@ window.agregarProducto = async function() {
         document.getElementById('imagen').value = '';
         document.getElementById('esVip').checked = false;
         document.getElementById('esInestable').checked = false;
+        document.getElementById('downloadFileName').value = '';
+        document.getElementById('downloadTemplate').value = '';
         document.getElementById('preview').classList.remove('show');
         document.getElementById('preciosBox').innerHTML = '';
         tagsActuales = [];
@@ -2815,6 +2936,8 @@ window.editarProducto = function(productoId) {
     document.getElementById('editImagen').value = producto.img;
     document.getElementById('editDescripcion').value = producto.desc;
     document.getElementById('editTags').value = (producto.tags || []).join(', ');
+    document.getElementById('editDownloadFileName').value = producto.downloadFileName || '';
+    document.getElementById('editDownloadTemplate').value = producto.downloadTemplate || '';
     document.getElementById('editEsVip').checked = producto.vip || false;
     document.getElementById('editEsInestable').checked = producto.inestable || false;
     
@@ -2874,6 +2997,8 @@ window.guardarEdicionProducto = async function() {
         const esVip = document.getElementById('editEsVip').checked;
         const esInestable = document.getElementById('editEsInestable').checked;
         const tags = document.getElementById('editTags').value.split(',').map(t => t.trim()).filter(Boolean);
+        const downloadFileName = document.getElementById('editDownloadFileName').value.trim();
+        const downloadTemplate = document.getElementById('editDownloadTemplate').value.trim();
         
         const precios = [];
         document.querySelectorAll('#editPreciosBox .precio-box').forEach(box => {
@@ -2897,6 +3022,8 @@ window.guardarEdicionProducto = async function() {
             vip: esVip,
             inestable: esInestable,
             tags,
+            downloadFileName,
+            downloadTemplate,
             updatedAt: Date.now(),
             updatedBy: currentUser.uid
         });
@@ -4110,6 +4237,20 @@ function iniciarApp() {
     onSnapshot(collection(db, 'admins'), snap => {
         admins = snap.docs.map(d => ({ uid: d.id, ...d.data() }));
         renderAdmins();
+    });
+
+    // Escuchar notificaciones
+    onSnapshot(query(collection(db, 'notifications'), orderBy('timestamp', 'desc'), limit(20)), snap => {
+        const notifications = snap.docs.map(d => {
+            const data = d.data();
+            return {
+                id: d.id,
+                title: data.title || 'Notificación',
+                message: data.message || '',
+                time: data.timestamp ? new Date(data.timestamp).toLocaleString() : new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+            };
+        });
+        renderNotificacionesAdmin(notifications);
     });
 
     // Escuchar logs (solo si tiene permiso)
