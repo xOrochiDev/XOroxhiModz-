@@ -361,12 +361,12 @@ overflow-y:auto;
 
 .auth-box{
 width:100%;
-    max-width:380px;
-    background:var(--card-bg);
-    border-radius:14px;
-    padding:28px 22px;
-    border:1px solid rgba(255,255,255,0.04);
-    box-shadow:0 8px 30px rgba(0,0,0,.45);
+max-width:420px;
+background:var(--bg-secondary);
+border-radius:32px;
+padding:40px 30px;
+border:1px solid var(--border);
+box-shadow:0 25px 80px rgba(0,0,0,.6);
 position:relative;
 overflow:hidden;
 }
@@ -382,49 +382,57 @@ background:linear-gradient(90deg,var(--accent),var(--accent-dark));
 }
 
 .auth-logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    justify-content:flex-start;
-    margin-bottom:18px;
+text-align:center;
+margin-bottom:30px;
 }
 
 .auth-logo i{
-    font-size:28px;
+font-size:48px;
 color:var(--accent);
 margin-bottom:15px;
 display:block;
 }
 
 .auth-logo h1{
-        font-size:18px;
-        font-weight:800;
-        color:var(--text-primary);
+font-size:32px;
+font-weight:900;
+background:linear-gradient(45deg,var(--text-primary),var(--accent));
+-webkit-background-clip:text; background-clip:text;
+color:transparent;
 }
 
 .auth-logo p{
-    display:none;
+color:var(--text-secondary);
+margin-top:8px;
+font-size:14px;
 }
 
 .auth-tabs{
-    display:flex; 
-    gap:8px; 
-    margin-bottom:18px;
+display:flex;
+gap:10px;
+margin-bottom:30px;
+background:var(--bg-tertiary);
+padding:6px;
+border-radius:16px;
 }
 
 .auth-tab{
-    flex:1; 
-    padding:10px; 
-    border-radius:10px; 
-    background:transparent; 
-    color:var(--text-secondary); 
-    font-weight:700; 
-    font-size:13px;
+flex:1;
+padding:14px;
+border:none;
+border-radius:12px;
+background:transparent;
+color:var(--text-secondary);
+font-weight:600;
+font-size:15px;
+cursor:pointer;
+transition:all .3s;
 }
 
 .auth-tab.active{
-    background:rgba(255,255,255,0.03); 
-    color:var(--text-primary);
+background:var(--accent);
+color:#000;
+box-shadow:0 4px 15px rgba(0,255,136,.3);
 }
 
 .auth-form{
@@ -437,7 +445,7 @@ display:block;
 }
 
 .input-group{
-    margin-bottom:14px;
+margin-bottom:20px;
 position:relative;
 }
 
@@ -451,15 +459,15 @@ font-size:18px;
 }
 
 .input-group input, .input-group select{
-    width:100%; 
-    padding:12px 14px 12px 44px; 
-    border:none; 
-    border-radius:10px; 
-    background:var(--card-bg); 
-    color:var(--text-primary); 
-    font-size:14px; 
-    border:1px solid rgba(255,255,255,0.04); 
-    transition:all .18s;
+width:100%;
+padding:16px 16px 16px 50px;
+border:none;
+border-radius:16px;
+background:var(--bg-tertiary);
+color:var(--text-primary);
+font-size:15px;
+border:1px solid var(--border);
+transition:all .2s;
 }
 
 .input-group input:focus, .input-group select:focus{
@@ -472,20 +480,21 @@ color:var(--text-muted);
 }
 
 .auth-btn{
-    width:100%; 
-    padding:12px; 
-    border:none; 
-    border-radius:10px; 
-    background:linear-gradient(90deg,var(--accent),var(--accent-dark)); 
-    color:#000; 
-    font-size:14px; 
-    font-weight:800; 
-    cursor:pointer; 
-    margin-bottom:12px; 
-    display:flex; 
-    align-items:center; 
-    justify-content:center; 
-    gap:10px;
+width:100%;
+padding:18px;
+border:none;
+border-radius:16px;
+background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+color:#000;
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+margin-bottom:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+transition:transform .2s;
 }
 
 .auth-btn:hover{
@@ -1295,6 +1304,38 @@ color:var(--text-secondary);
 line-height:1.6;
 margin-bottom:15px;
 flex:1;
+}
+
+.product-tags{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-bottom:14px;
+}
+
+.product-tag{
+background:rgba(255,255,255,.08);
+color:var(--text-secondary);
+padding:6px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:600;
+}
+
+.product-unstable{
+position:absolute;
+top:18px;
+left:18px;
+background:rgba(255,93,93,.95);
+color:#fff;
+padding:8px 14px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+display:flex;
+align-items:center;
+gap:8px;
+box-shadow:0 10px 30px rgba(255,93,93,.22);
 }
 
 .product-meta{
@@ -3629,31 +3670,10 @@ font-size:20px;
 </button>
 </form>
 </div>
-<div style="display:flex;justify-content:center;margin-top:12px;gap:8px;">
-    <button class="about-btn" onclick="openAbout()">Acerca de xOrochi</button>
-</div>
 </div>
 </div>
 
-<!-- ABOUT MODAL -->
-<div class="about-modal" id="aboutModal" style="display:none;">
-    <div class="about-content">
-        <button class="close-about" onclick="closeAbout()">×</button>
-        <h2>Sobre xOrochiModz</h2>
-        <p class="muted">Marketplace privado para productos digitales premium.</p>
-        <h4>Quiénes somos</h4>
-        <p>Somos un equipo pequeño apasionado por la escena gaming y la seguridad digital. xOrochi nació para ofrecer un espacio confiable donde encontrar llaves y servicios premium con procesos verificados.</p>
-        <h4>Cómo empezamos</h4>
-        <p>Fundado en 2021 por entusiastas del gaming, empezamos como un proyecto comunitario y hemos crecido gracias a usuarios que confían en nuestras compras y reseñas.</p>
-        <h4>Créditos</h4>
-        <ul>
-            <li>Desarrollo: Equipo xOrochi</li>
-            <li>Diseño: Comunidad</li>
-            <li>Infra: Firebase</li>
-        </ul>
-        <div style="text-align:center;margin-top:12px;"><button class="auth-btn" onclick="closeAbout()">Cerrar</button></div>
-    </div>
-</div>
+<!-- MAIN APP (hidden until logged in) -->
 
 <!-- MAIN APP (hidden until logged in) -->
 <div id="mainApp" style="display:none">
@@ -4682,6 +4702,7 @@ let reviewRating=0;
 let reviewImages=[];
 let homeReviewRating=0;
 let notifications=[];
+let currentPurchaseInfo=null;
 let currentLanguage=localStorage.getItem('appLang')||'es';
 document.documentElement.lang=currentLanguage;
 
@@ -4726,6 +4747,25 @@ window.toggleNotifications=function(){
     if(menu.classList.contains('active')){
         renderNotifications();
     }
+}
+
+function listenNotifications(){
+    const qNot=query(collection(db,'notifications'),orderBy('timestamp','desc'));
+    onSnapshot(qNot,snap=>{
+        notifications=snap.docs.map(d=>{
+            const data=d.data();
+            return {
+                id:d.id,
+                title:data.title||'Notificación',
+                message:data.message||'',
+                time:data.timestamp?new Date(data.timestamp).toLocaleString():new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+            };
+        }).slice(0,6);
+        updateNotificationBadge();
+        renderNotifications();
+    },err=>{
+        console.error('Error cargando notificaciones:',err);
+    });
 }
 
 window.toggleLanguage=function(){
@@ -4924,11 +4964,23 @@ total:"Consultar"
 
 // AUTH FUNCTIONS
 window.switchAuthTab=function(evt,tab){
-const target = evt?.target || evt?.srcElement;
+let target = evt?.currentTarget || evt?.target || evt?.srcElement;
+if(target && target.tagName !== 'BUTTON'){
+    target = target.closest('button') || target;
+}
+
 document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
-document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('active'));
+document.querySelectorAll('.auth-form').forEach(f=>{
+    f.classList.remove('active');
+    f.style.display = 'none';
+});
+
 if(target) target.classList.add('active');
-document.getElementById(tab==='login'?'loginForm':'registerForm').classList.add('active');
+const activeForm = document.getElementById(tab==='login'?'loginForm':'registerForm');
+if(activeForm){
+    activeForm.classList.add('active');
+    activeForm.style.display = 'block';
+}
 };
 
 window.previewRegPhoto=function(input){
@@ -5305,6 +5357,7 @@ renderRecargasUsuario(recargas);
 cargarTransferencias();
 
 renderCountries();
+listenNotifications();
 }
 
 // REVIEWS SYSTEM
@@ -5681,15 +5734,19 @@ const totalKeys=p.precios.reduce((a,b)=>a+b.keys.length,0);
 const vipBadge=p.vip?`<div class="vip-badge"><i class="fas fa-crown"></i> VIP</div>`:'';
 const stockClass=totalKeys>10?'in-stock':totalKeys>0?'low-stock':'';
 const stockText=totalKeys>10?'Disponible':totalKeys>0?'Últimas unidades':'Agotado';
+const tagsHTML=(p.tags||[]).map(tag=>`<span class="product-tag">${tag}</span>`).join('');
+const unstableBadge=p.inestable?`<div class="product-unstable"><i class="fas fa-exclamation-triangle"></i> Inestable</div>`:'';
 return `
 <div class="product-card">
 ${vipBadge}
+${unstableBadge}
 <div class="product-img-container">
 <img loading="lazy" src="${p.img}" class="product-img">
 </div>
 <div class="product-info">
 <h3>${p.nombre}</h3>
 <p>${p.desc}</p>
+<div class="product-tags">${tagsHTML}</div>
 <div class="product-meta">
 <div class="price-sale">$${menor.toFixed(2)}</div>
 <div class="stock-info ${stockClass}"><i class="fas fa-circle"></i> ${stockText}</div>
@@ -6037,6 +6094,9 @@ return;
 const keys=data.keys.splice(0,cantidad);
 const keyEntregada=keys.join(" | ");
 
+const currentPlan = { producto: productoActual, dias: data.dias, precio: data.precio, cantidad, key:keyEntregada };
+currentPurchaseInfo = currentPlan;
+
 const compraData={
 userId:userData.userId,
 uid:currentUser.uid,
@@ -6071,11 +6131,23 @@ alert("Llave copiada");
 window.downloadKeyFile=function(){
 const key=document.getElementById('keyGenerada').innerText;
 if(!key) return;
-const blob=new Blob([key],{type:'text/plain'});
+const product=currentPurchaseInfo?.producto || productoActual;
+const fileNameTemplate=product?.downloadFileName || 'clave-xOrochiModz.txt';
+const fileName=fileNameTemplate
+    .replace(/\{\{\s*nombre\s*\}\}/gi, product?.nombre || 'xOrochi')
+    .replace(/\{\{\s*key\s*\}\}/gi, key)
+    .replace(/[^a-zA-Z0-9_\-\.]/g,'_');
+const template=product?.downloadTemplate || 'Llave: {{key}}\nProducto: {{nombre}}\nDías: {{dias}}\nGracias por comprar en xOrochiModz.';
+const content=template
+    .replace(/\{\{\s*nombre\s*\}\}/gi, product?.nombre || '')
+    .replace(/\{\{\s*key\s*\}\}/gi, key)
+    .replace(/\{\{\s*dias\s*\}\}/gi, currentPurchaseInfo?.dias?.toString() || '')
+    .replace(/\{\{\s*precio\s*\}\}/gi, currentPurchaseInfo?.precio?.toString() || '');
+const blob=new Blob([content],{type:'text/plain'});
 const url=URL.createObjectURL(blob);
 const link=document.createElement('a');
 link.href=url;
-link.download='clave-xOrochiModz.txt';
+link.download=fileName;
 document.body.appendChild(link);
 link.click();
 link.remove();
@@ -6083,7 +6155,7 @@ URL.revokeObjectURL(url);
 };
 
 window.cerrarKey=()=>{
-document.getElementById('modalKey').style.display='none';
+    document.getElementById('modalKey').style.display='none';
 };
 
 // TRANSFERENCIAS
